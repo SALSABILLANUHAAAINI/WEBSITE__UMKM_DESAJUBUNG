@@ -1,0 +1,137 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@600&family=Space+Mono&display=swap');
+
+/* Reset kecil biar ukuran elemen kebaca */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Global Style */
+body {
+    font-family: 'Space Mono', monospace;
+    background-color: #fdf9e6;
+    /* vibes krem pastel */
+    margin: 0;
+    padding: 0;
+    color: #4b2e2e;
+    /* coklat tua */
+    line-height: 1.5;
+}
+
+/* Section UMKM */
+.umkm-section {
+    padding: 3rem 2rem;
+    text-align: center;
+    background-color: #dbe8f4;
+    /* biru pastel */
+}
+
+/* biar konten nggak megar ke samping */
+.umkm-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Judul */
+.umkm-title {
+    font-family: 'Fraunces', serif;
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+    color: #4b2e2e;
+}
+
+/* Grid Card: auto-fit biar jumlah kolom menyesuaikan lebar layar */
+.umkm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    align-items: stretch;
+    /* semua card tingginya mengikuti kolom */
+}
+
+/* Card UMKM */
+.umkm-card {
+    background: #fff;
+    border-radius: 12px;
+    border: 2px solid #4b2e2e;
+    padding: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    /* isi card full tinggi kolom */
+}
+
+/* Hover tetap aman, tidak “kepotong” */
+.umkm-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 4px 6px 0 #4b2e2e;
+}
+
+/* Gambar: pakai aspect-ratio, bukan height fixed */
+.umkm-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    /* bisa 4/3 kalau mau lebih kotak */
+    object-fit: cover;
+    display: block;
+    /* hilangkan gap bawaan img */
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/* Nama UMKM */
+.umkm-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: #4b2e2e;
+}
+
+/* Deskripsi */
+.umkm-desc {
+    font-size: 0.95rem;
+    color: #4b2e2e;
+    margin-bottom: 1rem;
+}
+
+/* Tombol */
+.btn-detail {
+    margin-top: auto;
+    /* dorong tombol ke bawah supaya rapi */
+    display: inline-block;
+    border: 2px solid #4b2e2e;
+    color: #ffffff;
+    background: #4b2e2e;
+    /* kasih fill default biar kontras */
+    padding: 0.6rem 1.2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-detail:hover {
+    background: transparent;
+    color: #4b2e2e;
+    transform: translateY(-2px);
+}
+
+/* Breakpoints tambahan (opsional, auto-fit sudah cukup) */
+@media (max-width: 1024px) {
+    .umkm-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .umkm-section {
+        padding: 2rem 1rem;
+    }
+}

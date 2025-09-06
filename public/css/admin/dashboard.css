@@ -1,0 +1,131 @@
+/* Hero Section */
+.admin-hero {
+  background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  padding: 4rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.admin-hero h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.admin-hero p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* Statistik Card */
+.stat-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Produk/UMKM Card */
+.produk-card {
+  background: #fff;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.produk-card:hover {
+  transform: translateY(-5px);
+}
+
+.produk-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.produk-body {
+  padding: 1rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.produk-nama {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: .25rem;
+}
+
+.produk-sub {
+  font-size: .95rem;
+  color: #666;
+  margin-bottom: .5rem;
+}
+
+.produk-harga {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #e91e63;
+  margin-bottom: .5rem;
+}
+
+.produk-desc {
+  font-size: .9rem;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+/* Tombol */
+.produk-btn-group {
+  display: flex;
+  gap: .5rem;
+}
+
+.btn {
+  flex: 1;
+  padding: .5rem 1rem;
+  border: none;
+  border-radius: .5rem;
+  cursor: pointer;
+  font-size: .9rem;
+  font-weight: 500;
+  transition: background .2s;
+}
+
+.btn.edit {
+  background: #4caf50;
+  color: #fff;
+}
+
+.btn.edit:hover {
+  background: #43a047;
+}
+
+.btn.hapus {
+  background: #e53935;
+  color: #fff;
+}
+
+.btn.hapus:hover {
+  background: #c62828;
+}

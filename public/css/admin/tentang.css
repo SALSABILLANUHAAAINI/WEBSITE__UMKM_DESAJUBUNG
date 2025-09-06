@@ -1,0 +1,92 @@
+/* ===== Tentang Kami Admin Form ===== */
+
+/* Body & Theme */
+body {
+    background-color: #fdf9e6;
+    /* krem pastel */
+    font-family: 'Space Mono', monospace;
+    color: #4b2e2e;
+    /* coklat tua */
+}
+
+/* Title Page */
+.title-page {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #4b2e2e;
+}
+
+/* Form Container */
+.form-tentang {
+    background-color: #ffffff;
+    border: 2px solid #4b2e2e;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 4px 6px 0 #4b2e2e;
+    margin-bottom: 2rem;
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4b2e2e;
+}
+
+/* Input & Textarea */
+.form-tentang input[type="text"],
+.form-tentang textarea {
+    border: 1px solid #4b2e2e;
+    border-radius: 8px;
+    padding: 0.6rem;
+    width: 100%;
+    font-size: 1rem;
+    font-family: 'Space Mono', monospace;
+    color: #4b2e2e;
+}
+
+/* Hero Section Input */
+#hero {
+    border: 2px solid #108f0e;
+    border-radius: 8px;
+    padding: 0.7rem;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #108f0e;
+    background-color: #f0fff0;
+    /* hijau pastel lembut */
+}
+
+/* Upload Box Preview */
+.preview-image {
+    margin-top: 0.5rem;
+}
+
+.preview-image img {
+    max-width: 150px;
+    border-radius: 8px;
+    border: 1px solid #4b2e2e;
+}
+
+/* Tombol Submit */
+.btn-submit {
+    background-color: #4b2e2e;
+    color: #fff;
+    border-radius: 8px;
+    padding: 0.7rem 1.5rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #2b1818;
+}

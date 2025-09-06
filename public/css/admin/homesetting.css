@@ -1,0 +1,82 @@
+.home-container {
+    padding: 20px;
+    font-family: 'Space Mono', monospace;
+    background-color: #fdf9e6;
+    color: #4b2e2e;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.home-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.home-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #aaa;
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+}
+
+textarea.form-input {
+    resize: vertical;
+}
+
+/* Upload Box */
+.upload-box {
+    border: 2px dashed #aaa;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #fff;
+    transition: border-color 0.3s, background 0.3s;
+}
+
+.upload-box.dragover {
+    border-color: #4b2e2e;
+    background: #f9f4d6;
+}
+
+/* Tombol */
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    box-shadow: 2px 3px 0px #dcdada;
+    transition: transform 0.2s;
+}
+
+.btn.submit {
+    background: #4caf50;
+    color: #fff;
+}
+
+.btn.cancel {
+    background: #e63946;
+    color: #fff;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+}

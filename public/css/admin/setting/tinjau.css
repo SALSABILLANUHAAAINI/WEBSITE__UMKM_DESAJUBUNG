@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Prata&family=Raleway:wght@400;600&display=swap');
+
+/* Vars */
+:root {
+    --bg: #fdfae9;
+    --ink: #4a3220;
+    --ink-soft: #5a4633;
+    --card: #ffffff;
+    --accent: #d7e2ec;
+    --border: #b5b5b5;
+    --border-soft: #e4e4e4;
+    --shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+    --shadow-inset: inset 0 0 6px rgba(0, 0, 0, 0.05);
+    --danger: #c0392b;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Raleway', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    margin: 0;
+}
+
+/* Container */
+.service-section {
+    max-width: 980px;
+    margin: 48px auto;
+    padding: 32px;
+    background: var(--card);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+/* Header */
+.service-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.service-title {
+    font-size: 2.1rem;
+    font-family: 'Prata', serif;
+    font-weight: 400;
+    color: var(--ink);
+    margin: 0 0 10px;
+}
+
+.service-subtitle {
+    font-size: 1rem;
+    color: var(--ink-soft);
+    margin: 0;
+}
+
+/* Form */
+.service-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+/* Blocks */
+.form-block {
+    padding: 22px;
+    background: var(--accent);
+    border-radius: 14px;
+    box-shadow: var(--shadow-inset);
+    border: 1px solid #c6d3df;
+}
+
+.block-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 16px;
+    font-family: 'Prata', serif;
+    color: var(--ink);
+}
+
+/* Grid helpers */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Inputs */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink);
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    background: #fff;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-group input[readonly],
+.form-group textarea[readonly] {
+    background: #f9f9f9;
+    color: #555;
+}
+
+/* Upload */
+.single-preview {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.single-preview .thumb {
+    width: 120px;
+    height: 90px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .06);
+}
+
+/* Multi preview (produk) */
+.preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.preview-card {
+    background: #fff;
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.preview-card img {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
+.preview-meta {
+    font-size: .8rem;
+    color: #555;
+    text-align: center;
+    word-break: break-word;
+}
+
+/* Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn-accept,
+.btn-reject {
+    font-size: 1.03rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform .05s, opacity .2s;
+}
+
+.btn-accept {
+    background: var(--ink);
+    color: #fff;
+}
+
+.btn-accept:hover {
+    opacity: .92;
+}
+
+.btn-accept:active {
+    transform: translateY(1px);
+}
+
+.btn-reject {
+    background: var(--danger);
+    color: #fff;
+}
+
+.btn-reject:hover {
+    opacity: .92;
+}
+
+.btn-reject:active {
+    transform: translateY(1px);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+    .service-section {
+        padding: 24px;
+    }
+
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .service-section {
+        border-radius: 14px;
+    }
+}

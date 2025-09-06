@@ -1,0 +1,125 @@
+/* ====== Root & Global ====== */
+:root {
+  --ink:#1f2d3d;
+  --muted:#6b7280;
+  --accent:#198754;
+  --pastel:#f6efe9;   /* krem pastel */
+  --shadow:0 12px 30px rgba(0,0,0,.12);
+  --radius:14px;
+}
+
+/* ====== Header Judul ====== */
+.about-header h1 {
+  font-family:'Playfair Display', serif;
+  font-size: clamp(32px,4.5vw,48px);
+  font-weight:700;
+  letter-spacing:.08em;
+  margin:0;
+  color:var(--ink);
+  text-align:center;
+  padding:50px 20px;
+}
+
+/* ====== About Section ====== */
+.about-section {
+  background:#fff;
+  padding: clamp(48px,6vw,80px) 0;
+}
+
+.about-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:clamp(20px,4vw,56px);
+  align-items:center;
+}
+
+.about-image img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+.about-content {
+  max-width:520px;
+}
+
+.about-number {
+  font-weight:700;
+  color:var(--accent);
+  font-size:14px;
+  letter-spacing:.12em;
+  display:block;
+  margin-bottom:12px;
+}
+
+.about-title {
+  font-family:'Playfair Display', serif;
+  font-size: clamp(26px,3vw,34px);
+  font-weight:700;
+  margin:0 0 16px;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+
+.about-desc {
+  font-size:1.05rem;
+  color:#555;
+  line-height:1.75;
+}
+
+/* Alternate layout (gambar kanan, teks kiri) */
+.about-section.alt .about-grid {
+  grid-template-columns:1fr 1fr;
+}
+
+.about-section.alt .about-content {
+  order:1;
+}
+
+.about-section.alt .about-image {
+  order:2;
+}
+
+/* ====== Pastel Section ====== */
+.pastel-section {
+  background:var(--pastel);
+  padding:60px 20px;
+  text-align:center;
+}
+
+.pastel-kicker {
+  font-size:14px;
+  color:var(--accent);
+  font-weight:600;
+  letter-spacing:.12em;
+  margin-bottom:12px;
+}
+
+.pastel-title {
+  font-family:'Playfair Display', serif;
+  font-size: clamp(22px,3vw,30px);
+  font-weight:700;
+  margin-bottom:20px;
+  color:var(--ink);
+}
+
+.pastel-text {
+  font-size:1.05rem;
+  color:#444;
+  line-height:1.7;
+  max-width:600px;
+  margin:0 auto;
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns:1fr;
+  }
+  .about-section.alt .about-content,
+  .about-section.alt .about-image {
+    order:unset;
+  }
+}

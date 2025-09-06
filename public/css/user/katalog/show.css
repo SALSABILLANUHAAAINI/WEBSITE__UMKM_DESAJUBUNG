@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fffbea;
+    color: #4b2e2e;
+    margin: 0;
+    padding: 0;
+}
+
+.katalog {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+    padding: 60px 5%;
+}
+
+/* Bagian kiri */
+.produk-display {
+    text-align: center;
+}
+
+.main-img {
+    width: 500px;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+
+.thumbnail-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.thumbnail-container img {
+    width: 120px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.3s, border 0.3s;
+}
+
+.thumbnail-container img:hover {
+    transform: scale(1.08);
+    border: 2px solid #4b2e2e;
+}
+
+/* Bagian kanan */
+.produk-deskripsi {
+    max-width: 400px;
+    background: #fff;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+}
+
+.produk-deskripsi h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #4b2e2e;
+}
+
+.harga {
+    font-size: 1.3rem;
+    color: #c25b5b;
+    margin-left: 10px;
+}
+
+.produk-deskripsi p {
+    line-height: 1.6;
+    margin-top: 8px;
+}

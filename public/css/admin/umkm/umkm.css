@@ -1,0 +1,246 @@
+/* Container utama */
+.produk-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #f9fafb;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* Header */
+.produk-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.produk-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.produk-actions .btn.tambah {
+    background: #2563eb;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.produk-actions .btn.tambah:hover {
+    background: #1d4ed8;
+}
+
+/* Hero Section */
+.hero-section {
+    margin-bottom: 2rem;
+}
+
+.hero-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.hero-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+.hero-desc {
+    color: #4b5563;
+    margin-bottom: 1rem;
+}
+
+.hero-btn-group .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+}
+
+.hero-btn-group .btn.edit {
+    background: #f59e0b;
+    color: white;
+}
+
+.hero-btn-group .btn.edit:hover {
+    background: #d97706;
+}
+
+/* Modal dasar */
+.modal {
+    display: none;
+    /* hidden by default */
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Konten modal */
+.modal-content {
+    background: #fff;
+    padding: 20px 24px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+/* Tombol close */
+.modal-content .close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 22px;
+    cursor: pointer;
+    color: #555;
+}
+
+/* Form */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+/* Aksi */
+.form-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.btn {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn.submit {
+    background: #6366f1;
+    color: #fff;
+}
+
+.btn.submit:hover {
+    background: #4f46e5;
+}
+
+.btn.cancel {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.btn.cancel:hover {
+    background: #e5e7eb;
+}
+
+/* Produk List */
+.produk-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.produk-card {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+}
+
+.produk-card:hover {
+    transform: translateY(-4px);
+}
+
+.produk-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.produk-body {
+    padding: 1rem;
+}
+
+.produk-nama {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.produk-desc {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 1rem;
+}
+
+.produk-btn-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.btn.edit {
+    background: #3b82f6;
+    color: white;
+}
+
+.btn.edit:hover {
+    background: #2563eb;
+}
+
+.btn.hapus {
+    background: #ef4444;
+    color: white;
+}
+
+.btn.hapus:hover {
+    background: #dc2626;
+}
+
+.btn.submit {
+    background: #10b981;
+    color: white;
+}
+
+.btn.cancel {
+    background: #6b7280;
+    color: white;
+}
