@@ -1,0 +1,109 @@
+/* Import Google Fonts (jika diperlukan, seringkali sudah ada di layout utama) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* Style untuk wrapper utama section */
+.service-section {
+    padding: 1.5rem;
+}
+
+/* Style untuk header halaman */
+.service-header {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.service-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.25rem;
+}
+
+.service-subtitle {
+    font-size: 1rem;
+    color: #6b7280;
+}
+
+/* Bungkus form */
+.service-form {
+    max-width: 100%;
+    margin: 0 auto; /* Dihapus margin atas bawah agar menempel di card */
+    padding: 1.5rem;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Grup form */
+.form-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Label */
+.form-group label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #111827;
+}
+
+/* Input & textarea */
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db; /* abu muda */
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #3b82f6; /* biru */
+    box-shadow: 0 0 6px rgba(59,130,246,0.25);
+}
+
+/* Tombol submit */
+.btn-submit {
+    width: 100%; /* Membuat tombol full-width */
+    background-color: #2563eb; /* biru tua */
+    color: #fff;
+    font-weight: 600;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.btn-submit:hover {
+    background-color: #1e40af; /* biru lebih tua */
+}
+
+/* Pesan notifikasi */
+.alert-success {
+    margin-bottom: 1.5rem; 
+    background-color: #d4edda; 
+    color: #155724; 
+    padding: 1rem; 
+    border-radius: 8px;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    margin-bottom: 1.5rem; 
+    background-color: #f8d7da; 
+    color: #721c24; 
+    padding: 1rem; 
+    border-radius: 8px;
+    border: 1px solid #f5c6cb;
+}

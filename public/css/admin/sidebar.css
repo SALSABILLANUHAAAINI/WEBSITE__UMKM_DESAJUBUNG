@@ -117,3 +117,34 @@ body, html {
         padding: 20px;
     }
 }
+
+/* Styling untuk tombol di footer sidebar */
+.sidebar-footer .footer-btn {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 8px;
+    text-align: center;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-footer .profile-btn {
+    background-color: #2563eb; /* Biru */
+    color: white;
+}
+
+.sidebar-footer .profile-btn:hover {
+    background-color: #1e40af;
+}
+
+.sidebar-footer .logout-btn {
+    background-color: #dc3545; /* Merah */
+    color: white;
+}
+
+.sidebar-footer .logout-btn:hover {
+    background-color: #c82333;
+}

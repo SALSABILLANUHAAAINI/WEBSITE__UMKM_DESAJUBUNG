@@ -19,7 +19,7 @@
         </form>
 
         <!-- Tombol Tambah Produk -->
-        <a href="{{ route('admin.produk.tambah') }}" class="btn add">Tambah Produk</a>
+        <a href="{{ route('admin.produk.create') }}" class="btn tambah">Tambah Produk</a>
     </div>
 
     {{-- Grid Produk --}}

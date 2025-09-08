@@ -66,3 +66,16 @@
     border-radius: 6px;
     font-size: 14px;
 }
+
+/* Gaya untuk Kotak Pesan Error */
+.alert-error {
+    background-color: #f8d7da; 
+    color: #721c24; 
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px; 
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+}

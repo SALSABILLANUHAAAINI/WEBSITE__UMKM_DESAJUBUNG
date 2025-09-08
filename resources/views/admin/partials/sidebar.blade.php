@@ -15,28 +15,37 @@
 </head>
 <body>
     <div class="layout-wrapper">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 Admin Panel
             </div>
-           <nav class="sidebar-menu">
-    <ul>
-        <li><a href="{{ url('/admin/dashboard') }}">Dashboard</a></li>
-        <li><a href="{{ url('/admin/home') }}">Home Setting</a></li>
-        <li><a href="{{ url('/admin/umkm') }}">UMKM Setting</a></li>
-        <li><a href="{{ url('/admin/katalog') }}">Katalog Setting</a></li>
-        <li><a href="{{ url('/admin/tentang') }}">Tentang Kami</a></li>
-         <li><a href="{{ url('/admin/produk') }}">Produk Setting</a></li>
-        <li><a href="{{ route('admin.service.settings') }}">Service Setting</a></li>
-    </ul>
-</nav>
+            <nav class="sidebar-menu">
+                <ul>
+                    <li><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ route('admin.home') }}">Home Setting</a></li>
+                    <li><a href="{{ route('admin.umkm.index') }}">UMKM Setting</a></li>
+                    <li><a href="{{ route('admin.katalog.index') }}">Katalog Setting</a></li>
+                    <li><a href="{{ route('admin.tentang') }}">Tentang Kami</a></li>
+                    <li><a href="{{ route('admin.produk.index') }}">Produk Setting</a></li>
+                    <li><a href="{{ route('admin.service.settings') }}">Service Setting</a></li>
+                </ul>
+            </nav>
             <div class="sidebar-footer">
-                <a href="{{ url('/admin/logout') }}" class="logout-btn">Logout</a>
-            </div>
+    {{-- Beri kelas 'profile-btn' yang sama gayanya dengan logout-btn --}}
+    <a href="{{ route('admin.profile.edit') }}" class="footer-btn profile-btn">Edit Profil</a>
+
+    {{-- Tombol Logout yang sudah benar --}}
+    <a href="{{ route('admin.logout') }}" 
+       class="footer-btn logout-btn" 
+       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+       Logout
+    </a>
+    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+</div>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
             @yield('content')
         </main>
