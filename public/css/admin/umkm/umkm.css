@@ -5,7 +5,7 @@
     padding: 1.5rem;
     background: #f9fafb;
     border-radius: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     font-family: "Segoe UI", sans-serif;
 }
 
@@ -42,123 +42,194 @@
     margin-bottom: 2rem;
 }
 
-.hero-title {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
+.hero-card {
+    background: linear-gradient(135deg, #ffffff, #f3f4f6);
+    padding: 1.8rem 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    border-left: 6px solid #2563eb;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.hero-card {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 0.75rem;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+.hero-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+}
+
+/* Ornamen dekoratif */
+.hero-card::before,
+.hero-card::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(37, 99, 235, 0.1);
+}
+.hero-card::before {
+    width: 100px;
+    height: 100px;
+    top: -30px;
+    right: -30px;
+}
+.hero-card::after {
+    width: 80px;
+    height: 80px;
+    bottom: -20px;
+    left: -20px;
+}
+
+.hero-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #1f2937;
 }
 
 .hero-desc {
+    font-size: 1rem;
     color: #4b5563;
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
 }
 
-.hero-btn-group .btn {
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    border: none;
-    cursor: pointer;
-}
-
-.hero-btn-group .btn.edit {
+/* Tombol hero */
+.hero-btn-group .btn.hero-edit {
     background: #f59e0b;
     color: white;
+    padding: 0.55rem 1.2rem;
+    border-radius: 0.6rem;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s, transform 0.2s;
 }
 
-.hero-btn-group .btn.edit:hover {
+.hero-btn-group .btn.hero-edit:hover {
     background: #d97706;
+    transform: translateY(-2px);
 }
 
-/* Modal dasar */
+
+/* Modal overlay */
 .modal {
     display: none;
-    /* hidden by default */
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0,0,0,0.6);
     z-index: 999;
     justify-content: center;
     align-items: center;
+    transition: opacity 0.3s ease;
 }
 
-/* Konten modal */
+/* Modal konten */
 .modal-content {
     background: #fff;
-    padding: 20px 24px;
-    border-radius: 10px;
-    width: 400px;
-    max-width: 90%;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 450px;
+    max-width: 95%;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
     position: relative;
+    animation: modalFadeIn 0.3s ease;
 }
 
-/* Tombol close */
+@keyframes modalFadeIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
 .modal-content .close {
     position: absolute;
-    top: 12px;
-    right: 14px;
-    font-size: 22px;
+    top: 16px;
+    right: 18px;
+    font-size: 28px;
     cursor: pointer;
-    color: #555;
+    color: #374151;
+    transition: color 0.2s ease;
 }
 
-/* Form */
-.form-group {
-    margin-bottom: 16px;
+.modal-content .close:hover {
+    color: #111827;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 6px;
+/* Modal form */
+.modal-title {
+    font-size: 1.5rem;
     font-weight: 600;
+    margin-bottom: 0.3rem;
 }
 
-.form-control {
+.modal-subtitle {
+    font-size: 0.95rem;
+    color: #6b7280;
+    margin-bottom: 1.2rem;
+}
+
+.modal-form .form-control {
     width: 100%;
-    padding: 8px 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.6rem;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Aksi */
+.modal-form .form-control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+}
+
+/* Tombol modal */
 .form-actions {
     display: flex;
-    gap: 10px;
     justify-content: flex-end;
+    gap: 0.8rem;
 }
 
-.btn {
-    padding: 8px 14px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
+/* Tombol modal */
 .btn.submit {
-    background: #6366f1;
+    background: #2563eb; /* sama seperti tombol tambah */
     color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
 .btn.submit:hover {
-    background: #4f46e5;
+    background: #1d4ed8; /* hover sama seperti tombol tambah */
 }
 
+.btn.submit:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.3);
+}
+
+/* Tombol batal */
 .btn.cancel {
-    background: #f3f4f6;
-    color: #374151;
+    background: #ca2323; /* abu netral */
+    color: #fff; /* teks putih agar kontras */
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
-.btn.cancel:hover {
-    background: #e5e7eb;
+
+.btn.cancel:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(156,163,175,0.3);
 }
+
 
 /* Produk List */
 .produk-list {
@@ -170,7 +241,7 @@
 .produk-card {
     background: white;
     border-radius: 0.75rem;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -208,39 +279,114 @@
     gap: 0.5rem;
 }
 
-.btn {
-    flex: 1;
-    padding: 0.5rem;
-    border: none;
-    border-radius: 0.5rem;
-    font-size: 0.9rem;
+.produk-btn-group .btn {
+    flex: 1;              /* Sama-sama full width */
+    text-align: center;
+    border: none;         /* Hilangkan garis hitam */
+    outline: none;
     cursor: pointer;
 }
 
+/* Form dalam grup tombol ikut fleksibel */
+.produk-btn-group form {
+    flex: 1;
+    display: flex;
+}
+
 .btn.edit {
-    background: #3b82f6;
-    color: white;
+    background: white;
+    font-size: 15px;
+    color: #2563eb;
+    padding: 0.2rem 10px;
+    border: 1px solid #2563eb; /* outline biru */
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 400;
+    transition: 0.3s;
 }
 
 .btn.edit:hover {
-    background: #2563eb;
+    background: #d9e8f9;
 }
 
 .btn.hapus {
-    background: #ef4444;
+    background: #ca2323;
     color: white;
+    padding: 0.5rem 40px;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
 }
 
 .btn.hapus:hover {
     background: #dc2626;
 }
 
-.btn.submit {
-    background: #10b981;
-    color: white;
+/* Container Search */
+.search-container {
+    display: flex;
+    justify-content: flex-end; /* Dorong ke kanan */
+    margin-bottom: 1rem;
+    width: 100%;
 }
 
-.btn.cancel {
-    background: #6b7280;
-    color: white;
+/* Form Search */
+.search-form {
+    display: flex;
+    gap: 0.6rem;
+    width: 100%;
+    max-width: 500px;
+    padding: 0.6rem;
+    border-radius: 0.6rem;
 }
+
+/* Input */
+.search-input {
+    flex: 1;
+    padding: 0.6rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
+}
+
+/* Tombol Cari */
+.search-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.search-btn:hover {
+    background: #1d4ed8;
+}
+
+/* Tombol Reset */
+.reset-btn {
+    background: #f3f4f6;
+    color: #374151;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s;
+}
+
+.reset-btn:hover {
+    background: #e5e7eb;
+}
+
+

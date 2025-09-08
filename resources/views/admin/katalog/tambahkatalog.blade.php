@@ -68,10 +68,10 @@ input:checked + .slider:before {
 <div class="tambahkatalog-container">
     <div class="header">
         <a href="{{ url('/admin/katalog') }}" class="btn btn-back">⬅ Kembali</a>
-        <button type="button" class="btn btn-add" id="tambahKategori">+ Tambah Kategori</button>
+        <button type="button" class="btn btn-add" id="tambahKategori">+ Tambah Katalog</button>
     </div>
 
-    <h2>Tambah Kategori Katalog</h2>
+    <h2>Tambah Katalog</h2>
 
     <form action="{{ url('/admin/katalog/store') }}" method="POST">
     @csrf
@@ -85,7 +85,7 @@ input:checked + .slider:before {
             </label>
         </div>
     </div>
-    <button type="submit" class="btn submit">✅ Simpan</button>
+    <button type="submit" class="btn submit">Simpan</button>
 </form>
 
 </div>

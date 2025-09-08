@@ -17,80 +17,81 @@
 html,
 body {
     background: var(--bg);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
 }
 
+/* ===== Container utama ===== */
 .produk-container {
-    width: 100%;
-    max-width: none;
-    /* full width */
-    margin: 0;
-    /* hilangkan margin luar */
-    padding: 24px 24px 32px;
-    /* ruang dalam */
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
     background: var(--bg);
-    border-radius: 0;
-    /* biar full rata */
-    box-shadow: none;
-    /* tak perlu shadow di container utama */
-    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     color: var(--text);
 }
 
 /* ===== Header ===== */
-.title {
-    font-size: 1.9rem;
-    font-weight: 800;
-    margin: 0 0 12px;
+.produk-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.title, .produk-title {
+    font-size: 1.8rem;
+    font-weight: 700;
     color: var(--text);
 }
 
-.actions {
+.actions, .produk-actions {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 16px;
 }
 
-.actions .btn.add {
+.actions .btn.add, .produk-actions .btn.tambah {
     background: var(--primary);
     color: #fff;
     padding: .65rem 1.2rem;
     border-radius: .6rem;
     text-decoration: none;
-    font-weight: 700;
+    font-weight: 500;
     border: none;
     box-shadow: var(--shadow);
     transition: transform .15s ease, background .25s ease, box-shadow .25s ease;
 }
 
-.actions .btn.add:hover {
+.actions .btn.add:hover, .produk-actions .btn.tambah:hover {
     background: var(--primary-hover);
     transform: translateY(-2px);
 }
 
-.actions .btn.add:active {
+.actions .btn.add:active, .produk-actions .btn.tambah:active {
     transform: translateY(0);
     box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
 }
 
-/* ===== Grid Produk (full + responsif) ===== */
-.produk-grid {
+/* ===== Grid Produk ===== */
+.produk-grid, .produk-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    /* memenuhi lebar */
-    gap: 20px;
+    gap: 1.5rem;
     margin-top: 8px;
 }
 
 /* ===== Card Produk ===== */
 .produk-card {
-    background: var(--card);
-    border-radius: 14px;
-    box-shadow: var(--shadow-soft);
-    overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    background: var(--card);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
     transition: transform .18s ease, box-shadow .25s ease;
     border: 1px solid rgba(17, 24, 39, .06);
+    position: relative;
 }
 
 .produk-card:hover {
@@ -98,96 +99,137 @@ body {
     box-shadow: var(--shadow);
 }
 
-/* Gambar di atas, full-width rapi */
+/* Hiasan dekoratif atas card */
+.produk-card::before {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(37, 99, 235, 0.08);
+    top: -20px;
+    right: -20px;
+    z-index: 0;
+}
+
+/* Gambar Produk */
 .produk-img {
     width: 100%;
-    height: 190px;
-    /* lebih tinggi biar terlihat penuh */
+    height: 180px;
     object-fit: cover;
     display: block;
 }
 
-/* Info */
-.produk-info {
-    padding: 14px 16px 0;
-}
-
-.produk-info h3 {
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin: 0 0 6px;
-    color: #111827;
-}
-
-.produk-info .umkm {
-    font-size: .92rem;
-    color: var(--muted);
-    margin: 0 0 8px;
-}
-
-.produk-info .harga {
-    font-size: 1rem;
-    font-weight: 800;
-    color: #111827;
-    margin: 0 0 12px;
-}
-
-/* Aksi */
-.produk-actions {
+/* Info Card */
+.produk-body {
+    padding: 1rem;
     display: flex;
-    gap: 10px;
-    padding: 0 16px 16px;
-    margin-top: auto;
-    /* dorong ke bawah agar konsisten tinggi */
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
 }
 
-.btn.small {
-    flex: 1;
-    padding: .6rem .8rem;
-    font-size: .92rem;
-    border-radius: .6rem;
-    border: none;
+.produk-nama {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.produk-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.produk-desc.harga {
     font-weight: 700;
+    color: #111827;
+    margin-bottom: 2px;
+}
+
+/* Tombol Edit & Hapus */
+.produk-btn-group {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0 1rem 1rem;
+    margin-top: auto;
+}
+
+.produk-btn-group a,
+.produk-btn-group form {
+    flex: 1;
+    display: flex;
+}
+
+.produk-btn-group .btn.edit,
+.produk-btn-group .btn.hapus {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    padding: 0.4rem 0;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.btn.edit {
+    background: white;
+    color: #2563eb;
+    border: 1px solid #2563eb;
+    text-decoration: none; /* <--- tambahkan ini */
+}
+
+.btn.edit:hover {
+    background: #d9e8f9;
+}
+
+.btn.hapus {
+    background: #ca2323;
+    color: white;
+    border: none;
+}
+
+.btn.hapus:hover {
+    background: #dc2626;
+}
+/* Tombol Tambah Produk agar sama dengan tombol Cari */
+.produk-actions .btn.add {
+    background: var(--primary);
+    color: #fff;
+    padding: 0.4rem 1rem; /* samakan dengan tombol Cari */
+    border-radius: 0.5rem;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    border: none;
     cursor: pointer;
+    box-shadow: var(--shadow);
     transition: transform .15s ease, background .25s ease, box-shadow .25s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, .06);
 }
 
-.btn.small.edit {
-    background: var(--edit);
-    color: #fff;
+.produk-actions .btn.add:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
 }
 
-.btn.small.edit:hover {
-    background: var(--edit-hover);
-    transform: translateY(-2px);
-}
-
-.btn.small.edit:active {
+.produk-actions .btn.add:active {
     transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0,0,0,.1);
 }
 
-.btn.small.delete {
-    background: var(--danger);
-    color: #fff;
-}
 
-.btn.small.delete:hover {
-    background: var(--danger-hover);
-    transform: translateY(-2px);
-}
 
-.btn.small.delete:active {
-    transform: translateY(0);
-}
-
-/* ===== Responsif kecil ===== */
+/* ===== Responsif ===== */
 @media (max-width: 480px) {
-    .title {
+    .title, .produk-title {
         font-size: 1.6rem;
     }
 
-    .produk-grid {
+    .produk-grid, .produk-list {
         gap: 16px;
     }
 
@@ -195,7 +237,7 @@ body {
         height: 170px;
     }
 
-    .actions .btn.add {
+    .actions .btn.add, .produk-actions .btn.tambah {
         padding: .55rem 1rem;
     }
 }

@@ -89,8 +89,8 @@
 
     <!-- Tombol -->
     <div class="form-actions">
-      <button type="submit" class="btn submit">✅ Update</button>
-      <a href="{{ route('admin.umkm.index') }}" class="btn cancel">❌ Batal</a>
+      <a href="{{ route('admin.umkm.index') }}" class="btn cancel">Batal</a>
+      <button type="submit" class="btn submit">Update</button>
     </div>
   </form>
 </div>

@@ -3,23 +3,6 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/admin/produk/tambahProduk.css') }}">
-<style>
-#preview img {
-    max-width: 150px;
-    margin-top: 10px;
-}
-#drop-area {
-    border: 2px dashed #ccc;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background 0.3s;
-}
-#drop-area:hover {
-    background: #f9f9f9;
-}
-</style>
 @endsection
 
 @section('content')
@@ -65,13 +48,13 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="form-group full-width">
             <label for="deskripsi">Deskripsi Produk</label>
             <textarea id="deskripsi" name="deskripsi" class="form-input" rows="4"
                       placeholder="Tulis deskripsi produk...">{{ old('deskripsi') }}</textarea>
         </div>
 
-        <div class="form-group">
+        <div class="form-group full-width">
             <label for="gambar">Upload Gambar</label>
             <div class="upload-box" id="drop-area" onclick="document.getElementById('gambar').click()">
                 <p id="drop-text">Drag & drop untuk upload<br>atau klik untuk pilih</p>
@@ -80,7 +63,7 @@
             </div>
         </div>
 
-        <div class="form-actions">
+        <div class="form-actions full-width">
             <button type="submit" class="btn submit">✅ Simpan</button>
             <a href="{{ route('admin.produk.index') }}" class="btn cancel">❌ Batal</a>
         </div>
@@ -98,6 +81,7 @@ gambarInput.addEventListener('change', function() {
     preview.innerHTML = '';
     if(this.files && this.files[0]){
         const file = this.files[0];
+
         const info = document.createElement('p');
         info.textContent = 'File dipilih: ' + file.name;
         preview.appendChild(info);
@@ -106,6 +90,8 @@ gambarInput.addEventListener('change', function() {
         reader.onload = function(e){
             const img = document.createElement('img');
             img.src = e.target.result;
+            img.style.maxWidth = '150px';
+            img.style.marginTop = '10px';
             preview.appendChild(img);
         }
         reader.readAsDataURL(file);

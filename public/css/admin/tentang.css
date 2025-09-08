@@ -1,92 +1,170 @@
-/* ===== Tentang Kami Admin Form ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-/* Body & Theme */
-body {
-    background-color: #fdf9e6;
-    /* krem pastel */
-    font-family: 'Space Mono', monospace;
-    color: #4b2e2e;
-    /* coklat tua */
+/* ===== Variabel Warna ===== */
+:root {
+    --primary: #2563eb;
+    --primary-light: #3b82f6;
+    --secondary: #475569;
+    --text-dark: #111827;
+    --text-base: #1f2937;
+    --text-muted: #6b7280;
+    --bg-light: #f9fafb;
+    --white: #ffffff;
+    --error: #b91c1c;
+    --success-bg: #d1fae5;
+    --success-text: #065f46;
 }
 
-/* Title Page */
-.title-page {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
-    color: #4b2e2e;
-}
-
-/* Form Container */
-.form-tentang {
-    background-color: #ffffff;
-    border: 2px solid #4b2e2e;
+/* ===== Container Utama ===== */
+.tentang-container {
+    padding: 30px;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-base);
     border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 4px 6px 0 #4b2e2e;
-    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
-/* Form Group */
-.form-group {
-    margin-bottom: 1.5rem;
+/* ===== Judul Halaman ===== */
+.title-page {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: var(--text-dark);
+    border-left: 4px solid var(--primary-light);
+    padding-left: 12px;
 }
 
-.form-group label {
-    font-weight: 600;
+/* ===== Form ===== */
+.home-form .form-group {
+    margin-bottom: 1.8rem;
+}
+
+.home-form label {
     display: block;
+    font-weight: 600;
     margin-bottom: 0.5rem;
-    color: #4b2e2e;
+    color: var(--text-dark);
 }
 
-/* Input & Textarea */
-.form-tentang input[type="text"],
-.form-tentang textarea {
-    border: 1px solid #4b2e2e;
-    border-radius: 8px;
-    padding: 0.6rem;
+.form-input {
     width: 100%;
-    font-size: 1rem;
-    font-family: 'Space Mono', monospace;
-    color: #4b2e2e;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background-color: var(--white);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+    font-family: 'Poppins', sans-serif; /* font sama di input/textarea */
 }
 
-/* Hero Section Input */
-#hero {
-    border: 2px solid #108f0e;
-    border-radius: 8px;
-    padding: 0.7rem;
-    width: 100%;
-    font-size: 1.1rem;
-    font-weight: bold;
-    color: #108f0e;
-    background-color: #f0fff0;
-    /* hijau pastel lembut */
+.form-input:focus {
+    border-color: var(--primary-light);
+    box-shadow: 0 0 6px rgba(59,130,246,0.25);
+    outline: none;
 }
 
-/* Upload Box Preview */
-.preview-image {
-    margin-top: 0.5rem;
+textarea.form-input {
+    resize: vertical;
 }
 
-.preview-image img {
-    max-width: 150px;
-    border-radius: 8px;
-    border: 1px solid #4b2e2e;
-}
-
-/* Tombol Submit */
-.btn-submit {
-    background-color: #4b2e2e;
-    color: #fff;
-    border-radius: 8px;
-    padding: 0.7rem 1.5rem;
-    font-weight: bold;
-    border: none;
+/* ===== Upload Box Modern ===== */
+.upload-box {
+    border: 2px dashed #d1d5db;
+    padding: 25px;
+    text-align: center;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background 0.3s ease;
+    background: var(--white);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-family: 'Poppins', sans-serif; /* font sama */
 }
 
-.btn-submit:hover {
-    background-color: #2b1818;
+.upload-box.dragover {
+    border-color: var(--primary-light);
+    background: #eff6ff;
+    box-shadow: 0 6px 15px rgba(59,130,246,0.15);
+}
+
+/* ===== Preview Image ===== */
+.home-form img {
+    display: block;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* ===== Tombol Modern ===== */
+.form-actions {
+    margin-top: 25px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 12px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+    width: 100%;
+    font-family: 'Poppins', sans-serif; /* font sama di tombol */
+}
+
+.btn.submit {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.btn.submit:hover {
+    box-shadow: 0 6px 12px rgba(37,99,235,0.3);
+}
+
+.btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+/* ===== Alert Success ===== */
+.alert-success {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    border-left: 4px solid var(--primary-light);
+    font-family: 'Poppins', sans-serif; /* font sama di alert */
+}
+
+/* ===== Error Message ===== */
+.error {
+    color: var(--error);
+    font-size: 0.875rem;
+    margin-top: 4px;
+    font-family: 'Poppins', sans-serif; /* font sama di error */
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .tentang-container {
+        padding: 20px;
+    }
+    .form-actions {
+        flex-direction: column;
+    }
+    .btn {
+        width: 100%;
+    }
 }

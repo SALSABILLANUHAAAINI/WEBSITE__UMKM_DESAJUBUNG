@@ -1,184 +1,156 @@
-/* ===== Design tokens ===== */
-:root {
-    --bg: #f9fafb;
-    --card: #ffffff;
-    --text: #111827;
-    --muted: #6b7280;
-    --border: #e5e7eb;
-    --ring: #2563eb20;
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --success: #10b981;
-    --danger: #ef4444;
-    --danger-hover: #dc2626;
-    --shadow: 0 8px 24px rgba(0, 0, 0, .08);
-    --shadow-soft: 0 4px 14px rgba(0, 0, 0, .06);
-}
+/* ===== Import Font Poppins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-/* ===== Layout full ===== */
-html,
-body {
-    background: var(--bg);
-}
-
+/* ===== Container Utama ===== */
 .produk-container {
-    width: 100%;
-    max-width: none;
-    /* full width */
-    margin: 0;
-    /* hapus margin luar */
-    padding: 24px 24px 36px;
-    /* ruang dalam kanan-kiri */
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  font-family: 'Poppins', sans-serif;
+  color: #1f2937;
 }
 
+/* ===== Judul Halaman ===== */
 .title {
-    font-size: 1.9rem;
-    font-weight: 800;
-    margin: 0 0 18px;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #111827;
+  border-left: 4px solid #3b82f6;
+  padding-left: 12px;
 }
 
-/* ===== Form card (full & rapi) ===== */
+/* ===== Form Grid ===== */
 .produk-form {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    box-shadow: var(--shadow-soft);
-    padding: 20px;
-    width: 100%;
-    max-width: none;
-    /* hilangkan batas 600px */
-    display: grid;
-    /* grid responsif */
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px 18px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 18px;
 }
 
-/* tiap form-group jadi satu "kartu" kecil rapi */
+/* Form group */
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1; /* full-width untuk textarea & upload */
 }
 
 .form-group label {
-    font-weight: 700;
-    color: var(--text);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #000000;
 }
 
-/* input, select, textarea seragam */
-.form-input {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    font-size: 15px;
-    background: #fff;
-    color: var(--text);
-    transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
-    outline: none;
+/* ===== Input, Textarea, File Input ===== */
+.form-input,
+.file-input,
+textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #ffffff;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
 }
 
-.form-input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 6px var(--ring);
+.form-input:focus,
+textarea:focus,
+.file-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 6px rgba(59,130,246,0.25);
+  outline: none;
 }
 
 textarea.form-input {
-    resize: vertical;
-    min-height: 120px;
+  resize: vertical;
+  min-height: 120px;
 }
 
-/* Buat field yang “besar” melebar penuh kolom grid */
-.form-group:has(textarea),
-.form-group:has(.upload-box) {
-    grid-column: 1 / -1;
-    /* span full row */
-}
-
-/* ===== Upload box (drag & drop feel) ===== */
+/* ===== Upload Box Modern ===== */
 .upload-box {
-    border: 2px dashed var(--border);
-    border-radius: 12px;
-    text-align: center;
-    padding: 28px 20px;
-    background: #f9fafb;
-    color: var(--muted);
-    cursor: pointer;
-    transition: border-color .25s ease, background .25s ease, transform .15s ease;
-}
-
-.upload-box:hover {
-    border-color: var(--primary);
-    background: #f3f7ff;
-    transform: translateY(-1px);
+  border: 2px dashed #d1d5db;
+  padding: 25px;
+  text-align: center;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  font-size: 0.95rem;
+  color: #6b7280;
 }
 
 .upload-box.dragover {
-    border-color: var(--primary);
-    background: #eef4ff;
+  border-color: #3b82f6;
+  background: #eff6ff;
+  box-shadow: 0 6px 15px rgba(59,130,246,0.15);
 }
 
-/* ===== Actions (full row, kanan) ===== */
+/* ===== Preview Image ===== */
+#preview img {
+  display: block;
+  margin-top: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* ===== Tombol Modern ===== */
 .form-actions {
-    grid-column: 1 / -1;
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-    margin-top: 4px;
+  margin-top: 25px;
+  display: flex;
+  gap: 12px;
+  width: 100%;
 }
 
-.btn {
-    padding: 11px 16px;
-    font-size: 14.5px;
-    border: none;
-    border-radius: 10px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: transform .12s ease, box-shadow .2s ease, background .25s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+.form-actions .btn {
+  flex: 1;                /* Bagi rata masing-masing tombol */
+  text-align: center;
+  padding: 14px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  text-decoration: none;
+  display: inline-block;
 }
 
+/* Tombol Submit Biru */
 .btn.submit {
-    background: var(--success);
-    color: #fff;
+  background: #2563eb;
+  color: #ffffff;
 }
 
 .btn.submit:hover {
-    transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(37,99,235,0.3);
 }
 
+/* Tombol Cancel Abu-Biru */
 .btn.cancel {
-    background: var(--danger);
-    color: #fff !important;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  background: white;
+  border: 1px solid #475569;
+  color: #475569;
 }
 
 .btn.cancel:hover {
-    background: var(--danger-hover);
-    transform: translateY(-2px);
+  background: #e9eaec;
 }
 
-/* ===== Fine-tune responsif ===== */
-@media (max-width: 480px) {
-    .title {
-        font-size: 1.6rem;
-    }
-
-    .produk-container {
-        padding: 18px 16px 28px;
-    }
-
-    .produk-form {
-        padding: 16px;
-        gap: 14px;
-    }
+/* ===== Responsif ===== */
+@media (max-width: 768px) {
+  .produk-form {
+    grid-template-columns: 1fr;
+  }
 }
-
-/* ===== Opsional: benar-benar full-bleed (jika mau nempel ke tepi layout admin) ===== */
-/* body .produk-container { padding-left: 0; padding-right: 0; } */

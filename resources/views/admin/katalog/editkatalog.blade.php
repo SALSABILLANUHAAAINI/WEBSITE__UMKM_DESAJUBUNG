@@ -78,7 +78,7 @@ input:checked + .slider:before {
         <a href="{{ route('admin.katalog.index') }}" class="btn btn-back">⬅ Kembali</a>
     </div>
 
-    <h2>Edit Kategori Katalog</h2>
+    <h2>Edit Katalog</h2>
 
     <form action="{{ route('admin.katalog.update', $katalog->id) }}" method="POST">
         @csrf
@@ -91,7 +91,7 @@ input:checked + .slider:before {
                 <span class="slider"></span>
             </label>
         </div>
-        <button type="submit" class="btn submit">✅ Simpan</button>
+        <button type="submit" class="btn submit">Simpan</button>
     </form>
 </div>
 @endsection

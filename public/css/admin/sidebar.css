@@ -1,13 +1,27 @@
-/* Layout wrapper */
-.layout-wrapper {
-    display: flex;
-    min-height: 100vh;
+/* ===== Global ===== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    height: 100%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Sidebar */
+/* ===== Layout Wrapper ===== */
+.layout-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ===== Sidebar ===== */
 .sidebar {
     width: 260px;
+    min-height: 100vh;
     background: linear-gradient(180deg, #1f2937, #111827);
     color: #fff;
     display: flex;
@@ -33,8 +47,6 @@
 
 .sidebar-menu ul {
     list-style: none;
-    margin: 0;
-    padding: 0;
 }
 
 .sidebar-menu ul li {
@@ -81,9 +93,27 @@
     background: #dc2626;
 }
 
-/* Main Content */
+/* ===== Main Content ===== */
 .main-content {
     flex: 1;
     padding: 30px;
     background-color: #f3f4f6;
+    min-height: 100vh;
+    overflow: auto; /* supaya scroll jika konten panjang */
+}
+
+/* ===== Responsif ===== */
+@media (max-width: 768px) {
+    .layout-wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
 }

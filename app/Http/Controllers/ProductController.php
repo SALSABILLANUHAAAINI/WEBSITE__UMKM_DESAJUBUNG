@@ -10,19 +10,36 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    // Tampilkan daftar produk
-    public function index()
-    {
-        $products = Product::with(['umkm', 'katalog'])
-                           ->orderBy('created_at', 'desc')
-                           ->get()
-                           ->map(function($product) {
-                               // Pastikan harga selalu float
-                               $product->harga = (float) $product->harga;
-                               return $product;
-                           });
-        return view('admin.produk.index', compact('products'));
+    // Tampilkan daftar produk dengan pencarian dan pagination
+    public function index(Request $request)
+{
+    $query = Product::with(['umkm', 'katalog'])
+                    ->orderBy('created_at', 'desc');
+
+    if ($request->filled('search')) {
+        $search = $request->search;
+
+        $query->where(function($q) use ($search) {
+            $q->where('nama_produk', 'like', "%{$search}%")
+              ->orWhereHas('umkm', function($q2) use ($search) {
+                  $q2->where('nama_umkm', 'like', "%{$search}%");
+              })
+              ->orWhereHas('katalog', function($q3) use ($search) {
+                  $q3->where('name', 'like', "%{$search}%"); // <-- ini yang diperbaiki
+              });
+        });
     }
+
+    $products = $query->paginate(10)->withQueryString();
+
+    $products->getCollection()->transform(function($product) {
+        $product->harga = (float) $product->harga;
+        return $product;
+    });
+
+    return view('admin.produk.index', compact('products'));
+}
+
 
     // Halaman tambah produk
     public function create()
@@ -45,14 +62,13 @@ class ProductController extends Controller
         ]);
 
         $imagePath = null;
-
         if ($request->hasFile('gambar')) {
             $imagePath = $request->file('gambar')->store('product_images', 'public');
         }
 
         Product::create([
             'nama_produk' => $request->nama_produk,
-            'harga' => (float) $request->harga, // CAST HARGA
+            'harga' => (float) $request->harga,
             'umkm_id' => $request->umkm_id,
             'katalog_id' => $request->katalog_id,
             'deskripsi' => $request->deskripsi,
@@ -96,7 +112,7 @@ class ProductController extends Controller
 
         $product->update([
             'nama_produk' => $request->nama_produk,
-            'harga' => (float) $request->harga, // CAST HARGA
+            'harga' => (float) $request->harga,
             'umkm_id' => $request->umkm_id,
             'katalog_id' => $request->katalog_id,
             'deskripsi' => $request->deskripsi,
