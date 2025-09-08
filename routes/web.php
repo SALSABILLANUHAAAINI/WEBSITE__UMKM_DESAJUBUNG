@@ -22,7 +22,7 @@ Route::prefix('umkm')->name('umkm.')->group(function () {
 
 // Halaman statis user
 Route::get('/about', [TentangKamiController::class, 'show'])->name('about');
-Route::view('/katalog', 'user.katalog.index')->name('katalog');
+Route::get('/katalog', [KatalogController::class, 'userIndex'])->name('katalog');
 Route::view('/katalog/show', 'user.katalog.show')->name('katalog.show');
 
 // UMKM submission user
@@ -81,9 +81,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     // Service Settings
-    Route::get('/service-settings', [AdminUmkmSubmissionController::class, 'serviceSettings'])
-        ->name('service.settings'); // admin.service.settings
-
+    Route::get('/service-settings', [AdminUmkmSubmissionController::class, 'serviceSettings'])->name('service.settings'); // admin.service.settings
+    Route::post('/service-settings', [AdminUmkmSubmissionController::class, 'updateServiceSettings'])->name('service.settings.update');
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {

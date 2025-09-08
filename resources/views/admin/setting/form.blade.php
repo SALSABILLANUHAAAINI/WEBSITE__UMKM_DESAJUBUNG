@@ -15,18 +15,21 @@
             Silakan isi form berikut untuk mengatur konten service website Anda.
         </p>
     </div>
-<form action="{{ route('admin.hero.update') }}" method="POST" class="service-form">
+    <!-- FORM -->
+<form action="{{ route('admin.service.settings.update') }}" method="POST" class="service-form">
     @csrf
-    @method('PUT')
+    {{-- Kita tidak butuh @method('PUT') karena rute baru kita menggunakan POST --}}
 
     <div class="form-group">
-        <label for="title">Judul Hero</label>
-        <input type="text" id="title" name="title" value="{{ old('title', $hero->title ?? '') }}" required>
+        <label for="judul_hero">Judul Hero</label>
+        {{-- Ganti name="title" menjadi "judul_hero" dan variabelnya menjadi $settings->judul_hero --}}
+        <input type="text" id="judul_hero" name="judul_hero" value="{{ old('judul_hero', $settings->judul_hero ?? '') }}">
     </div>
 
     <div class="form-group">
-        <label for="subtitle">Subjudul Hero</label>
-        <textarea id="subtitle" name="subtitle" rows="3">{{ old('subtitle', $hero->subtitle ?? '') }}</textarea>
+        <label for="subjudul_hero">Subjudul Hero</label>
+        {{-- Ganti name="subtitle" menjadi "subjudul_hero" dan variabelnya menjadi $settings->subjudul_hero --}}
+        <textarea id="subjudul_hero" name="subjudul_hero" rows="3">{{ old('subjudul_hero', $settings->subjudul_hero ?? '') }}</textarea>
     </div>
 
     <div class="form-group">

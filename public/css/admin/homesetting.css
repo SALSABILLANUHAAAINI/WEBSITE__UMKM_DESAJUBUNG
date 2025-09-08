@@ -1,82 +1,122 @@
 .home-container {
-    padding: 20px;
-    font-family: 'Space Mono', monospace;
-    background-color: #fdf9e6;
-    color: #4b2e2e;
+    padding: 30px;
+    font-family: 'Inter', sans-serif;
+    background-color: #f7f8fa;
+    color: #333;
 }
 
 .title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #222;
 }
 
 .home-form .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
 }
 
 .home-form label {
     display: block;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
+    color: #444;
 }
 
 .form-input {
     width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #aaa;
-    font-family: 'Space Mono', monospace;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
     font-size: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.form-input:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 6px rgba(76, 175, 80, 0.3);
+    outline: none;
 }
 
 textarea.form-input {
     resize: vertical;
 }
 
-/* Upload Box */
+/* Upload Box Modern */
 .upload-box {
-    border: 2px dashed #aaa;
-    padding: 30px;
+    border: 2px dashed #ccc;
+    padding: 25px;
     text-align: center;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
     background: #fff;
-    transition: border-color 0.3s, background 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    font-size: 0.95rem;
+    color: #666;
 }
 
 .upload-box.dragover {
-    border-color: #4b2e2e;
-    background: #f9f4d6;
+    border-color: #4caf50;
+    background: #e6f4ea;
+    box-shadow: 0 6px 15px rgba(76, 175, 80, 0.15);
 }
 
-/* Tombol */
+/* Preview Image */
+.home-form img {
+    display: block;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Tombol Modern */
 .form-actions {
-    margin-top: 20px;
+    margin-top: 25px;
     display: flex;
-    gap: 10px;
+    gap: 12px;
 }
 
 .btn {
-    padding: 10px 16px;
-    border-radius: 8px;
+    padding: 12px 18px;
+    border-radius: 10px;
     cursor: pointer;
     border: none;
     font-weight: 600;
-    box-shadow: 2px 3px 0px #dcdada;
-    transition: transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
 }
 
 .btn.submit {
-    background: #4caf50;
+    background: linear-gradient(135deg, #4caf50, #43a047);
     color: #fff;
 }
 
 .btn.cancel {
-    background: #e63946;
+    background: linear-gradient(135deg, #e63946, #d32f2f);
     color: #fff;
 }
 
 .btn:hover {
     transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Pesan sukses */
+.alert-success {
+    background-color: #e6f4ea;
+    color: #2e7d32;
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Error message */
+.error {
+    color: #e63946;
+    font-size: 0.875rem;
+    margin-top: 4px;
 }

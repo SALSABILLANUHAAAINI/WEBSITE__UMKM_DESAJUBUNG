@@ -8,10 +8,13 @@
 
   <!-- HEADER -->
   <div class="service-header">
-    <h1 class="service-title">Service UMKM Desa Jubung</h1>
-    <p class="service-subtitle">
-      Silakan isi form berikut untuk mendaftarkan UMKM Anda.
-    </p>
+    @if($settings)
+      <h1 class="service-title">{{ $settings->judul_hero }}</h1>
+      <p class="service-subtitle">{{ $settings->subjudul_hero }}</p>
+    @else
+      <h1 class="service-title">Service UMKM Desa Jubung</h1>
+      <p class="service-subtitle">Silakan isi form berikut untuk mendaftarkan UMKM Anda.</p>
+    @endif
   </div>
 
   <!-- FORM -->
@@ -80,7 +83,7 @@
       <h2 class="block-title">2. Data Produk</h2>
 
       <div id="productWrapper">
-        <div class="grid-2 product-item">
+        <div class="grid-2 product-item" style="position:relative;">
           <div class="form-group">
             <label>Nama Produk*</label>
             <input type="text" name="product[]" required>
@@ -93,9 +96,6 @@
             <label>Deskripsi Produk*</label>
             <textarea name="description[]" rows="3" required></textarea>
           </div>
-          <div class="form-group">.
-
-      </div>
           <div class="form-group">
             <label>Foto Produk</label>
             <input type="file" name="product_images[0][]" multiple accept="image/png,image/jpeg,image/jpg">
@@ -114,9 +114,22 @@
   </form>
 </section>
 
+<!-- Popup Tambah Produk -->
+<div id="popupConfirm" class="popup-overlay" style="display:none;">
+  <div class="popup-box">
+    <p>Apakah Anda yakin ingin menambahkan produk baru?</p>
+    <div class="popup-actions">
+      <button type="button" id="popupYes" class="btn-yes">Ya</button>
+      <button type="button" id="popupNo" class="btn-no">Batal</button>
+    </div>
+  </div>
+</div>
+
 <script>
 (() => {
-\
+  const MAX_SIZE = 2 * 1024 * 1024; // 2MB
+  const ALLOWED = ["image/jpeg","image/png","image/jpg"];
+
   function clear(el){ while(el.firstChild) el.removeChild(el.firstChild); }
 
   // Logo preview
@@ -139,25 +152,59 @@
     });
   }
 
-  // Tambah produk dinamis
+  // Produk dinamis
   const productWrapper = document.getElementById('productWrapper');
   const addProductBtn = document.getElementById('addProduct');
   let productIndex = 1;
 
+  // popup
+  const popup = document.getElementById('popupConfirm');
+  const popupYes = document.getElementById('popupYes');
+  const popupNo = document.getElementById('popupNo');
+
   addProductBtn.addEventListener('click', ()=>{
-    const template = document.querySelector('.product-item').cloneNode(true);
-    template.querySelectorAll('input,textarea').forEach(el=>{
-      if(el.name.includes('product_images')) el.name = `product_images[${productIndex}][]`;
-      else el.value='';
-    });
-    template.querySelector('.preview-grid').innerHTML='';
-    productWrapper.appendChild(template);
-    productIndex++;
+    popup.style.display = 'flex';
   });
 
-  // Cegah submit default
-  document.getElementById('serviceForm').addEventListener('submit', e=>{
-    // e.preventDefault(); // hapus jika ingin benar-benar submit
+  popupYes.addEventListener('click', ()=>{
+    const firstProduct = document.querySelector('.product-item');
+    const template = firstProduct.cloneNode(true);
+
+    // ambil value dari produk pertama
+    const firstInputs = firstProduct.querySelectorAll('input,textarea');
+    const newInputs = template.querySelectorAll('input,textarea');
+
+    newInputs.forEach((el, i) => {
+      if(el.name.includes('product_images')) {
+        el.name = `product_images[${productIndex}][]`;
+        el.value = ''; // file input kosong
+      } else {
+        el.value = firstInputs[i].value; // copy value
+      }
+    });
+
+    // kosongkan preview gambar
+    template.querySelector('.preview-grid').innerHTML='';
+
+    // tambahkan tombol hapus (X)
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'remove-btn';
+    removeBtn.textContent = '×';
+    removeBtn.style.cssText = "position:absolute;top:-10px;right:-10px;background:#000;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;";
+    removeBtn.addEventListener('click', ()=> template.remove());
+    template.style.position = "relative";
+    template.appendChild(removeBtn);
+
+    // tambahkan ke wrapper
+    productWrapper.prepend(template);
+    productIndex++;
+
+    popup.style.display = 'none';
+  });
+
+  popupNo.addEventListener('click', ()=>{
+    popup.style.display = 'none';
   });
 })();
 </script>

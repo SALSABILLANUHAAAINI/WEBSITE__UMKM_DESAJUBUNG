@@ -10,21 +10,41 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\ServiceSetting;
 
 class AdminUmkmSubmissionController extends Controller
 {
     // Halaman service settings
     public function serviceSettings()
     {
-        $submissions = UmkmSubmission::with('products')->orderBy('created_at', 'desc')->get();
-        return view('admin.setting.form', compact('submissions'));
+        $submissions = UmkmSubmission::with('products')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $settings = ServiceSetting::first();
+
+        return view('admin.setting.form', compact('submissions', 'settings'));
+    }
+
+    public function updateServiceSettings(Request $request)
+    {
+        $validated = $request->validate([
+            'judul_hero' => 'nullable|string|max:255',
+            'subjudul_hero' => 'nullable|string',
+        ]);
+
+        ServiceSetting::updateOrCreate(['id' => 1], $validated);
+
+        return redirect()->back()->with('success', 'Service settings berhasil diperbarui.');
     }
 
     // Index semua submission pending
     public function index()
     {
         $submissions = UmkmSubmission::where('status', 'pending')
-                        ->with('products')->get();
+            ->with('products')
+            ->get();
+
         return view('admin.submissions.index', compact('submissions'));
     }
 
@@ -32,6 +52,7 @@ class AdminUmkmSubmissionController extends Controller
     public function show($id)
     {
         $submission = UmkmSubmission::with('products')->findOrFail($id);
+
         return view('admin.submissions.show', compact('submission'));
     }
 
@@ -46,6 +67,7 @@ class AdminUmkmSubmissionController extends Controller
         ]);
 
         DB::beginTransaction();
+
         try {
             // Pindahkan logo
             $newLogoPath = null;
@@ -70,7 +92,7 @@ class AdminUmkmSubmissionController extends Controller
             ]);
 
             // Masukkan produk
-            foreach($submission->products as $productSub){
+            foreach ($submission->products as $productSub) {
                 $newProductPath = null;
                 if ($productSub->product_image && Storage::disk('public')->exists($productSub->product_image)) {
                     $newProductPath = 'product_images/' . basename($productSub->product_image);
@@ -80,11 +102,11 @@ class AdminUmkmSubmissionController extends Controller
                 }
 
                 Product::create([
-                    'umkm_id' => $umkm->id,
-                    'nama_produk' => $productSub->nama_produk,
-                    'harga' => $productSub->harga,
-                    'deskripsi' => $productSub->deskripsi,
-                    'product_image' => $newProductPath,
+                    'umkm_id'      => $umkm->id,
+                    'nama_produk'  => $productSub->nama_produk,
+                    'harga'        => $productSub->harga,
+                    'deskripsi'    => $productSub->deskripsi,
+                    'product_image'=> $newProductPath,
                 ]);
 
                 $productSub->delete();
@@ -94,16 +116,16 @@ class AdminUmkmSubmissionController extends Controller
             DB::commit();
 
             return redirect()->route('admin.service.settings')
-                     ->with('success', 'Submission diterima dan dipindahkan ke tabel UMKM & Product.');
-
+                ->with('success', 'Submission diterima dan dipindahkan ke tabel UMKM & Product.');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error("ERROR: Gagal accept submission", [
                 'submission_id' => $submission->id,
                 'error' => $e->getMessage()
             ]);
+
             return redirect()->route('admin.service.settings')
-                     ->with('error', 'Terjadi kesalahan saat memproses submission.');
+                ->with('error', 'Terjadi kesalahan saat memproses submission.');
         }
     }
 
@@ -115,6 +137,6 @@ class AdminUmkmSubmissionController extends Controller
         $submission->save();
 
         return redirect()->route('admin.service.settings')
-                         ->with('success', 'Submission ditolak.');
+            ->with('success', 'Submission ditolak.');
     }
 }

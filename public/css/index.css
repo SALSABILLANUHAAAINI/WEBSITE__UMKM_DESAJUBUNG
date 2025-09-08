@@ -1,546 +1,381 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+/* ================== Fonts ================== */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
-.umkm-section {
-    background: #fafaf8;
-    padding: 4rem 2rem;
-}
-
-.umkm-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-}
-
-.umkm-image img {
-    max-width: 300px;
-    border-radius: 8px;
-}
-
-.umkm-text {
-    text-align: center;
-    max-width: 600px;
-    padding: 0 1rem;
-}
-
-.sub-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
-    font-style: italic;
-    margin-bottom: 1rem;
-}
-
-.main-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.8rem;
-    font-weight: 600;
-    line-height: 1.4;
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-}
-
-.goal-text {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.desc-text {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #333;
-}
-
-.logo-slider {
-    background: #d8f3dc;
-    height: 150px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.slider-track {
-    display: flex;
-    width: calc(200px * 10);
-    animation: scroll 20s linear infinite;
-}
-
-.slide {
-    width: 200px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 20px;
-}
-
-.slide img {
-    max-height: 100px;
-    object-fit: contain;
-}
-
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-.highlight {
-    position: relative;
-    height: 600px;
-    background-size: cover;
-    background-position: center;
-}
-
-.highlight-box {
-    position: absolute;
-    top: 50%;
-    right: 50px;
-    transform: translateY(-50%);
-    background: white;
-    padding: 30px;
-    width: 400px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.highlight-box h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    font-style: italic;
-}
-
-.highlight-box p {
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 20px;
-}
-
-.highlight-box .btn {
-    display: inline-block;
-    padding: 12px 24px;
-    background: linear-gradient(135deg, #a8c09a 0%, #8fbc8f 100%);
-    color: #fff;
-    font-weight: bold;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(168, 192, 154, 0.3);
-}
-
-.highlight-box .btn:hover {
-    background: linear-gradient(135deg, #8fbc8f 0%, #a8c09a 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(168, 192, 154, 0.4);
-}
-
-.katalog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    justify-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.katalog-card {
-    background: #ffffff;
-    border-radius: 16px;
-    overflow: hidden;
-    text-align: center;
-    box-shadow: 0 8px 25px rgba(93, 78, 55, 0.1);
-    transition: all 0.3s ease;
-    width: 100%;
-    max-width: 300px;
-    position: relative;
-    border: 1px solid #e8d5c4;
-}
-
-.katalog-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 35px rgba(93, 78, 55, 0.15);
-}
-
-.katalog-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #a8c09a, #8fbc8f, #90ee90);
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-}
-
-.katalog-card:hover::before {
-    transform: scaleX(1);
-}
-
-.katalog-card img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.katalog-card:hover img {
-    transform: scale(1.05);
-}
-
-.katalog-info {
-    padding: 1.25rem;
-}
-
-.katalog-info h3 {
-    font-family: 'Fraunces', serif;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #5d4e37;
-    margin: 0 0 1rem 0;
-    line-height: 1.3;
-}
-
-.btn-detail {
-    display: inline-block;
-    background: linear-gradient(135deg, #a8c09a 0%, #8fbc8f 100%);
-    color: #ffffff;
-    padding: 0.75rem 1.5rem;
-    border-radius: 25px;
-    text-decoration: none;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 0.85rem;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: 0 4px 15px rgba(168, 192, 154, 0.3);
-}
-
-.btn-detail:hover {
-    background: linear-gradient(135deg, #8fbc8f 0%, #a8c09a 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(168, 192, 154, 0.4);
-}
-
-@media (max-width: 1024px) {
-    .katalog-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        padding: 0 1rem;
-    }
-
-    .highlight-box {
-        width: 70%;
-        right: 40px;
-    }
-}
-
-@media (max-width: 768px) {
-    .katalog-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 1.5rem;
-    }
-
-    .katalog-card {
-        max-width: 400px;
-        margin: 0 auto;
-    }
-
-    .highlight-box {
-        width: 80%;
-        right: 30px;
-        padding: 25px;
-    }
-}
-
-@media (max-width: 600px) {
-    .katalog-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .highlight-box {
-        width: 90%;
-        right: 20px;
-        padding: 20px;
-    }
-
-    .highlight-box h2 {
-        font-size: 1.5rem;
-    }
-
-    .highlight-box p {
-        font-size: 0.9rem;
-    }
-
-    .highlight-box .btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-
-    .umkm-grid {
-        gap: 1rem;
-    }
-
-    .katalog-card {
-        max-width: 320px;
-    }
-
-    .umkm-card {
-        max-width: 320px;
-    }
-
-    .umkm-title {
-        font-size: 1.4rem;
-    }
-
-    .katalog-info h3 {
-        font-size: 1.1rem;
-    }
-
-    .btn-detail {
-        padding: 0.5rem 1rem;
-        font-size: 0.75rem;
-    }
-
-    .umkm-name {
-        font-size: 1.1rem;
-    }
-
-    .umkm-desc {
-        font-size: 0.8rem;
-    }
-
-    .katalog-card img {
-        height: 180px;
-    }
-
-    .umkm-card img {
-        height: 160px;
-    }
-
-    .umkm-info {
-        padding: 0.875rem;
-    }
-
-    .katalog-info {
-        padding: 0.875rem;
-    }
-
-    .umkm-section {
-        padding: 1.5rem 1rem;
-    }
-}
-
-/* ============ Tokens / Design Variables ============ */
+/* ============ Design Tokens ============ */
 :root {
-    --col-min: 280px;
+    --c-white: #FCFDFB;
+    --c-bg: #FCFDFB;
+    --c-bg-soft: #E9F5EC;
+    --c-accent-soft: #BEE3C6;
+    --c-accent: #8FBC8F;
+    --c-accent-deep: #2F6F52;
+    --c-brown: #5D4E37;
+    --c-brown-border: #E8D5C4;
+    --c-muted: #6B5B47;
+    --shadow-sm: 0 6px 20px rgba(93, 78, 55, 0.12);
+    --shadow-lg: 0 14px 40px rgba(93, 78, 55, 0.18);
+    --radius: 16px;
+    --radius-sm: 12px;
+    --container: 1200px;
     --gap-lg: 2rem;
     --gap-md: 1.25rem;
-    --radius: 12px;
-    --shadow-sm: 0 6px 20px rgba(93, 78, 55, 0.10);
-    --shadow-lg: 0 12px 30px rgba(93, 78, 55, 0.15);
-    --clamp-lines: 3;
-    --c-bg: #ffffff;
-    --c-border: #e8d5c4;
-    --c-text-strong: #5d4e37;
-    --c-text: #6b5b47;
-    --c-accent-grad: linear-gradient(90deg, #a8c09a, #8fbc8f, #90ee90);
+    --gap-sm: .75rem;
+    --speed: .35s;
 }
 
-/* Reduce animation if user prefers */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation: none !important;
-        transition: none !important;
-    }
+/* ============ Base Reset ============ */
+* {
+    box-sizing: border-box
 }
 
-/* ============ Grid (UMKM & Katalog) ============ */
-.umkm-grid,
-.katalog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(var(--col-min), 1fr));
-    gap: var(--gap-lg);
-    margin: 2.5rem auto 5rem;
-    max-width: 1200px;
-    padding-inline: 0;
-    /* will adjust on smaller screens */
+html,
+body {
+    height: 100%
 }
 
-/* ============ Card (UMKM & Katalog) ============ */
-.umkm-card,
-.katalog-card {
+body {
+    margin: 0;
+    color: var(--c-brown);
     background: var(--c-bg);
-    border: 1px solid var(--c-border);
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    max-width: 100%;
+    display: block
+}
+
+a {
+    color: inherit
+}
+
+.container {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: 0 1.25rem
+}
+
+.content-wrapper {
+    isolation: isolate
+}
+
+/* ============ Utilities ============ */
+.empty-state {
+    text-align: center;
+    color: var(--c-muted);
+    background: linear-gradient(180deg, var(--c-white), var(--c-bg-soft));
+    padding: 1rem;
+    border: 1px dashed var(--c-brown-border);
+    border-radius: var(--radius-sm);
+}
+
+/* ============ Buttons ============ */
+.btn {
+    display: inline-block;
+    padding: .85rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform var(--speed) ease, box-shadow var(--speed) ease, background var(--speed) ease, border-color var(--speed) ease;
+    will-change: transform;
+}
+
+.btn--primary {
+    background: linear-gradient(135deg, var(--c-accent) 0%, var(--c-accent-soft) 100%);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(143, 188, 143, .35);
+}
+
+.btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(143, 188, 143, .45);
+}
+
+.btn--block {
+    display: block;
+    text-align: center;
+    margin: 0 1rem 1rem
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+    outline: 3px solid var(--c-accent);
+    outline-offset: 3px;
+    border-radius: 10px
+}
+
+/* ============ Section ============ */
+.section {
+    padding: 4rem 0;
+    background: var(--c-white)
+}
+
+.section--light {
+    background: linear-gradient(180deg, var(--c-white) 0%, var(--c-bg-soft) 100%)
+}
+
+.section__title {
+    font-family: Fraunces, serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.2rem);
+    text-align: center;
+    margin: 0 0 2rem 0;
+    color: var(--c-brown);
+    letter-spacing: .3px;
+}
+
+/* ============ HERO ============ */
+.hero {
+    background:
+        radial-gradient(1200px 600px at 10% 10%, rgba(190, 227, 198, .35) 0%, transparent 60%),
+        radial-gradient(1000px 500px at 90% 5%, rgba(233, 245, 236, .55) 0%, transparent 60%),
+        var(--c-white);
+    padding: 3rem 0 2rem;
+}
+
+.hero--fallback {
+    padding: 5rem 0
+}
+
+.hero__container {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding: 0 1.25rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--gap-lg);
+    align-items: center;
+}
+
+.hero__container--center {
+    display: block;
+    text-align: center
+}
+
+.hero__img img {
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
+    height: clamp(220px, 28vw, 340px);
+    object-fit: cover;
+    transition: transform var(--speed) ease, box-shadow var(--speed) ease;
+}
+
+.hero__img:hover img {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-lg)
+}
+
+.hero__content {
+    text-align: center
+}
+
+.hero__subtitle {
+    color: var(--c-muted);
+    font-size: 1rem;
+    letter-spacing: .4px;
+    margin: 0 0 .75rem 0;
+    font-weight: 600;
+}
+
+.hero__title {
+    font-family: Fraunces, serif;
+    font-weight: 700;
+    color: var(--c-brown);
+    margin: 0 0 .75rem 0;
+    line-height: 1.25;
+    font-size: clamp(1.6rem, 1.1rem + 2vw, 2.6rem);
+}
+
+.hero__desc {
+    color: var(--c-muted);
+    max-width: 48ch;
+    margin: 0 auto;
+    font-size: 1rem;
+}
+
+/* Responsive hero */
+@media (max-width: 960px) {
+    .hero__container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem
+    }
+
+    .hero__content {
+        order: -1
+    }
+}
+
+/* ============ HIGHLIGHT ============ */
+.highlight {
+    position: relative;
+    min-height: 460px;
+    background: var(--c-white);
+    display: grid;
+    place-items: center;
+    padding: 2rem 1rem;
+    overflow: hidden;
+}
+
+.highlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: var(--highlight-bg);
+    background-size: cover;
+    background-position: center;
+    filter: saturate(95%) contrast(95%) brightness(105%);
+    transform: scale(1.02);
+}
+
+.highlight__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(252, 253, 251, .85), rgba(233, 245, 236, .85), rgba(252, 253, 251, .6));
+    backdrop-filter: saturate(1.05) blur(.5px);
+}
+
+.highlight__box {
+    position: relative;
+    z-index: 1;
+    width: min(560px, 92vw);
+    background: #fff;
+    border: 1px solid var(--c-brown-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    padding: 1.5rem;
+    animation: floatIn var(--speed) ease both;
+}
+
+.highlight__text {
+    font-family: Fraunces, serif;
+    font-weight: 600;
+    font-size: clamp(1.2rem, 1rem + .8vw, 1.8rem);
+    color: var(--c-brown);
+    margin: 0 0 1rem 0;
+}
+
+/* ============ GRID (Katalog & UMKM) ============ */
+.katalog-grid,
+.umkm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--gap-lg);
+    margin-top: 2rem;
+}
+
+/* ============ CARD (Katalog & UMKM) ============ */
+.katalog-card,
+.umkm-card {
+    background: #fff;
+    border: 1px solid var(--c-brown-border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: 100%;
-    overflow: hidden;
+    transition: transform var(--speed) ease, box-shadow var(--speed) ease;
     position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    padding: 0;
 }
 
-@media (hover: hover) {
-
-    .umkm-card:hover,
-    .katalog-card:hover {
-        transform: translateY(-5px);
-        box-shadow: var(--shadow-lg);
-    }
-
-    .umkm-card:hover::before,
-    .katalog-card:hover::before {
-        transform: scaleX(1);
-    }
-}
-
-/* Accent bar on hover */
-.umkm-card::before,
-.katalog-card::before {
+.katalog-card::before,
+.umkm-card::before {
     content: "";
     position: absolute;
     inset: 0 0 auto 0;
     height: 3px;
-    background: var(--c-accent-grad);
+    background: linear-gradient(90deg, var(--c-accent), var(--c-accent-soft));
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.3s ease;
+    transition: transform var(--speed) ease;
 }
 
-/* Cover Image */
-.umkm-card img,
-.katalog-card img {
+.katalog-card:hover,
+.umkm-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg)
+}
+
+.katalog-card:hover::before,
+.umkm-card:hover::before {
+    transform: scaleX(1)
+}
+
+.katalog-card img,
+.umkm-card img {
     width: 100%;
-    /* use aspect-ratio for consistency across images */
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 16/9;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform var(--speed) ease;
 }
 
-@media (hover: hover) {
-
-    .umkm-card:hover img,
-    .katalog-card:hover img {
-        transform: scale(1.03);
-    }
+.katalog-card:hover img,
+.umkm-card:hover img {
+    transform: scale(1.03)
 }
 
-/* ============ Info Area (UMKM & Katalog) ============ */
-.umkm-info,
-.katalog-info {
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    /* fixed height only if needed; otherwise let content flow uncomment next line to enforce equal heights: min-height: 160px; */
+.katalog-info,
+.umkm-info {
+    padding: 1rem 1.1rem
 }
 
-/* Title / Name */
-.umkm-name,
 .katalog-name,
-.umkm-title {
-    font-family: 'Fraunces', serif;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--c-text-strong);
+.umkm-name {
+    font-family: Fraunces, serif;
+    font-weight: 700;
+    color: var(--c-brown);
+    margin: .2rem 0 .6rem;
+    font-size: 1.15rem;
     line-height: 1.3;
-    margin: 0 0 0.75rem 0;
 }
 
-/* Description */
-.umkm-desc,
-.katalog-desc {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 400;
-    color: var(--c-text);
-    line-height: 1.5;
-    margin-bottom: 1.25rem;
-    flex-grow: 1;
+.umkm-desc {
+    color: var(--c-muted);
+    margin: 0 0 1rem 0;
     display: -webkit-box;
-    -webkit-line-clamp: var(--clamp-lines);
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-/* ============ Responsive ============ */
-/* ≤ 1024px */
-@media (max-width: 1024px) {
-    :root {
-        --col-min: 260px;
+/* Harga */
+.harga {
+    font-weight: 700;
+    color: var(--c-accent-deep);
+}
+
+/* ============ Animations ============ */
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px)
     }
 
-    .umkm-grid,
-    .katalog-grid {
-        gap: var(--gap-md);
-        padding-inline: 1rem;
-    }
-
-    .highlight-box {
-        width: 70%;
-        right: 40px;
+    to {
+        opacity: 1;
+        transform: translateY(0)
     }
 }
 
-/* ≤ 768px */
-@media (max-width: 768px) {
-    :root {
-        --col-min: 250px;
-    }
-
-    .umkm-card,
-    .katalog-card {
-        max-width: 350px;
-        margin-inline: auto;
-    }
-
-    .umkm-grid,
-    .katalog-grid {
-        gap: var(--gap-md);
-    }
-
-    .highlight-box {
-        width: 80%;
-        right: 30px;
-        padding: 25px;
+/* Motion reduce */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important
     }
 }
 
-/* ≤ 480px */
+/* ============ Small Screens ============ */
 @media (max-width: 480px) {
-
-    .umkm-info,
-    .katalog-info {
-        padding: 0.75rem;
+    .btn--block {
+        margin: 0 .75rem .75rem
     }
 
-    .umkm-name,
-    .katalog-name,
-    .umkm-title {
-        font-size: 1.1rem;
-    }
-
-    .umkm-card,
-    .katalog-card {
-        max-width: 300px;
-    }
-
-    .umkm-title {
-        font-size: 1.3rem;
+    .katalog-grid,
+    .umkm-grid {
+        gap: 1rem
     }
 }

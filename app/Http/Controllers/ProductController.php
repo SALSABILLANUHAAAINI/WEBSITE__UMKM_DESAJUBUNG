@@ -15,7 +15,12 @@ class ProductController extends Controller
     {
         $products = Product::with(['umkm', 'katalog'])
                            ->orderBy('created_at', 'desc')
-                           ->get();
+                           ->get()
+                           ->map(function($product) {
+                               // Pastikan harga selalu float
+                               $product->harga = (float) $product->harga;
+                               return $product;
+                           });
         return view('admin.produk.index', compact('products'));
     }
 
@@ -47,7 +52,7 @@ class ProductController extends Controller
 
         Product::create([
             'nama_produk' => $request->nama_produk,
-            'harga' => $request->harga,
+            'harga' => (float) $request->harga, // CAST HARGA
             'umkm_id' => $request->umkm_id,
             'katalog_id' => $request->katalog_id,
             'deskripsi' => $request->deskripsi,
@@ -91,7 +96,7 @@ class ProductController extends Controller
 
         $product->update([
             'nama_produk' => $request->nama_produk,
-            'harga' => $request->harga,
+            'harga' => (float) $request->harga, // CAST HARGA
             'umkm_id' => $request->umkm_id,
             'katalog_id' => $request->katalog_id,
             'deskripsi' => $request->deskripsi,

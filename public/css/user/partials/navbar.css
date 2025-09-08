@@ -1,67 +1,184 @@
+/* Import font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --c-white: #ffffff;
+    --c-green-soft: #E9F5EC;
+    --c-green-main: #8FBC8F;
+    --c-green-deep: #2F6F52;
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --speed: .3s;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ====== NAVBAR ====== */
 .navbar {
-    background-color: #f9f8f6; /* warna abu terang seperti contoh */
-    padding: 1rem 2rem;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--c-white);
+    border-bottom: 1px solid var(--c-green-soft);
+    box-shadow: var(--shadow-sm);
 }
 
-.navbar .container {
+.navbar__row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    position: relative;
+    justify-content: space-between;
+    min-height: 64px;
+    gap: 1rem;
+    padding-inline: 1rem;
 }
 
-/* Menu kiri & kanan */
+/* Logo */
+.logo {
+    text-decoration: none;
+}
+
+.logo__title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--c-green-deep);
+}
+
+.logo__sub {
+    font-size: .75rem;
+    color: var(--c-green-main);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+/* Links */
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     margin: 0;
     padding: 0;
 }
 
 .nav-links a {
-    color: black;
     text-decoration: none;
     font-weight: 600;
-    letter-spacing: 2px;
-    font-size: 0.85rem;
+    color: var(--c-green-deep);
+    position: relative;
+    padding: .4rem 0;
+    transition: color var(--speed) ease;
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--c-green-main);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--speed) ease;
 }
 
 .nav-links a:hover {
-    text-decoration: underline;
+    color: var(--c-green-main);
 }
 
-/* Logo di tengah */
-.logo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center;
-    font-weight: 700;
-    font-size: 1.5rem;
-    letter-spacing: 3px;
-    color: black;
-    text-decoration: none;
+.nav-links a:hover::after {
+    transform: scaleX(1);
 }
 
-.logo .subtitle {
-    font-size: 0.75rem;
-    letter-spacing: 3px;
-    display: block;
-    font-weight: 500;
-}
-
+/* Admin */
 .admin-icon {
-  margin-left: 1rem;
-  color: #374151;
-  display: flex;
-  align-items: center;
-  transition: color 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem .75rem;
+    border-radius: 8px;
+    background: var(--c-green-soft);
+    color: var(--c-green-deep);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background var(--speed), transform var(--speed);
 }
 
 .admin-icon:hover {
-  color: #ec4899;
-  transform: scale(1.1);
+    background: var(--c-green-main);
+    color: #fff;
+    transform: translateY(-2px);
 }
 
+.admin-text {
+    font-size: .9rem;
+}
+
+/* ====== Hamburger ====== */
+.nav-toggle {
+    display: none;
+}
+
+.nav-burger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+}
+
+.nav-burger span {
+    height: 2px;
+    width: 20px;
+    background: var(--c-green-deep);
+    transition: transform var(--speed), opacity var(--speed);
+}
+
+/* Responsive */
+@media(max-width:960px) {
+    .nav-burger {
+        display: flex;
+    }
+
+    .nav-links {
+        position: fixed;
+        inset: 64px 0 auto 0;
+        background: var(--c-white);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        border-bottom: 1px solid var(--c-green-soft);
+        transform: translateY(-12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform var(--speed), opacity var(--speed);
+    }
+
+    .nav-toggle:checked~.nav-links {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Burger to X */
+    .nav-toggle:checked+.nav-burger span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .nav-toggle:checked+.nav-burger span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .nav-toggle:checked+.nav-burger span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .admin-icon {
+        display: none;
+    }
+}

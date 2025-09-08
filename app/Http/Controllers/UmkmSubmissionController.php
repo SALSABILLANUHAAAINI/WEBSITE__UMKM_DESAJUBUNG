@@ -7,13 +7,16 @@ use App\Models\UmkmSubmission;
 use App\Models\ProductSubmission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\ServiceSetting;
 
 class UmkmSubmissionController extends Controller
 {
     public function showForm()
     {
         $katalogs = Katalog::where('is_active', 1)->get();
-        return view('user.service.service', compact('katalogs'));
+        $settings = ServiceSetting::first();
+
+        return view('user.service.service', compact('katalogs', 'settings'));
     }
 
     public function store(Request $request)
@@ -35,10 +38,12 @@ class UmkmSubmissionController extends Controller
             'product_images.*.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // Upload logo
-        $logoPath = $request->hasFile('logo') ? $request->file('logo')->store('umkm_logos','public') : null;
+        // Upload logo UMKM
+        $logoPath = $request->hasFile('logo')
+            ? $request->file('logo')->store('umkm_logos', 'public')
+            : null;
 
-        // Simpan UMKM
+        // Simpan data UMKM
         $submission = UmkmSubmission::create([
             'nama_umkm' => $validated['nama_umkm'],
             'owner' => $validated['owner'],
@@ -62,10 +67,11 @@ class UmkmSubmissionController extends Controller
         foreach ($products as $i => $name) {
             $imgPath = null;
 
-            if (isset($productImages[$i]) && count($productImages[$i]) > 0) {
+            // Pastikan ada file gambar untuk index produk saat ini
+            if (isset($productImages[$i]) && is_array($productImages[$i]) && count($productImages[$i]) > 0) {
                 $imgFile = $productImages[$i][0];
-                if ($imgFile->isValid()) {
-                    $imgPath = $imgFile->store('product_images','public');
+                if ($imgFile && $imgFile->isValid()) {
+                    $imgPath = $imgFile->store('product_images', 'public');
                 }
             }
 
@@ -79,6 +85,6 @@ class UmkmSubmissionController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success','Data UMKM berhasil dikirim, menunggu persetujuan admin.');
+        return redirect()->back()->with('success', 'Data UMKM berhasil dikirim, menunggu persetujuan admin.');
     }
 }

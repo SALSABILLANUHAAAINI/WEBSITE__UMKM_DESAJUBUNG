@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Katalog;
 use App\Models\HeroKatalog;
+use App\Models\Product;
 
 class KatalogController extends Controller
 {
     // ------------------- USER SIDE -------------------
 
 public function userIndex()
-{
-    $katalogs = Katalog::all();
-    $heroKatalog = \App\Models\HeroKatalog::first();
-    return view('user.katalog.index', compact('katalogs', 'heroKatalog'));
-}
+    {
+        $katalogs = Katalog::all();
+        $heroKatalog = HeroKatalog::first();
+        $products = Product::latest()->get(); // <-- BARIS BARU: Ambil semua produk
+
+        // Kirim semua data ke view
+        return view('user.katalog.index', compact('katalogs', 'heroKatalog', 'products'));
+    }
 
     // ------------------- ADMIN SIDE -------------------
     public function index()

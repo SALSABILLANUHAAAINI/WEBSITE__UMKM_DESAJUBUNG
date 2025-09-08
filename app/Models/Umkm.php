@@ -21,4 +21,9 @@ class Umkm extends Model
         'store',
         'hero',
     ];
+        public function products()
+    {
+        return $this->hasMany(Product::class, 'umkm_id');
+    }
+
 }

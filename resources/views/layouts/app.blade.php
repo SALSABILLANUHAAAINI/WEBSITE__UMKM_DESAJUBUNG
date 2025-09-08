@@ -6,7 +6,7 @@
     <title>@yield('title', 'Home')</title>
 
     {{-- CSS global --}}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <link rel="stylesheet" href="{{ asset('css/user/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/login.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/sidebar.css') }}">
