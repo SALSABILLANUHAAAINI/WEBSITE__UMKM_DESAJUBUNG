@@ -3,18 +3,6 @@
 
 @section('styles')
 <link rel="stylesheet" href="{{ asset('css/admin/produk/tambahProduk.css') }}">
-<style>
-#preview img { max-width: 150px; margin-top: 10px; display: block; }
-#drop-area {
-    border: 2px dashed #ccc;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background 0.3s;
-}
-#drop-area:hover { background: #f9f9f9; }
-</style>
 @endsection
 
 @section('content')
@@ -61,15 +49,17 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <!-- Full-width textarea -->
+        <div class="form-group full-width">
             <label for="deskripsi">Deskripsi Produk</label>
             <textarea id="deskripsi" name="deskripsi" class="form-input" rows="4">{{ old('deskripsi', $product->deskripsi) }}</textarea>
         </div>
 
-        <div class="form-group">
+        <!-- Full-width upload -->
+        <div class="form-group full-width">
             <label for="gambar">Upload Gambar</label>
             <div class="upload-box" id="drop-area" onclick="gambarInput.click()">
-                <p id="drop-text">{{ $product->product_image ? 'Gambar saat ini:' : 'Drag & drop atau klik untuk pilih' }}</p>
+                <p id="drop-text">{{ $product->product_image ? 'Gambar saat ini:' : 'Drag & drop untuk upload atau klik untuk pilih' }}</p>
                 <input type="file" id="gambar" name="gambar" class="file-input" accept="image/*" hidden>
                 <div id="preview">
                     @if($product->product_image)
@@ -79,9 +69,10 @@
             </div>
         </div>
 
-        <div class="form-actions">
-            <button type="submit" class="btn submit">✅ Simpan</button>
-            <a href="{{ route('admin.produk.index') }}" class="btn cancel">❌ Batal</a>
+        <!-- Tombol full-width -->
+        <div class="form-actions full-width">
+            <a href="{{ route('admin.produk.index') }}" class="btn cancel">Batal</a>
+            <button type="submit" class="btn submit">Simpan</button>
         </div>
     </form>
 </div>
@@ -98,10 +89,6 @@ gambarInput.addEventListener('change', function() {
     if(this.files && this.files[0]){
         const file = this.files[0];
 
-        const info = document.createElement('p');
-        info.textContent = 'File dipilih: ' + file.name;
-        preview.appendChild(info);
-
         const reader = new FileReader();
         reader.onload = function(e){
             const img = document.createElement('img');
@@ -112,7 +99,7 @@ gambarInput.addEventListener('change', function() {
 
         dropText.style.display = 'none';
     } else {
-        // Jika batal pilih file
+        // tampilkan kembali gambar lama jika ada
         @if($product->product_image)
             const img = document.createElement('img');
             img.src = "{{ asset('storage/'.$product->product_image) }}";

@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('admin.partials.sidebar')
 
-@section('title', 'Tinjau Data UMKM')
+@section('title', 'Service Setting')
 
 @section('content')
 <section class="service-section">
@@ -91,17 +91,15 @@
 
     <!-- Tombol Aksi -->
     <div class="form-actions">
-        <form action="{{ route('admin.submissions.accept', $submission->id) }}" method="POST" style="display:inline;">
-            @csrf
-            <button type="submit" class="btn-accept">Accept</button>
-        </form>
-
-        <form action="{{ route('admin.submissions.reject', $submission->id) }}" method="POST" style="display:inline;">
+        <form action="{{ route('admin.submissions.reject', $submission->id) }}" method="POST">
             @csrf
             <button type="submit" class="btn-reject">Tolak</button>
+        </form>
+
+        <form action="{{ route('admin.submissions.accept', $submission->id) }}" method="POST">
+            @csrf
+            <button type="submit" class="btn-accept">Accept</button>
         </form>
     </div>
 </section>
 @endsection
-
-

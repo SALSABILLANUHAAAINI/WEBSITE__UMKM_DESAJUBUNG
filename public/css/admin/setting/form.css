@@ -1,68 +1,66 @@
-/* form.css */
-
 /* Bungkus form */
 .service-form {
-    max-width: 900px;
+    max-width: 100%;
     margin: 2rem auto;
     padding: 1.5rem;
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    font-family: 'Poppins', sans-serif;
 }
 
 /* Grup form */
 .form-group {
     margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 /* Label */
 .form-group label {
-    display: block;
     font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: #333;
+    font-size: 0.95rem;
+    color: #111827;
 }
 
 /* Input & textarea */
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #a17a74;
-    /* coklat halus */
-    border-radius: 6px;
-    font-size: 1rem;
-    resize: vertical;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db; /* abu muda */
+    font-size: 0.95rem;
     outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: all 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-    border-color: #5c4036;
-    box-shadow: 0 0 0 2px rgba(92, 64, 54, 0.2);
+    border-color: #3b82f6;
+    box-shadow: 0 0 6px rgba(59,130,246,0.25);
 }
 
 /* Tombol submit */
 .btn-submit {
-    background-color: #5c4036;
-    /* coklat gelap */
+    background-color: #2563eb;
     color: #fff;
     font-weight: 600;
-    padding: 0.75rem 1.5rem;
+    padding: 12px 24px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
 }
 
 .btn-submit:hover {
-    background-color: #3e2c25;
+    background-color: #1e40af;
 }
 
 /* Data Section */
 .data-section {
-    margin-top: 2rem;
+    margin-top: 3rem;
 }
 
 /* Container card */
@@ -77,28 +75,28 @@
 .service-card {
     background: #fff;
     border: 1px solid #e5e7eb;
-    border-radius: 10px;
-    padding: 1.2rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .service-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }
 
 .card-title {
     font-size: 1.2rem;
     font-weight: 700;
-    color: #333;
-    margin-bottom: .5rem;
+    color: #111827;
+    margin-bottom: 0.5rem;
 }
 
 .card-desc {
     font-size: 0.95rem;
-    color: #555;
-    margin-bottom: .3rem;
+    color: #4b5563;
+    margin-bottom: 0.5rem;
 }
 
 .card-website {
@@ -107,11 +105,27 @@
     margin-bottom: 1rem;
 }
 
+/* Status badge */
+.card-status {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 1rem;
+}
+
+/* Card warna status */
+.card-pending {
+    border-left: 4px solid #fbbf24; /* kuning */
+}
+.card-rejected {
+    border-left: 4px solid #ef4444; /* merah */
+}
+
 /* Tombol Tinjau */
 .btn-tinjau {
     display: inline-block;
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
+    padding: 8px 16px;
+    border-radius: 10px;
     background: #2563eb;
     color: #fff;
     font-weight: 600;
@@ -120,5 +134,5 @@
 }
 
 .btn-tinjau:hover {
-    background: #1d4ed8;
+    background: #1e40af;
 }

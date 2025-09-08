@@ -64,8 +64,8 @@
         </div>
 
         <div class="form-actions full-width">
-            <button type="submit" class="btn submit">✅ Simpan</button>
-            <a href="{{ route('admin.produk.index') }}" class="btn cancel">❌ Batal</a>
+            <a href="{{ route('admin.produk.index') }}" class="btn cancel">Batal</a>
+            <button type="submit" class="btn submit">Simpan</button>
         </div>
     </form>
 </div>

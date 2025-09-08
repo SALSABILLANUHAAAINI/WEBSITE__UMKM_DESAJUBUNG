@@ -38,7 +38,7 @@
 }
 
 .form-group.full-width {
-  grid-column: 1 / -1; /* full-width untuk textarea & upload */
+  grid-column: 1 / -1; /* full-width untuk textarea, upload, dan tombol */
 }
 
 .form-group label {
@@ -49,7 +49,6 @@
 
 /* ===== Input, Textarea, File Input ===== */
 .form-input,
-.file-input,
 textarea {
   width: 100%;
   padding: 12px 16px;
@@ -63,8 +62,7 @@ textarea {
 }
 
 .form-input:focus,
-textarea:focus,
-.file-input:focus {
+textarea:focus {
   border-color: #3b82f6;
   box-shadow: 0 0 6px rgba(59,130,246,0.25);
   outline: none;
@@ -87,6 +85,11 @@ textarea.form-input {
   box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   font-size: 0.95rem;
   color: #6b7280;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
 }
 
 .upload-box.dragover {
@@ -96,25 +99,33 @@ textarea.form-input {
 }
 
 /* ===== Preview Image ===== */
-#preview img {
-  display: block;
+#preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin-top: 10px;
+}
+
+#preview img {
+  max-width: 150px;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  margin-top: 10px;
 }
 
 /* ===== Tombol Modern ===== */
 .form-actions {
-  margin-top: 25px;
   display: flex;
   gap: 12px;
   width: 100%;
+  grid-column: 1 / -1; /* pastikan menempati full-width grid */
 }
 
 .form-actions .btn {
-  flex: 1;                /* Bagi rata masing-masing tombol */
+  flex: 1;               /* Membagi lebar tombol sama rata */
   text-align: center;
-  padding: 14px 20px;
+  padding: 14px 0;
   border-radius: 8px;
   cursor: pointer;
   border: none;
@@ -148,9 +159,22 @@ textarea.form-input {
   background: #e9eaec;
 }
 
+/* Input file tersembunyi */
+.file-input {
+  display: none;
+}
+
 /* ===== Responsif ===== */
 @media (max-width: 768px) {
   .produk-form {
     grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;  /* tombol menumpuk vertikal di mobile */
+  }
+
+  .form-actions .btn {
+    width: 100%;  /* tombol menyesuaikan penuh lebar */
   }
 }
