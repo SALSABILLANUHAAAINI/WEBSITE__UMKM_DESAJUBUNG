@@ -6,67 +6,83 @@
 
 <link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
 
-<!-- Hero Section -->
-<section class="admin-hero text-white py-16">
-  <div class="container mx-auto px-6 text-center">
-    <h1 class="text-4xl font-bold mb-4">Dashboard Admin</h1>
-    <p class="text-lg">Selamat datang di halaman Admin Website UMKM Desa Jubung</p>
-  </div>
-</section>
+<div class="dashboard-container">
 
-<!-- Statistik Ringkas -->
-<!-- Statistik Ringkas -->
-<section class="py-12 bg-gray-100">
-  <div class="max-w-4xl mx-auto px-6 flex justify-center gap-6 text-center">
+    <section class="admin-hero">
+        <h1>Dashboard Admin</h1>
+        <p>Selamat datang di halaman Admin Website UMKM Desa Jubung</p>
+    </section>
 
-    <div class="stat-card">
-      <h3 class="stat-value text-blue-500">25</h3>
-      <p class="stat-label">Jumlah UMKM</p>
-    </div>
-
-    <div class="stat-card">
-      <h3 class="stat-value text-pink-500">42</h3>
-      <p class="stat-label">Jumlah Katalog</p>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- Card List (UMKM & Katalog) -->
-<section class="py-12">
-  <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-    <!-- Card Katalog -->
-    <div class="produk-card">
-      <img src="https://picsum.photos/300/200?random=1" class="produk-img" alt="Produk">
-      <div class="produk-body">
-        <h4 class="produk-nama">Cookies</h4>
-        <p class="produk-sub">Coklat Premium</p>
-        <p class="produk-harga">Rp 20.000</p>
-        <p class="produk-desc">Dipanggang renyah dengan choco chips melimpah.</p>
-        <div class="produk-btn-group">
-          <button class="btn edit">Edit</button>
-          <button class="btn hapus">Hapus</button>
+    {{-- KARTU STATISTIK (DINAMIS) --}}
+    <section class="grid-container">
+        <div class="stat-card">
+            {{-- Menggunakan variabel dari View Composer --}}
+            <h3 class="stat-value">{{ $jumlahUmkm }}</h3>
+            <p class="stat-label">Jumlah UMKM</p>
         </div>
-      </div>
-    </div>
 
-    <!-- Card UMKM -->
-    <div class="produk-card">
-      <img src="https://picsum.photos/300/200?random=2" class="produk-img" alt="UMKM">
-      <div class="produk-body">
-        <h4 class="produk-nama">UMKM Batik Jubung</h4>
-        <p class="produk-sub">Fashion Batik</p>
-        <p class="produk-desc">UMKM lokal yang memproduksi batik tulis khas Jubung.</p>
-        <div class="produk-btn-group">
-          <button class="btn edit">Edit</button>
-          <button class="btn hapus">Hapus</button>
+        <div class="stat-card">
+            {{-- Menggunakan variabel dari View Composer --}}
+            <h3 class="stat-value">{{ $jumlahKatalog }}</h3>
+            <p class="stat-label">Jumlah Katalog</p>
         </div>
-      </div>
-    </div>
+    </section>
 
-  </div>
+    {{-- BAGIAN DAFTAR PRODUK DAN KATALOG (DINAMIS) --}}
+
+{{-- 1. DAFTAR PRODUK TERBARU --}}
+<section class="list-section">
+    <h2 class="section-title">Produk Terbaru</h2>
+    <div class="grid-container">
+        @forelse($recentProducts as $product)
+            <div class="produk-card">
+                <img src="{{ asset('storage/' . $product->gambar) }}" class="produk-img" alt="{{ $product->name }}">
+                <div class="produk-body">
+                    <h4 class="produk-nama">{{ $product->name }}</h4>
+                    <p class="produk-sub">{{ $product->katalog->name ?? 'Tanpa Kategori' }}</p>
+                    <p class="produk-harga">{{-- Anda perlu menambahkan kolom harga di sini jika ada, contoh: $product->harga --}}</p>
+                    <div class="produk-btn-group">
+                        <a href="{{ route('admin.produk.edit', $product->id) }}" class="btn lihat">Edit</a>
+                        <form action="{{ route('admin.produk.destroy', $product->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn hapus" onclick="return confirm('Anda yakin?')">Hapus</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <p class="col-span-full">Belum ada produk.</p>
+        @endforelse
+    </div>
 </section>
+
+{{-- 2. DAFTAR KATEGORI KATALOG TERBARU --}}
+<section class="list-section">
+    <h2 class="section-title">Kategori Katalog Terbaru</h2>
+    <div class="grid-container">
+        @forelse($recentKatalogs as $katalog)
+            <div class="produk-card">
+                {{-- Kita tidak punya gambar untuk katalog, jadi bisa tampilkan ikon atau biarkan kosong --}}
+                <div class="produk-body" style="padding-top: 2rem;"> {{-- Sedikit style agar rapi --}}
+                    <h4 class="produk-nama">{{ $katalog->name }}</h4>
+                    <p class="produk-sub">Status: {{ $katalog->is_active ? 'Aktif' : 'Tidak Aktif' }}</p>
+                    <div class="produk-btn-group">
+                         <a href="{{ route('admin.katalog.edit', $katalog->id) }}" class="btn lihat">Edit</a>
+                         <form action="{{ route('admin.katalog.destroy', $katalog->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn hapus" onclick="return confirm('Anda yakin?')">Hapus</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <p class="col-span-full">Belum ada kategori katalog.</p>
+        @endforelse
+    </div>
+</section>
+
+</div>
 
 @endsection
