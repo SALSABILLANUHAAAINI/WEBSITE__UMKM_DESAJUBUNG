@@ -7,47 +7,77 @@
 @endsection
 
 @section('content')
-<!-- HEADER UTAMA -->
-<header class="about-header">
-    <h1 class="about-heading">{{ $tentang->hero ?? 'Tentang UMKM Desa Jubung' }}</h1>
+<!-- ===== HERO SEDERHANA ===== -->
+<header class="about-hero">
+  <div class="container">
+    <p class="hero-kicker">Tentang Kami</p>
+    <h1 class="hero-title">{{ $tentang->hero ?? 'Tentang UMKM Desa Jubung' }}</h1>
+  </div>
 </header>
 
-<!-- SECTION 1: Gambar kiri, teks kanan -->
+<!-- ===== SECTION 1 (gambar kiri) ===== -->
 <section class="about-section">
-    <div class="container about-grid">
-        <div class="about-image">
-            <img src="{{ $tentang && $tentang->image1 ? asset('storage/'.$tentang->image1) : asset('images/dummy14.jpg') }}"
-                 alt="Gambar 1">
-        </div>
-        <div class="about-content">
-            <span class="about-number">01</span>
-            <h2 class="about-title">{{ $tentang->title1 ?? 'Judul 1' }}</h2>
-            <p class="about-desc">{{ $tentang->desc1 ?? 'Deskripsi 1' }}</p>
-        </div>
+  <div class="container about-grid">
+    <div class="about-media reveal" data-reveal="left">
+      <div class="media-frame">
+        <img src="{{ $tentang && $tentang->image1 ? asset('storage/'.$tentang->image1) : asset('images/dummy14.jpg') }}" alt="Gambar 1">
+      </div>
     </div>
+    <div class="about-content reveal" data-reveal="right">
+      <h2 class="about-title">{{ $tentang->title1 ?? 'Judul 1' }}</h2>
+      <p class="about-desc">{{ $tentang->desc1 ?? 'Deskripsi 1' }}</p>
+    </div>
+  </div>
 </section>
 
-<!-- SECTION 2: Gambar kanan, teks kiri -->
+<!-- ===== SECTION 2 (gambar kanan) ===== -->
 <section class="about-section alt">
-    <div class="container about-grid">
-        <div class="about-content">
-            <span class="about-number">02</span>
-            <h2 class="about-title">{{ $tentang->title2 ?? 'Judul 2' }}</h2>
-            <p class="about-desc">{{ $tentang->desc2 ?? 'Deskripsi 2' }}</p>
-        </div>
-        <div class="about-image">
-            <img src="{{ $tentang && $tentang->image2 ? asset('storage/'.$tentang->image2) : asset('images/dummy13.jpg') }}"
-                 alt="Gambar 2">
-        </div>
+  <div class="container about-grid">
+    <div class="about-content reveal" data-reveal="left">
+      <h2 class="about-title">{{ $tentang->title2 ?? 'Judul 2' }}</h2>
+      <p class="about-desc">{{ $tentang->desc2 ?? 'Deskripsi 2' }}</p>
     </div>
+    <div class="about-media reveal" data-reveal="right">
+      <div class="media-frame">
+        <img src="{{ $tentang && $tentang->image2 ? asset('storage/'.$tentang->image2) : asset('images/dummy13.jpg') }}" alt="Gambar 2">
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- SECTION MISSION -->
-<section class="pastel-section">
-    <div class="container pastel-inner">
-        <p class="pastel-kicker">The Mission</p>
-        <h3 class="pastel-title">{{ $tentang->title3 ?? 'Judul 3' }}</h3>
-        <p class="pastel-text">{{ $tentang->webdesc ?? 'Deskripsi Website' }}</p>
-    </div>
+<!-- ===== MISSION ===== -->
+<section class="mission-section">
+  <div class="container mission-inner reveal" data-reveal="up">
+    <p class="mission-kicker">Misi Kami</p>
+    <h3 class="mission-title">{{ $tentang->title3 ?? 'Judul 3' }}</h3>
+    <p class="mission-text">{{ $tentang->webdesc ?? 'Deskripsi Website' }}</p>
+  </div>
 </section>
+
+<!-- ===== Inline JS kecil (khusus halaman ini) ===== -->
+<script>
+  (function(){
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){ en.target.classList.add('is-visible'); io.unobserve(en.target); }
+      });
+    }, {threshold: 0.15});
+    els.forEach(el=>io.observe(el));
+
+    // parallax ringan pada gambar (tanpa mengubah data)
+    document.querySelectorAll('.media-frame').forEach(frame=>{
+      frame.addEventListener('mousemove', e=>{
+        const r = frame.getBoundingClientRect();
+        const dx = ((e.clientX - r.left)/r.width - .5) * 4;
+        const dy = ((e.clientY - r.top)/r.height - .5) * 4;
+        frame.style.setProperty('--tiltX', dy.toFixed(2) + 'deg');
+        frame.style.setProperty('--tiltY', -dx.toFixed(2) + 'deg');
+      });
+      frame.addEventListener('mouseleave', ()=>{
+        frame.style.setProperty('--tiltX','0deg'); frame.style.setProperty('--tiltY','0deg');
+      });
+    });
+  })();
+</script>
 @endsection

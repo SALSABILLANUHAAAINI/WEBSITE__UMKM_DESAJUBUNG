@@ -101,14 +101,68 @@
   @endif
 </section>
 
-{{-- JS kecil untuk ganti gambar & detail --}}
+{{-- ====== JS: fungsional + animasi ringan (khusus halaman ini) ====== --}}
 <script>
+  // Ganti gambar & info produk (fungsi asli, tetap dipakai)
   function changeImage(el) {
     document.getElementById('mainImage').src = el.src;
     document.getElementById('produkNama').childNodes[0].nodeValue = el.dataset.nama + ' ';
     document.getElementById('produkHarga').innerText = el.dataset.harga;
     document.getElementById('produkDesc').innerText = el.dataset.deskripsi;
   }
+
+  // ===== Scroll Reveal + efek muncul halus =====
+  (function(){
+    const revealEls = [
+      ...document.querySelectorAll('.umkm-detail, .umkm-title, .umkm-right'),
+      ...document.querySelectorAll('.katalog-wrap, .katalog-title, .katalog'),
+      ...document.querySelectorAll('.umkm-contact, .contact-title, .contact-cards, .map-container')
+    ];
+
+    // Tambahkan kelas 'reveal' + arah
+    revealEls.forEach(el => {
+      el.classList.add('reveal');
+      if (el.classList.contains('umkm-right') || el.classList.contains('katalog'))
+        el.classList.add('reveal-right');
+      if (el.classList.contains('umkm-detail') || el.classList.contains('katalog-wrap'))
+        el.classList.add('reveal-left');
+    });
+
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){
+          en.target.classList.add('is-visible');
+          en.target.classList.remove('reveal-left','reveal-right','reveal-up');
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealEls.forEach(el => io.observe(el));
+
+    // muncul awal untuk gambar
+    document.querySelectorAll('.slider img, .thumbnail-container img').forEach(img=>{
+      img.classList.add('appear');
+    });
+  })();
+
+  // ===== Tilt ringan pada gambar utama mengikuti kursor =====
+  (function(){
+    const img = document.querySelector('.slider img');
+    if(!img) return;
+    const maxTilt = 4; // derajat
+    img.addEventListener('mousemove', (e)=>{
+      const r = img.getBoundingClientRect();
+      const rx = ((e.clientY - r.top)/r.height - .5) * maxTilt;   // rotasi X
+      const ry = ((e.clientX - r.left)/r.width - .5) * -maxTilt;  // rotasi Y
+      img.style.setProperty('--tiltX', rx.toFixed(2) + 'deg');
+      img.style.setProperty('--tiltY', ry.toFixed(2) + 'deg');
+    });
+    img.addEventListener('mouseleave', ()=>{
+      img.style.setProperty('--tiltX', '0deg');
+      img.style.setProperty('--tiltY', '0deg');
+    });
+  })();
 </script>
 
 @endsection

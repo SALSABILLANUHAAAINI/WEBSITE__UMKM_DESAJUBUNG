@@ -1,18 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Prata&family=Raleway:wght@400;600&display=swap');
-
-/* Vars */
+/* =========================
+   Color Palette & Vars
+========================= */
 :root {
-    --bg: #fdfae9;
-    --ink: #4a3220;
-    --ink-soft: #5a4633;
-    --card: #ffffff;
-    --accent: #d7e2ec;
-    --border: #b5b5b5;
-    --border-soft: #e4e4e4;
-    --shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
-    --shadow-inset: inset 0 0 6px rgba(0, 0, 0, 0.05);
+    --c-white: #FCFDFB;
+    --c-bg: #FCFDFB;
+    --c-bg-soft: #E9F5EC;
+    --c-accent-soft: #BEE3C6;
+    --c-accent: #8FBC8F;
+    --c-accent-deep: #2F6F52;
+    --c-brown: #5D4E37;
+    --c-brown-border: #E8D5C4;
+    --c-muted: #6B5B47;
+    --shadow-sm: 0 6px 20px rgba(93, 78, 55, 0.12);
+    --shadow-lg: 0 14px 40px rgba(93, 78, 55, 0.18);
+    --radius: 16px;
+    --radius-sm: 12px;
+    --container: 1200px;
+    --gap-lg: 2rem;
+    --gap-md: 1.25rem;
+    --gap-sm: 0.75rem;
+    --speed: 0.35s;
 }
 
+/* =========================
+   Global Styles
+========================= */
 *,
 *::before,
 *::after {
@@ -21,93 +33,120 @@
 
 body {
     font-family: 'Raleway', sans-serif;
-    background: var(--bg);
-    color: var(--ink);
+    background: var(--c-bg);
+    color: var(--c-brown);
     margin: 0;
 }
 
-/* Container */
+/* =========================
+   Containers & Sections
+========================= */
 .service-section {
-    max-width: 980px;
+    max-width: var(--container);
     margin: 48px auto;
     padding: 32px;
-    background: var(--card);
-    border-radius: 20px;
-    box-shadow: var(--shadow);
+    background: var(--c-white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    transition: transform var(--speed) ease, box-shadow var(--speed) ease;
 }
 
-/* Header */
+.service-section:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* =========================
+   Headers
+========================= */
 .service-header {
     text-align: center;
     margin-bottom: 28px;
+    animation: fadeInDown 0.7s ease;
 }
 
 .service-title {
     font-size: 2.1rem;
     font-family: 'Prata', serif;
     font-weight: 400;
-    color: var(--ink);
+    color: var(--c-brown);
     margin: 0 0 10px;
 }
 
 .service-subtitle {
     font-size: 1rem;
-    color: var(--ink-soft);
+    color: var(--c-muted);
     margin: 0;
 }
 
-/* Form */
+/* =========================
+   Forms & Blocks
+========================= */
 .service-form {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: var(--gap-lg);
 }
 
-/* Blocks */
 .form-block {
-    padding: 22px;
-    background: var(--accent);
-    border-radius: 14px;
-    box-shadow: var(--shadow-inset);
-    border: 1px solid #c6d3df;
+    padding: 24px;
+    background: var(--c-bg-soft);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--c-brown-border);
+    transition: transform var(--speed) ease, box-shadow var(--speed) ease;
+}
+
+.form-block:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
 .block-title {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     font-weight: 600;
-    margin: 0 0 16px;
+    margin-bottom: 16px;
     font-family: 'Prata', serif;
-    color: var(--ink);
+    color: var(--c-accent-deep);
+    position: relative;
 }
 
-/* Grid helpers */
+.block-title::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: var(--c-accent);
+    margin-top: 4px;
+    border-radius: 2px;
+}
+
+/* =========================
+   Grid Helpers
+========================= */
 .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: var(--gap-md);
 }
 
-/* Inputs */
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+/* Full width untuk alamat & deskripsi */
+.grid-2 .form-group.full-width {
+    grid-column: 1 / -1;
 }
 
-.form-group label {
-    font-weight: 600;
-    font-size: 0.95rem;
-    color: var(--ink);
-}
-
+/* =========================
+   Inputs & Textareas
+========================= */
 .form-group input,
 .form-group textarea {
     padding: 12px 14px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
+    border: 1px solid var(--c-brown-border);
+    border-radius: var(--radius-sm);
     font-size: 0.95rem;
-    transition: border-color .2s, box-shadow .2s, transform .05s;
-    background: #fff;
+    transition: all var(--speed) ease;
+    background: var(--c-white);
+    width: 100%;
 }
 
 .form-group textarea {
@@ -116,137 +155,236 @@ body {
 
 .form-group input:focus,
 .form-group textarea:focus {
-    border-color: var(--ink);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(74, 50, 32, 0.15);
+    border-color: var(--c-accent-deep);
+    box-shadow: 0 0 0 3px rgba(47, 111, 82, 0.15);
+    transform: scale(1.02);
 }
 
-/* Upload */
+/* =========================
+   Upload Area
+========================= */
 .upload-area {
     position: relative;
-    border: 2px dashed #b9c9d6;
-    background: #f4f8fb;
-    border-radius: 12px;
+    border: 2px dashed var(--c-accent);
+    background: var(--c-accent-soft);
+    border-radius: var(--radius-sm);
     padding: 18px;
     text-align: center;
+    transition: background var(--speed) ease, border-color var(--speed) ease;
 }
 
-.upload-area input[type="file"] {
-    width: 100%;
-    display: block;
+.upload-area:hover {
+    background: var(--c-accent);
+    color: var(--c-white);
+    border-color: var(--c-accent-deep);
 }
 
-.upload-note {
-    margin: 10px 0 0;
-    font-size: .9rem;
-    color: #4e6a80;
+/* =========================
+   Preview Images
+========================= */
+.single-preview .thumb,
+.preview-card img {
+    border-radius: var(--radius-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Single preview (logo) */
-.single-preview {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.single-preview .thumb {
-    width: 120px;
-    height: 90px;
-    border-radius: 10px;
-    object-fit: cover;
-    border: 1px solid var(--border-soft);
-    box-shadow: 0 3px 8px rgba(0, 0, 0, .06);
-}
-
-/* Multi preview (produk) */
-.preview-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 12px;
-    margin-top: 12px;
+.single-preview .thumb:hover,
+.preview-card img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(93, 78, 55, 0.12);
 }
 
 .preview-card {
-    background: #fff;
-    border: 1px solid var(--border-soft);
-    border-radius: 12px;
+    background: var(--c-white);
+    border: 1px solid var(--c-brown-border);
+    border-radius: var(--radius-sm);
     padding: 8px;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, .06);
+    box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
 }
 
-.preview-card img {
-    width: 100%;
-    height: 90px;
-    object-fit: cover;
-    border-radius: 8px;
-    display: block;
-}
-
 .preview-meta {
-    font-size: .8rem;
-    color: #555;
+    font-size: 0.8rem;
+    color: var(--c-muted);
     text-align: center;
     word-break: break-word;
 }
 
+/* Tombol hapus preview */
 .preview-remove {
     background: transparent;
     border: 1px solid #c99;
     color: #a33;
     border-radius: 8px;
     padding: 6px 10px;
-    font-size: .8rem;
+    font-size: 0.8rem;
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .preview-remove:hover {
     background: #ffe9e9;
 }
 
-/* Actions */
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-}
-
+/* =========================
+   Buttons
+========================= */
 .btn-submit {
-    background: var(--ink);
-    color: #fff;
-    font-size: 1.03rem;
-    padding: 12px 20px;
+    background: var(--c-accent-deep);
+    color: var(--c-white);
+    font-size: 1.05rem;
+    padding: 14px 24px;
     border: none;
-    border-radius: 10px;
+    border-radius: var(--radius);
     cursor: pointer;
     font-weight: 600;
-    transition: transform .05s, opacity .2s;
+    transition: all var(--speed) ease;
 }
 
 .btn-submit:hover {
-    opacity: .92;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    opacity: 0.95;
 }
 
 .btn-submit:active {
     transform: translateY(1px);
+    opacity: 0.9;
 }
 
-/* Responsive */
-@media (max-width: 860px) {
-    .service-section {
-        padding: 24px;
+/* =========================
+   Divider / Sekat Produk Baru
+========================= */
+.product-divider {
+    height: 2px;
+    background: var(--c-accent-soft);
+    margin: 24px 0;
+    border-radius: var(--radius-sm);
+}
+
+/* Tombol hapus produk */
+.remove-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #000;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+/* =========================
+   Popup
+========================= */
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease forwards;
+    z-index: 999;
+}
+
+.popup-box {
+    background: var(--c-white);
+    border-radius: var(--radius);
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    animation: scaleIn 0.3s ease forwards;
+}
+
+.popup-actions button {
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    margin: 8px;
+    cursor: pointer;
+    transition: all var(--speed) ease;
+}
+
+.btn-yes {
+    background: var(--c-accent-deep);
+    color: var(--c-white);
+    border: none;
+}
+
+.btn-yes:hover {
+    opacity: 0.9;
+}
+
+.btn-no {
+    background: var(--c-bg-soft);
+    border: 1px solid var(--c-brown-border);
+    color: var(--c-brown);
+}
+
+.btn-no:hover {
+    background: var(--c-brown-border);
+    color: var(--c-brown);
+}
+
+/* =========================
+   Animations
+========================= */
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
     }
 
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 860px) {
     .grid-2 {
         grid-template-columns: 1fr;
+    }
+
+    .service-section {
+        padding: 24px;
     }
 }
 
 @media (max-width: 480px) {
     .service-section {
-        border-radius: 14px;
+        border-radius: var(--radius-sm);
     }
 }

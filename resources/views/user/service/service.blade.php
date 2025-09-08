@@ -117,7 +117,7 @@
 <!-- Popup Tambah Produk -->
 <div id="popupConfirm" class="popup-overlay" style="display:none;">
   <div class="popup-box">
-    <p>Apakah Anda yakin ingin menambahkan produk baru?</p>
+    <p id="popupText">Apakah Anda yakin ingin menambahkan produk baru?</p>
     <div class="popup-actions">
       <button type="button" id="popupYes" class="btn-yes">Ya</button>
       <button type="button" id="popupNo" class="btn-no">Batal</button>
@@ -161,50 +161,66 @@
   const popup = document.getElementById('popupConfirm');
   const popupYes = document.getElementById('popupYes');
   const popupNo = document.getElementById('popupNo');
+  let currentAction = null; // "add" atau "remove"
+  let targetElement = null; // elemen yang akan dihapus
+
+  function showPopup(action, text, element=null){
+    currentAction = action;
+    targetElement = element;
+    document.getElementById('popupText').textContent = text;
+    popup.style.display = 'flex';
+  }
 
   addProductBtn.addEventListener('click', ()=>{
-    popup.style.display = 'flex';
+    showPopup('add','Apakah Anda yakin ingin menambahkan produk baru?');
   });
 
   popupYes.addEventListener('click', ()=>{
-    const firstProduct = document.querySelector('.product-item');
-    const template = firstProduct.cloneNode(true);
+    if(currentAction === 'add'){
+      const firstProduct = document.querySelector('.product-item');
+      const template = firstProduct.cloneNode(true);
 
-    // ambil value dari produk pertama
-    const firstInputs = firstProduct.querySelectorAll('input,textarea');
-    const newInputs = template.querySelectorAll('input,textarea');
+      // ambil value dari produk pertama
+      const firstInputs = firstProduct.querySelectorAll('input,textarea');
+      const newInputs = template.querySelectorAll('input,textarea');
 
-    newInputs.forEach((el, i) => {
-      if(el.name.includes('product_images')) {
-        el.name = `product_images[${productIndex}][]`;
-        el.value = ''; // file input kosong
-      } else {
-        el.value = firstInputs[i].value; // copy value
-      }
-    });
+      newInputs.forEach((el, i) => {
+        if(el.name.includes('product_images')) {
+          el.name = `product_images[${productIndex}][]`;
+          el.value = ''; // file input kosong
+        } else {
+          el.value = firstInputs[i].value; // copy value
+        }
+      });
 
-    // kosongkan preview gambar
-    template.querySelector('.preview-grid').innerHTML='';
+      // kosongkan preview gambar
+      template.querySelector('.preview-grid').innerHTML='';
 
-    // tambahkan tombol hapus (X)
-    const removeBtn = document.createElement('button');
-    removeBtn.type = 'button';
-    removeBtn.className = 'remove-btn';
-    removeBtn.textContent = '×';
-    removeBtn.style.cssText = "position:absolute;top:-10px;right:-10px;background:#000;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;";
-    removeBtn.addEventListener('click', ()=> template.remove());
-    template.style.position = "relative";
-    template.appendChild(removeBtn);
+      // tambahkan tombol hapus (X)
+      const removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'remove-btn';
+      removeBtn.textContent = '×';
+      removeBtn.style.cssText = "position:absolute;top:-10px;right:-10px;background:#000;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;";
+      removeBtn.addEventListener('click', ()=> showPopup('remove','Apakah Anda yakin ingin menghapus produk ini?', template));
+      template.style.position = "relative";
+      template.appendChild(removeBtn);
 
-    // tambahkan ke wrapper
-    productWrapper.prepend(template);
-    productIndex++;
-
+      productWrapper.prepend(template);
+      productIndex++;
+    } else if(currentAction === 'remove' && targetElement){
+      targetElement.remove();
+    }
     popup.style.display = 'none';
   });
 
   popupNo.addEventListener('click', ()=>{
     popup.style.display = 'none';
+  });
+
+  // Tombol hapus produk awal
+  document.querySelectorAll('.remove-btn').forEach(btn=>{
+    btn.addEventListener('click', e=> showPopup('remove','Apakah Anda yakin ingin menghapus produk ini?', e.target.closest('.product-item')));
   });
 })();
 </script>

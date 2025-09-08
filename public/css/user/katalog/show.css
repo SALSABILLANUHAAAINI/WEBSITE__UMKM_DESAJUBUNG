@@ -14,16 +14,23 @@ body {
     align-items: flex-start;
     gap: 50px;
     padding: 60px 5%;
+    flex-wrap: wrap;
+    /* ✅ biar otomatis turun di layar kecil */
 }
 
 /* Bagian kiri */
 .produk-display {
     text-align: center;
+    flex: 1 1 500px;
+    /* ✅ fleksibel */
 }
 
 .main-img {
-    width: 500px;
-    height: 350px;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    aspect-ratio: 4/3;
+    /* ✅ biar proporsi konsisten */
     object-fit: cover;
     border-radius: 16px;
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
@@ -53,6 +60,8 @@ body {
 
 /* Bagian kanan */
 .produk-deskripsi {
+    flex: 1 1 350px;
+    /* ✅ fleksibel */
     max-width: 400px;
     background: #fff;
     padding: 25px;
@@ -76,4 +85,63 @@ body {
 .produk-deskripsi p {
     line-height: 1.6;
     margin-top: 8px;
+}
+
+/* ============ Responsive ============ */
+
+/* Tablet */
+@media (max-width: 992px) {
+    .katalog {
+        gap: 30px;
+        padding: 40px 4%;
+    }
+
+    .main-img {
+        max-width: 420px;
+    }
+
+    .thumbnail-container img {
+        width: 100px;
+        height: 75px;
+    }
+
+    .produk-deskripsi {
+        max-width: 100%;
+    }
+}
+
+/* HP */
+@media (max-width: 600px) {
+    .katalog {
+        flex-direction: column;
+        /* ✅ turun ke bawah */
+        align-items: center;
+        gap: 20px;
+        padding: 30px 1rem;
+    }
+
+    .main-img {
+        max-width: 100%;
+    }
+
+    .thumbnail-container img {
+        width: 80px;
+        height: 60px;
+    }
+
+    .produk-deskripsi {
+        padding: 18px;
+        text-align: center;
+        /* ✅ biar rapi di layar kecil */
+    }
+
+    .produk-deskripsi h2 {
+        font-size: 1.6rem;
+    }
+
+    .harga {
+        display: block;
+        margin: 10px 0;
+        font-size: 1.2rem;
+    }
 }
