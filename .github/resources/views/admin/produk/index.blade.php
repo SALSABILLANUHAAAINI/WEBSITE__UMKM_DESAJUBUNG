@@ -8,7 +8,7 @@
     <h1 class="title">Daftar Produk</h1>
 
     <div class="actions">
-        <a href="{{ route('admin.produk.tambah') }}" class="btn add">➕ Tambah Produk</a>
+        <a href="{{ route('admin.product.tambah') }}" class="btn add">➕ Tambah Produk</a>
     </div>
 
     {{-- Grid Produk --}}
@@ -25,9 +25,9 @@
                 </div>
 
                 <div class="produk-actions">
-                    <a href="{{ route('admin.produk.edit', $product->id) }}" class="btn small edit">✏️ Edit</a>
+                    <a href="{{ route('admin.product.edit', $product->id) }}" class="btn small edit">✏️ Edit</a>
 
-                    <form action="{{ route('admin.produk.destroy', $product->id) }}" method="POST" style="display:inline;">
+                    <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button class="btn small delete" onclick="return confirm('Yakin hapus produk ini?')">🗑️ Hapus</button>

@@ -21,7 +21,7 @@
 <div class="produk-container">
     <h1 class="title">Edit Produk</h1>
 
-    <form action="{{ route('admin.produk.update', $product->id) }}" method="POST" enctype="multipart/form-data" class="produk-form">
+    <form action="{{ route('admin.product.update', $product->id) }}" method="POST" enctype="multipart/form-data" class="produk-form">
         @csrf
         @method('PUT')
 
@@ -81,7 +81,7 @@
 
         <div class="form-actions">
             <button type="submit" class="btn submit">✅ Simpan</button>
-            <a href="{{ route('admin.produk.index') }}" class="btn cancel">❌ Batal</a>
+            <a href="{{ route('admin.product.index') }}" class="btn cancel">❌ Batal</a>
         </div>
     </form>
 </div>

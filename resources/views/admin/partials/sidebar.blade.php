@@ -26,7 +26,7 @@
                     <li><a href="{{ route('admin.umkm.index') }}">UMKM Setting</a></li>
                     <li><a href="{{ route('admin.katalog.index') }}">Katalog Setting</a></li>
                     <li><a href="{{ route('admin.tentang') }}">Tentang Kami</a></li>
-                    <li><a href="{{ route('admin.produk.index') }}">Produk Setting</a></li>
+                    <li><a href="{{ route('admin.product.index') }}">Produk Setting</a></li>
                     <li><a href="{{ route('admin.service.settings') }}">Service Setting</a></li>
                 </ul>
             </nav>

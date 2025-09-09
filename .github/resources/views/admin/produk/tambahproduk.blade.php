@@ -26,7 +26,7 @@
 <div class="produk-container">
     <h1 class="title">Tambah Produk</h1>
 
-    <form action="{{ route('admin.produk.store') }}" method="POST" enctype="multipart/form-data" class="produk-form">
+    <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data" class="produk-form">
         @csrf
 
         <div class="form-group">
@@ -82,7 +82,7 @@
 
         <div class="form-actions">
             <button type="submit" class="btn submit">✅ Simpan</button>
-            <a href="{{ route('admin.produk.index') }}" class="btn cancel">❌ Batal</a>
+            <a href="{{ route('admin.product.index') }}" class="btn cancel">❌ Batal</a>
         </div>
     </form>
 </div>
