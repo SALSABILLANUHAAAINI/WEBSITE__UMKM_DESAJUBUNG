@@ -1,81 +1,146 @@
+/* ===== General Styling & Reset ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+/* ===== Login Container & Box ===== */
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
-    background: #f9fafb;
+    width: 100%;
+    padding: 20px;
 }
 
 .login-box {
-    background: #fff;
-    padding: 30px;
+    background: #ffffff;
+    padding: 40px;
     border-radius: 12px;
-    width: 350px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 10px B0px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 480px; /* <-- LEBAR BOX DITAMBAHKAN */
     text-align: center;
 }
 
 .login-box h2 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #2c3e50;
 }
 
+/* ===== Form Groups (Label & Input) ===== */
 .form-group {
+    margin-bottom: 20px;
     text-align: left;
-    margin-bottom: 15px;
 }
 
 .form-group label {
-    font-size: 14px;
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
     color: #555;
+    margin-bottom: 8px;
 }
 
-.form-group input {
+.form-group input[type="text"],
+.form-group input[type="password"] {
     width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
+    padding: 12px 15px;
+    border: 1px solid #dcdcdc;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 1rem;
+    color: #333;
+    background-color: #f9f9f9;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+.form-group input[type="text"]:focus,
+.form-group input[type="password"]:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    background-color: #fff;
+}
+
+/* ===== Kode Unik (Captcha) Styling BARU ===== */
+.captcha-wrapper {
+    display: flex; /* <-- KUNCI UTAMA: Membuat elemen di dalamnya sejajar */
+    align-items: center;
+    gap: 15px; /* Jarak antara kode dan input */
+}
+
+.captcha-code {
+    flex-shrink: 0; /* Mencegah kotak kode penyok */
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    padding: 10px 25px; /* Dibuat sedikit lebih lebar */
+    background-color: #e8f0fe;
+    color: #2c3e50;
+    border-radius: 8px;
+    border: 1px solid #c9d8eb;
+    user-select: none;
+}
+
+/* Input captcha akan mengisi sisa ruang yang tersedia */
+.form-group input[name="captcha"] {
+    flex-grow: 1; /* <-- KUNCI UTAMA: Membuat input mengisi sisa ruang */
+    text-align: center;
+    font-size: 1.2rem;
+    height: 57px; /* Menyamakan tinggi dengan kotak kode */
+}
+
+#countdown-timer {
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+/* ===== Login Button ===== */
 .btn-login {
     width: 100%;
-    background: #111827;
-    color: #fff;
-    padding: 12px;
+    padding: 14px;
+    background-color: #3498db;
+    color: #ffffff;
     border: none;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.3s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    margin-top: 20px;
 }
 
 .btn-login:hover {
-    background: #374151;
+    background-color: #2980b9;
+    transform: translateY(-2px);
 }
 
-.error-box {
-    background: #fee2e2;
-    color: #b91c1c;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 6px;
-    font-size: 14px;
+.btn-login:active {
+    background-color: #2980b9;
+    transform: translateY(0);
 }
 
-/* Gaya untuk Kotak Pesan Error */
+/* ===== Alert Error Styling ===== */
 .alert-error {
-    background-color: #f8d7da; 
-    color: #721c24; 
-    padding: 1rem;
-    margin-bottom: 1rem;
+    background-color: #fdeded;
+    color: #e74c3c;
+    padding: 12px 20px;
     border: 1px solid #f5c6cb;
-    border-radius: 8px; 
-    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 25px;
     font-size: 0.9rem;
-    font-weight: 500;
+    text-align: center;
 }
