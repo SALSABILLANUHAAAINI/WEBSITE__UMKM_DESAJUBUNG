@@ -36,7 +36,14 @@
     <div class="grid-container">
         @forelse($recentProducts as $product)
             <div class="produk-card">
+            {{-- KODE BARU DENGAN PENGAMAN --}}
+            @if($product->gambar)
+                {{-- Jika produk punya gambar, tampilkan --}}
                 <img src="{{ asset('storage/' . $product->gambar) }}" class="produk-img" alt="{{ $product->name }}">
+            @else
+                {{-- Jika tidak, tampilkan gambar placeholder --}}
+                <img src="https://via.placeholder.com/500x300?text=No+Image" class="produk-img" alt="{{ $product->name }}">
+            @endif
                 <div class="produk-body">
                     <h4 class="produk-nama">{{ $product->name }}</h4>
                     <p class="produk-sub">{{ $product->katalog->name ?? 'Tanpa Kategori' }}</p>
