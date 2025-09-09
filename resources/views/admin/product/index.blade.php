@@ -1,9 +1,11 @@
 @extends('admin.partials.sidebar')
 @section('title', 'Daftar Produk')
 
-@section('content')
+@section('styles')
 <link rel="stylesheet" href="{{ asset('css/admin/produk/produk.css') }}">
+@endsection
 
+@section('content')
 <div class="container">
     <h1 class="mb-3">Daftar Produk</h1>
 
