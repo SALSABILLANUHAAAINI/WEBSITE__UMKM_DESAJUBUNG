@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Katalog;
 use App\Models\HeroUmkm;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UmkmController extends Controller
 {
@@ -51,7 +52,7 @@ class UmkmController extends Controller
 
     public function adminStore(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'nama_umkm' => 'required|string|max:255',
             'owner'     => 'nullable|string|max:255',
             'deskripsi' => 'nullable|string',
@@ -64,19 +65,15 @@ class UmkmController extends Controller
             'gambar'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $umkm = new Umkm($request->only([
-            'nama_umkm', 'owner', 'deskripsi', 'alamat', 'kontak', 'gmaps', 'social', 'store'
-        ]));
-
         if ($request->hasFile('logo')) {
-            $umkm->logo = $request->file('logo')->store('umkm_logos', 'public');
+            $data['logo'] = $request->file('logo')->store('umkm_logos', 'public');
         }
 
         if ($request->hasFile('gambar')) {
-            $umkm->gambar = $request->file('gambar')->store('umkm_images', 'public');
+            $data['gambar'] = $request->file('gambar')->store('umkm_images', 'public');
         }
 
-        $umkm->save();
+        Umkm::create($data); // Lebih ringkas dan aman
 
         return redirect()->route('admin.umkm.index')->with('success', 'UMKM berhasil ditambahkan!');
     }
@@ -88,7 +85,7 @@ class UmkmController extends Controller
 
     public function adminUpdate(Request $request, Umkm $umkm)
     {
-        $request->validate([
+        $data = $request->validate([
             'nama_umkm' => 'required|string|max:255',
             'owner'     => 'nullable|string|max:255',
             'deskripsi' => 'nullable|string',
@@ -101,25 +98,37 @@ class UmkmController extends Controller
             'gambar'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $umkm->fill($request->only([
-            'nama_umkm', 'owner', 'deskripsi', 'alamat', 'kontak', 'gmaps', 'social', 'store'
-        ]));
-
         if ($request->hasFile('logo')) {
-            $umkm->logo = $request->file('logo')->store('umkm_logos', 'public');
+            // HAPUS FILE LAMA JIKA ADA
+            if ($umkm->logo) {
+                Storage::disk('public')->delete($umkm->logo);
+            }
+            $data['logo'] = $request->file('logo')->store('umkm_logos', 'public');
         }
 
         if ($request->hasFile('gambar')) {
-            $umkm->gambar = $request->file('gambar')->store('umkm_images', 'public');
+            // HAPUS FILE LAMA JIKA ADA
+            if ($umkm->gambar) {
+                Storage::disk('public')->delete($umkm->gambar);
+            }
+            $data['gambar'] = $request->file('gambar')->store('umkm_images', 'public');
         }
 
-        $umkm->save();
+        $umkm->update($data);
 
         return redirect()->route('admin.umkm.index')->with('success', 'UMKM berhasil diperbarui!');
     }
 
     public function destroy(Umkm $umkm)
     {
+        // HAPUS FILE SEBELUM MENGHAPUS DATA
+        if ($umkm->logo) {
+            Storage::disk('public')->delete($umkm->logo);
+        }
+        if ($umkm->gambar) {
+            Storage::disk('public')->delete($umkm->gambar);
+        }
+
         $umkm->delete();
         return redirect()->route('admin.umkm.index')->with('success', 'UMKM berhasil dihapus!');
     }
