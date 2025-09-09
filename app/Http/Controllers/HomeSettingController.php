@@ -4,18 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\HomeSetting;
-use Illuminate\Support\Facades\Storage;
 
 class HomeSettingController extends Controller
 {
-    // Tampilkan form home setting
     public function edit()
     {
-        $home = HomeSetting::first(); // Ambil data pertama (anggap hanya 1 row)
+        $home = HomeSetting::first();
         return view('admin.home.homesetting', compact('home'));
     }
 
-    // Simpan atau update home setting
     public function update(Request $request)
     {
         $request->validate([
@@ -28,24 +25,26 @@ class HomeSettingController extends Controller
         ]);
 
         $home = HomeSetting::first();
-
         $data = $request->only(['judul','subjudul','deskripsi','highlight']);
 
-        // Upload gambar kiri
         if ($request->hasFile('gambar_kiri')) {
-            if ($home && $home->gambar_kiri && Storage::disk('public')->exists($home->gambar_kiri)) {
-                Storage::disk('public')->delete($home->gambar_kiri);
-            }
-            $data['gambar_kiri'] = $request->file('gambar_kiri')->store('home_images', 'public');
-        }
+    if ($home && $home->gambar_kiri && file_exists(public_path('home_images/'.$home->gambar_kiri))) {
+        unlink(public_path('home_images/'.$home->gambar_kiri));
+    }
+    $filename = time().'_'.$request->file('gambar_kiri')->getClientOriginalName();
+    $request->file('gambar_kiri')->move(public_path('home_images'), $filename);
+    $data['gambar_kiri'] = $filename;
+}
 
-        // Upload gambar kanan
-        if ($request->hasFile('gambar_kanan')) {
-            if ($home && $home->gambar_kanan && Storage::disk('public')->exists($home->gambar_kanan)) {
-                Storage::disk('public')->delete($home->gambar_kanan);
-            }
-            $data['gambar_kanan'] = $request->file('gambar_kanan')->store('home_images', 'public');
-        }
+if ($request->hasFile('gambar_kanan')) {
+    if ($home && $home->gambar_kanan && file_exists(public_path('home_images/'.$home->gambar_kanan))) {
+        unlink(public_path('home_images/'.$home->gambar_kanan));
+    }
+    $filename = time().'_'.$request->file('gambar_kanan')->getClientOriginalName();
+    $request->file('gambar_kanan')->move(public_path('home_images'), $filename);
+    $data['gambar_kanan'] = $filename;
+}
+
 
         if ($home) {
             $home->update($data);
