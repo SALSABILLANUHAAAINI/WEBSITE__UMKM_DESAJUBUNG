@@ -45,7 +45,7 @@ class ProductController extends Controller
     {
         $umkms = Umkm::all();
         $katalogs = Katalog::where('is_active', true)->get();
-        return view('admin.product.tambahproduk', compact('umkms', 'katalogs'));
+        return view('admin.product.create', compact('umkms', 'katalogs'));
     }
 
     // Simpan produk baru
@@ -83,7 +83,7 @@ class ProductController extends Controller
     {
         $umkms = Umkm::all();
         $katalogs = Katalog::where('is_active', true)->get();
-        return view('admin.product.editproduk', compact('product', 'umkms', 'katalogs'));
+        return view('admin.product.edit', compact('product', 'umkms', 'katalogs'));
     }
 
     // Update produk
