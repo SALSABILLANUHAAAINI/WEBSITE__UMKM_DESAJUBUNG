@@ -1,30 +1,36 @@
-@extends('layouts.admin')
+@extends('admin.partials.sidebar')
+@section('title', 'Edit Produk')
 
 @section('content')
-<div class="container">
-    <h1>Edit Produk</h1>
+<link rel="stylesheet" href="{{ asset('css/admin/produk/produk.css') }}">
+
+<div class="produk-container">
+    <h1 class="produk-title">Edit Produk</h1>
 
     <form action="{{ route('admin.product.update', $product) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
         <div class="mb-3">
-            <label for="nama_produk" class="form-label">Nama Produk</label>
-            <input type="text" name="nama_produk" class="form-control" 
-                   value="{{ $product->nama_produk }}" required>
+            <label>Nama Produk</label>
+            <input type="text" name="nama_produk" value="{{ $product->nama_produk }}" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="harga" class="form-label">Harga</label>
-            <input type="number" name="harga" class="form-control" 
-                   value="{{ $product->harga }}" required>
+            <label>Harga</label>
+            <input type="number" name="harga" value="{{ $product->harga }}" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="umkm_id" class="form-label">UMKM</label>
+            <label>Deskripsi</label>
+            <textarea name="deskripsi" class="form-control">{{ $product->deskripsi }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label>UMKM</label>
             <select name="umkm_id" class="form-control" required>
                 @foreach($umkms as $umkm)
-                    <option value="{{ $umkm->id }}" {{ $umkm->id == $product->umkm_id ? 'selected' : '' }}>
+                    <option value="{{ $umkm->id }}" @if($umkm->id == $product->umkm_id) selected @endif>
                         {{ $umkm->nama_umkm }}
                     </option>
                 @endforeach
@@ -32,36 +38,30 @@
         </div>
 
         <div class="mb-3">
-            <label for="katalog_id" class="form-label">Katalog</label>
+            <label>Katalog</label>
             <select name="katalog_id" class="form-control" required>
-                @foreach($katalogs as $katalog)
-                    <option value="{{ $katalog->id }}" {{ $katalog->id == $product->katalog_id ? 'selected' : '' }}>
-                        {{ $katalog->nama_katalog }}
+                @foreach($katalogs as $k)
+                    <option value="{{ $k->id }}" @if($k->id == $product->katalog_id) selected @endif>
+                        {{ $k->nama_katalog }}
                     </option>
                 @endforeach
             </select>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Gambar Produk</label><br>
-            <div id="preview">
-                <img src="{{ asset('storage/'.$product->product_image) }}" 
-                     alt="{{ $product->nama_produk }}" 
-                     width="120" class="img-thumbnail mb-2">
-            </div>
-            <input type="file" name="gambar" id="gambar" class="form-control">
-            <small class="text-muted">Biarkan kosong jika tidak ingin mengubah gambar.</small>
+            <label>Gambar Produk</label><br>
+            @if($product->product_image)
+                <img src="{{ asset('storage/'.$product->product_image) }}" width="120" class="mb-2"><br>
+            @endif
+            <input type="file" name="product_image" class="form-control" accept="image/*">
         </div>
 
-        <div class="mb-3">
-            <label for="deskripsi" class="form-label">Deskripsi</label>
-            <textarea name="deskripsi" class="form-control">{{ $product->deskripsi }}</textarea>
-        </div>
-
-        <button type="submit" class="btn btn-success">Update</button>
+        <button type="submit" class="btn add">Update</button>
+        <a href="{{ route('admin.product.index') }}" class="btn edit">Batal</a>
     </form>
 </div>
 @endsection
+
 
 @section('scripts')
 <script>

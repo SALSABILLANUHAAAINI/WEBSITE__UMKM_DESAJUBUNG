@@ -1,24 +1,32 @@
-@extends('layouts.admin')
+@extends('admin.partials.sidebar')
+@section('title', 'Tambah Produk')
 
 @section('content')
-<div class="container">
-    <h1>Tambah Produk</h1>
+<link rel="stylesheet" href="{{ asset('css/admin/produk/tambahproduk.css') }}">
+
+<div class="produk-container">
+    <h1 class="produk-title">Tambah Produk</h1>
 
     <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-3">
-            <label class="form-label">Nama Produk</label>
+            <label>Nama Produk</label>
             <input type="text" name="nama_produk" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Harga</label>
+            <label>Harga</label>
             <input type="number" name="harga" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">UMKM</label>
+            <label>Deskripsi</label>
+            <textarea name="deskripsi" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label>UMKM</label>
             <select name="umkm_id" class="form-control" required>
                 @foreach($umkms as $umkm)
                     <option value="{{ $umkm->id }}">{{ $umkm->nama_umkm }}</option>
@@ -27,49 +35,21 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Katalog</label>
+            <label>Katalog</label>
             <select name="katalog_id" class="form-control" required>
-                @foreach($katalogs as $katalog)
-                    <option value="{{ $katalog->id }}">{{ $katalog->nama_katalog }}</option>
+                @foreach($katalogs as $k)
+                    <option value="{{ $k->id }}">{{ $k->nama_katalog }}</option>
                 @endforeach
             </select>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Gambar Produk</label>
-            <input type="file" name="gambar" id="gambar" class="form-control">
-            <div id="preview" class="mt-2"></div>
+            <label>Gambar Produk</label>
+            <input type="file" name="product_image" class="form-control" accept="image/*">
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Deskripsi</label>
-            <textarea name="deskripsi" class="form-control"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-success">Simpan</button>
+        <button type="submit" class="btn add">Simpan</button>
+        <a href="{{ route('admin.product.index') }}" class="btn edit">Batal</a>
     </form>
 </div>
-@endsection
-
-@section('scripts')
-<script>
-    const gambarInput = document.getElementById('gambar');
-    const preview = document.getElementById('preview');
-
-    gambarInput.addEventListener('change', function() {
-        preview.innerHTML = '';
-        if (this.files && this.files[0]) {
-            const file = this.files[0];
-            const reader = new FileReader();
-            reader.onload = function(e){
-                const img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '150px';
-                img.classList.add('img-thumbnail');
-                preview.appendChild(img);
-            }
-            reader.readAsDataURL(file);
-        }
-    });
-</script>
 @endsection
