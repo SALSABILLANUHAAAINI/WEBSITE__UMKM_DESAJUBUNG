@@ -80,7 +80,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     // Manajemen Produk
     // Route::resource lebih ringkas untuk CRUD standar
-    Route::resource('produk', ProductController::class)->except(['show']);
+    Route::resource('product', ProductController::class)->except(['show']);
 
     // Manajemen Katalog
     Route::prefix('katalog')->name('katalog.')->group(function () {

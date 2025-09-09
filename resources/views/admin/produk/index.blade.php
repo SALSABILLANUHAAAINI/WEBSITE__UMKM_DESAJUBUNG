@@ -11,7 +11,7 @@
     <!-- Header aksi: Pencarian + Tambah Produk -->
     <div class="produk-actions" style="display: flex; gap: 1rem; margin: 1rem 0; align-items: center;">
         <!-- Form Pencarian -->
-        <form action="{{ route('admin.produk.index') }}" method="GET" style="display: flex; gap: 0.5rem; flex: 1;">
+        <form action="{{ route('admin.product.index') }}" method="GET" style="display: flex; gap: 0.5rem; flex: 1;">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk..."
                 style="padding: 0.5rem 0.75rem; border-radius: 0.5rem; border: 1px solid #d1d5db; width: 100%;">
             <button type="submit"
@@ -19,7 +19,7 @@
         </form>
 
         <!-- Tombol Tambah Produk -->
-        <a href="{{ route('admin.produk.create') }}" class="btn tambah">Tambah Produk</a>
+        <a href="{{ route('admin.product.create') }}" class="btn tambah">Tambah Produk</a>
     </div>
 
     {{-- Grid Produk --}}
@@ -36,9 +36,9 @@
                 </div>
 
                 <div class="produk-btn-group">
-                    <a href="{{ route('admin.produk.edit', $product->id) }}" class="btn edit">Edit</a>
+                    <a href="{{ route('admin.product.edit', $product->id) }}" class="btn edit">Edit</a>
 
-                    <form action="{{ route('admin.produk.destroy', $product->id) }}" method="POST">
+                    <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button class="btn hapus" onclick="return confirm('Yakin hapus produk ini?')">Hapus</button>
