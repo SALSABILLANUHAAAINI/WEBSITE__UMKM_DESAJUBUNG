@@ -50,12 +50,12 @@
         <div class="form-group">
             <label for="gambar_kiri">Gambar Kiri</label>
             <img id="preview-kiri"
-                src="{{ isset($home->gambar_kiri) ? asset('home_images/'.$home->gambar_kiri) : '' }}"
-                width="150" class="mb-2"
-                style="{{ isset($home->gambar_kiri) ? '' : 'display:none;' }}">
+                 src="{{ isset($home->gambar_kiri) ? asset('home_images/'.$home->gambar_kiri) : '' }}"
+                 width="150" class="mb-2"
+                 style="{{ isset($home->gambar_kiri) ? '' : 'display:none;' }}">
 
             <div id="drop-left" class="upload-box">
-                <p>{{ isset($home->gambar_kiri) ? 'Klik atau drag untuk ganti gambar' : 'Klik atau drag gambar kiri' }}</p>
+                <p>Klik atau drag gambar kiri</p>
             </div>
             <input type="file" id="gambar_kiri" name="gambar_kiri" class="file-input" style="display:none;">
             @error('gambar_kiri') <p class="error">{{ $message }}</p> @enderror
@@ -65,12 +65,12 @@
         <div class="form-group">
             <label for="gambar_kanan">Gambar Kanan</label>
             <img id="preview-kanan"
-                src="{{ isset($home->gambar_kanan) ? asset('home_images/'.$home->gambar_kanan) : '' }}"
-                width="150" class="mb-2"
-                style="{{ isset($home->gambar_kanan) ? '' : 'display:none;' }}">
+                 src="{{ isset($home->gambar_kanan) ? asset('home_images/'.$home->gambar_kanan) : '' }}"
+                 width="150" class="mb-2"
+                 style="{{ isset($home->gambar_kanan) ? '' : 'display:none;' }}">
 
             <div id="drop-right" class="upload-box">
-                <p>{{ isset($home->gambar_kanan) ? 'Klik atau drag untuk ganti gambar' : 'Klik atau drag gambar kanan' }}</p>
+                <p>Klik atau drag gambar kanan</p>
             </div>
             <input type="file" id="gambar_kanan" name="gambar_kanan" class="file-input" style="display:none;">
             @error('gambar_kanan') <p class="error">{{ $message }}</p> @enderror
