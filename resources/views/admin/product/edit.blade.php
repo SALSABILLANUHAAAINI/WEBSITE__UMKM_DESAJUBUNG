@@ -9,7 +9,7 @@
 <div class="produk-container">
     <h1 class="title">Edit Produk</h1>
 
-    <form action="{{ route('admin.product.update', ['produk' => $product->id]) }}" method="POST" enctype="multipart/form-data" class="produk-form">
+    <form action="{{ route('admin.product.update', $product) }}" method="POST" enctype="multipart/form-data" class="produk-form">
         @csrf
         @method('PUT')
 
@@ -28,7 +28,6 @@
         <div class="form-group">
             <label for="umkm_id">Pilih UMKM</label>
             <select id="umkm_id" name="umkm_id" class="form-input" required>
-                <option value="">-- Pilih UMKM --</option>
                 @foreach($umkms as $umkm)
                     <option value="{{ $umkm->id }}" {{ (old('umkm_id', $product->umkm_id) == $umkm->id) ? 'selected' : '' }}>
                         {{ $umkm->nama_umkm }}
@@ -40,7 +39,6 @@
         <div class="form-group">
             <label for="katalog_id">Pilih Kategori</label>
             <select id="katalog_id" name="katalog_id" class="form-input" required>
-                <option value="">-- Pilih Kategori --</option>
                 @foreach($katalogs as $katalog)
                     <option value="{{ $katalog->id }}" {{ (old('katalog_id', $product->katalog_id) == $katalog->id) ? 'selected' : '' }}>
                         {{ $katalog->name }}
@@ -49,30 +47,24 @@
             </select>
         </div>
 
-        <!-- Full-width textarea -->
         <div class="form-group full-width">
             <label for="deskripsi">Deskripsi Produk</label>
             <textarea id="deskripsi" name="deskripsi" class="form-input" rows="4">{{ old('deskripsi', $product->deskripsi) }}</textarea>
         </div>
 
-        <!-- Full-width upload -->
         <div class="form-group full-width">
-            <label for="gambar">Upload Gambar</label>
-            <div class="upload-box" id="drop-area" onclick="gambarInput.click()">
-                <p id="drop-text">{{ $product->product_image ? 'Gambar saat ini:' : 'Drag & drop untuk upload atau klik untuk pilih' }}</p>
-                <input type="file" id="gambar" name="gambar" class="file-input" accept="image/*" hidden>
-                <div id="preview">
-                    @if($product->product_image)
-                        <img src="{{ asset('storage/'.$product->product_image) }}" alt="Preview Gambar">
-                    @endif
-                </div>
+            <label for="gambar">Upload Gambar (Kosongkan jika tidak ingin diubah)</label>
+            <div id="preview" style="margin-bottom: 10px;">
+                @if($product->product_image)
+                    <img src="{{ asset('storage/'.$product->product_image) }}" alt="Gambar saat ini" style="max-width: 200px;">
+                @endif
             </div>
+            <input type="file" id="gambar" name="gambar" class="form-input" accept="image/*">
         </div>
 
-        <!-- Tombol full-width -->
         <div class="form-actions full-width">
             <a href="{{ route('admin.product.index') }}" class="btn cancel">Batal</a>
-            <button type="submit" class="btn submit">Simpan</button>
+            <button type="submit" class="btn submit">Simpan Perubahan</button>
         </div>
     </form>
 </div>
@@ -80,35 +72,27 @@
 
 @section('scripts')
 <script>
-const gambarInput = document.getElementById('gambar');
-const preview = document.getElementById('preview');
-const dropText = document.getElementById('drop-text');
+    const gambarInput = document.getElementById('gambar');
+    const previewContainer = document.getElementById('preview');
+    // Simpan HTML asli dari kontainer preview saat halaman dimuat
+    const originalPreviewHTML = previewContainer.innerHTML;
 
-gambarInput.addEventListener('change', function() {
-    preview.innerHTML = '';
-    if(this.files && this.files[0]){
-        const file = this.files[0];
+    gambarInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
 
-        const reader = new FileReader();
-        reader.onload = function(e){
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            preview.appendChild(img);
+        if (file) {
+            // Jika ada file baru yang dipilih, buat dan tampilkan preview-nya
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Hapus preview lama dan tampilkan yang baru
+                previewContainer.innerHTML = `<img src="${e.target.result}" alt="Preview Gambar Baru" style="max-width: 200px;">`;
+            }
+            reader.readAsDataURL(file);
+        } else {
+            // Jika pemilihan file dibatalkan (input kosong),
+            // kembalikan ke gambar asli yang ada saat halaman pertama kali dimuat.
+            previewContainer.innerHTML = originalPreviewHTML;
         }
-        reader.readAsDataURL(file);
-
-        dropText.style.display = 'none';
-    } else {
-        // tampilkan kembali gambar lama jika ada
-        @if($product->product_image)
-            const img = document.createElement('img');
-            img.src = "{{ asset('storage/'.$product->product_image) }}";
-            preview.appendChild(img);
-            dropText.style.display = 'block';
-        @else
-            dropText.style.display = 'block';
-        @endif
-    }
-});
+    });
 </script>
 @endsection
