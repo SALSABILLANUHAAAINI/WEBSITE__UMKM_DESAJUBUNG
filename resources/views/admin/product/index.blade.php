@@ -1,48 +1,55 @@
 @extends('admin.partials.sidebar')
-@section('title', 'Daftar Produk')
+@section('title', 'Produk Setting')
+
+@section('styles')
+<link rel="stylesheet" href="{{ asset('css/admin/product/product.css') }}">
+@endsection
 
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/admin/produk/produk.css') }}">
-
 <div class="produk-container">
-    <div class="produk-header">
-        <h1 class="produk-title">Daftar Produk</h1>
-        <div class="produk-actions">
-            <a href="{{ route('admin.product.create') }}" class="btn add">Tambah Produk</a>
-        </div>
+    <h1 class="title">Daftar Produk</h1>
+
+    <!-- Header aksi: Pencarian + Tambah Produk -->
+    <div class="produk-actions" style="display: flex; gap: 1rem; margin: 1rem 0; align-items: center;">
+        <form action="{{ route('admin.product.index') }}" method="GET" style="display: flex; gap: 0.5rem; flex: 1;">
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk..."
+                style="padding: 0.5rem 0.75rem; border-radius: 0.5rem; border: 1px solid #d1d5db; width: 100%;">
+            <button type="submit"
+                style="background: var(--primary); color: #fff; padding: 0.5rem 1rem; border-radius: 0.5rem; border: none; cursor: pointer;">Cari</button>
+        </form>
+
+        <a href="{{ route('admin.product.create') }}" class="btn add">Tambah Produk</a>
     </div>
 
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
     <div class="produk-grid">
-        @foreach($products as $product)
+        @forelse($products as $product)
             <div class="produk-card">
-                <img src="{{ $product->product_image ? asset('storage/'.$product->product_image) : asset('images/no-image.png') }}"
-                     alt="{{ $product->nama_produk }}"
-                     class="produk-img">
+                <img src="{{ $product->product_image ? asset('storage/'.$product->product_image) : asset('images/sample-produk.jpg') }}"
+                    alt="{{ $product->nama_produk }}" class="produk-img">
 
                 <div class="produk-body">
-                    <div class="produk-nama">{{ $product->nama_produk }}</div>
-                    <div class="produk-desc harga">Rp {{ number_format($product->harga, 0, ',', '.') }}</div>
-                    <div class="produk-desc">{{ $product->umkm->nama_umkm }}</div>
-                    <div class="produk-desc">{{ $product->katalog->nama_katalog }}</div>
+                    <h3 class="produk-nama">{{ $product->nama_produk }}</h3>
+                    <p class="produk-desc">{{ $product->umkm->nama_umkm ?? '-' }}</p>
+                    <p class="produk-desc harga">Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
                 </div>
 
                 <div class="produk-btn-group">
-                    <a href="{{ route('admin.product.edit', $product) }}" class="btn edit">Edit</a>
-                    <form action="{{ route('admin.product.destroy', $product) }}" method="POST">
+                    <a href="{{ route('admin.product.edit', $product->id) }}" class="btn edit">Edit</a>
+
+                    <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn hapus" onclick="return confirm('Yakin hapus produk ini?')">Hapus</button>
+                        <button class="btn hapus" onclick="return confirm('Yakin hapus produk ini?')">Hapus</button>
                     </form>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <p>Belum ada produk yang ditambahkan.</p>
+        @endforelse
     </div>
 
-    <div style="margin-top:20px">
+    <!-- Pagination -->
+    <div class="pagination">
         {{ $products->links() }}
     </div>
 </div>

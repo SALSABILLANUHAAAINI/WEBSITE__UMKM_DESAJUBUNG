@@ -1,38 +1,54 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use App\Models\Umkm;
 use App\Models\Katalog;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    /**
-     * List all products
-     */
-    public function index()
+    // Tampilkan daftar produk dengan pencarian dan pagination
+    public function index(Request $request)
     {
-        $products = Product::with(['umkm', 'katalog'])->paginate(10);
+        $query = Product::with(['umkm', 'katalog'])
+                        ->orderBy('created_at', 'desc');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+
+            $query->where(function($q) use ($search) {
+                $q->where('nama_produk', 'like', "%{$search}%")
+                  ->orWhereHas('umkm', function($q2) use ($search) {
+                      $q2->where('nama_umkm', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('katalog', function($q3) use ($search) {
+                      $q3->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        $products = $query->paginate(10)->withQueryString();
+
+        $products->getCollection()->transform(function($product) {
+            $product->harga = (float) $product->harga;
+            return $product;
+        });
+
         return view('admin.product.index', compact('products'));
     }
 
-    /**
-     * Show create form
-     */
+    // Halaman tambah produk
     public function create()
     {
         $umkms = Umkm::all();
-        $katalogs = Katalog::all();
-        return view('admin.product.create', compact('umkms', 'katalogs'));
+        $katalogs = Katalog::where('is_active', true)->get();
+        return view('admin.product.tambahproduk', compact('umkms', 'katalogs'));
     }
 
-    /**
-     * Store new product
-     */
+    // Simpan produk baru
     public function store(Request $request)
     {
         $request->validate([
@@ -40,41 +56,37 @@ class ProductController extends Controller
             'harga' => 'required|numeric',
             'umkm_id' => 'required|exists:umkms,id',
             'katalog_id' => 'required|exists:katalogs,id',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'deskripsi' => 'nullable|string',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
         ]);
 
-        $path = null;
+        $imagePath = null;
         if ($request->hasFile('gambar')) {
-            $path = $request->file('gambar')->store('product_images', 'public');
+            $imagePath = $request->file('gambar')->store('product_images', 'public');
         }
 
         Product::create([
             'nama_produk' => $request->nama_produk,
-            'harga' => $request->harga,
+            'harga' => (float) $request->harga,
             'umkm_id' => $request->umkm_id,
             'katalog_id' => $request->katalog_id,
-            'product_image' => $path,
             'deskripsi' => $request->deskripsi,
+            'product_image' => $imagePath,
         ]);
 
         return redirect()->route('admin.product.index')
                          ->with('success', 'Produk berhasil ditambahkan.');
     }
 
-    /**
-     * Show edit form
-     */
+    // Halaman edit produk
     public function edit(Product $product)
     {
         $umkms = Umkm::all();
-        $katalogs = Katalog::all();
-        return view('admin.product.edit', compact('product', 'umkms', 'katalogs'));
+        $katalogs = Katalog::where('is_active', true)->get();
+        return view('admin.product.editproduk', compact('product', 'umkms', 'katalogs'));
     }
 
-    /**
-     * Update product
-     */
+    // Update produk
     public function update(Request $request, Product $product)
     {
         $request->validate([
@@ -82,36 +94,35 @@ class ProductController extends Controller
             'harga' => 'required|numeric',
             'umkm_id' => 'required|exists:umkms,id',
             'katalog_id' => 'required|exists:katalogs,id',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'deskripsi' => 'nullable|string',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp',
         ]);
 
-        $path = $product->product_image;
+        $imagePath = $product->product_image;
 
         if ($request->hasFile('gambar')) {
-            // hapus file lama jika ada
+            // Hapus gambar lama jika ada
             if ($product->product_image && Storage::disk('public')->exists($product->product_image)) {
                 Storage::disk('public')->delete($product->product_image);
             }
-            $path = $request->file('gambar')->store('product_images', 'public');
+
+            $imagePath = $request->file('gambar')->store('product_images', 'public');
         }
 
         $product->update([
             'nama_produk' => $request->nama_produk,
-            'harga' => $request->harga,
+            'harga' => (float) $request->harga,
             'umkm_id' => $request->umkm_id,
             'katalog_id' => $request->katalog_id,
-            'product_image' => $path,
             'deskripsi' => $request->deskripsi,
+            'product_image' => $imagePath,
         ]);
 
         return redirect()->route('admin.product.index')
                          ->with('success', 'Produk berhasil diperbarui.');
     }
 
-    /**
-     * Delete product
-     */
+    // Hapus produk
     public function destroy(Product $product)
     {
         if ($product->product_image && Storage::disk('public')->exists($product->product_image)) {
@@ -119,7 +130,6 @@ class ProductController extends Controller
         }
 
         $product->delete();
-
         return redirect()->route('admin.product.index')
                          ->with('success', 'Produk berhasil dihapus.');
     }

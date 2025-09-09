@@ -11,7 +11,7 @@ use App\Http\Controllers\HomeSettingController;
 use App\Http\Controllers\AdminUmkmSubmissionController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\ProductController;
 
 
 /*

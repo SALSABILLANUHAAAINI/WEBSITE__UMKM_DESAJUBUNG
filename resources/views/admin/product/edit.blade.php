@@ -1,87 +1,54 @@
 @extends('admin.partials.sidebar')
 @section('title', 'Edit Produk')
 
+@section('styles')
+<link rel="stylesheet" href="{{ asset('css/admin/product/form.css') }}">
+@endsection
+
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/admin/produk/produk.css') }}">
+<div class="produk-form-container">
+    <h1 class="title">Edit Produk</h1>
 
-<div class="produk-container">
-    <h1 class="produk-title">Edit Produk</h1>
-
-    <form action="{{ route('admin.product.update', $product) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.product.update', $product->id) }}" method="POST" enctype="multipart/form-data" class="produk-form">
         @csrf
         @method('PUT')
 
-        <div class="mb-3">
-            <label>Nama Produk</label>
-            <input type="text" name="nama_produk" value="{{ $product->nama_produk }}" class="form-control" required>
-        </div>
+        <label for="nama_produk">Nama Produk</label>
+        <input type="text" name="nama_produk" id="nama_produk" value="{{ $product->nama_produk }}" required>
 
-        <div class="mb-3">
-            <label>Harga</label>
-            <input type="number" name="harga" value="{{ $product->harga }}" class="form-control" required>
-        </div>
+        <label for="harga">Harga</label>
+        <input type="number" name="harga" id="harga" value="{{ $product->harga }}" required>
 
-        <div class="mb-3">
-            <label>Deskripsi</label>
-            <textarea name="deskripsi" class="form-control">{{ $product->deskripsi }}</textarea>
-        </div>
+        <label for="umkm_id">UMKM</label>
+        <select name="umkm_id" id="umkm_id" required>
+            @foreach($umkms as $umkm)
+                <option value="{{ $umkm->id }}" {{ $umkm->id == $product->umkm_id ? 'selected' : '' }}>
+                    {{ $umkm->nama_umkm }}
+                </option>
+            @endforeach
+        </select>
 
-        <div class="mb-3">
-            <label>UMKM</label>
-            <select name="umkm_id" class="form-control" required>
-                @foreach($umkms as $umkm)
-                    <option value="{{ $umkm->id }}" @if($umkm->id == $product->umkm_id) selected @endif>
-                        {{ $umkm->nama_umkm }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+        <label for="katalog_id">Katalog</label>
+        <select name="katalog_id" id="katalog_id" required>
+            @foreach($katalogs as $katalog)
+                <option value="{{ $katalog->id }}" {{ $katalog->id == $product->katalog_id ? 'selected' : '' }}>
+                    {{ $katalog->name }}
+                </option>
+            @endforeach
+        </select>
 
-        <div class="mb-3">
-            <label>Katalog</label>
-            <select name="katalog_id" class="form-control" required>
-                @foreach($katalogs as $k)
-                    <option value="{{ $k->id }}" @if($k->id == $product->katalog_id) selected @endif>
-                        {{ $k->nama_katalog }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+        <label for="deskripsi">Deskripsi</label>
+        <textarea name="deskripsi" id="deskripsi">{{ $product->deskripsi }}</textarea>
 
-        <div class="mb-3">
-            <label>Gambar Produk</label><br>
-            @if($product->product_image)
-                <img src="{{ asset('storage/'.$product->product_image) }}" width="120" class="mb-2"><br>
-            @endif
-            <input type="file" name="product_image" class="form-control" accept="image/*">
-        </div>
+        <label for="gambar">Gambar Produk</label>
+        @if($product->product_image)
+            <div style="margin-bottom: 1rem;">
+                <img src="{{ asset('storage/'.$product->product_image) }}" alt="{{ $product->nama_produk }}" style="max-width: 200px;">
+            </div>
+        @endif
+        <input type="file" name="gambar" id="gambar">
 
-        <button type="submit" class="btn add">Update</button>
-        <a href="{{ route('admin.product.index') }}" class="btn edit">Batal</a>
+        <button type="submit" class="btn edit">Update</button>
     </form>
 </div>
-@endsection
-
-
-@section('scripts')
-<script>
-    const gambarInput = document.getElementById('gambar');
-    const previewContainer = document.getElementById('preview');
-    const originalPreviewHTML = previewContainer.innerHTML;
-
-    gambarInput.addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                previewContainer.innerHTML = `<img src="${e.target.result}" 
-                                               alt="Preview Gambar Baru" 
-                                               style="max-width: 200px;" class="img-thumbnail">`;
-            }
-            reader.readAsDataURL(file);
-        } else {
-            previewContainer.innerHTML = originalPreviewHTML;
-        }
-    });
-</script>
 @endsection
