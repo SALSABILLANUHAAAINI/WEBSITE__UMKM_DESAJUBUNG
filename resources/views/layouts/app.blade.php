@@ -3,31 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'UMKM Desa Jubung')</title>
+    <title>@yield('title', 'Home')</title>
 
-    {{-- Memanggil Bootstrap dari CDN sebagai fondasi dasar styling --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    {{-- Memanggil file CSS global utama Anda. Pastikan file ini ada. --}}
+    {{-- CSS global --}}
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/sidebar.css') }}">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
 
-    {{-- Slot ini akan diisi oleh CSS spesifik dari halaman lain (seperti halaman katalog, dll) --}}
+
+    {{-- JS global --}}
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
+    {{-- CSS tambahan khusus halaman --}}
     @yield('styles')
 </head>
 <body>
 
-    {{-- Memuat komponen Navbar --}}
+    {{-- Navbar --}}
     @include('user.partials.navbar')
 
-    {{-- Konten utama dari setiap halaman akan dimuat di sini --}}
-    <main>
+    {{-- Konten utama --}}
+    <main >
         @yield('content')
     </main>
 
-    {{-- Memuat komponen Footer --}}
+    {{-- Footer --}}
     @include('user.partials.footer')
 
-    {{-- Slot untuk JavaScript spesifik dari halaman lain --}}
+    {{-- Script tambahan khusus halaman --}}
     @yield('scripts')
 
 </body>

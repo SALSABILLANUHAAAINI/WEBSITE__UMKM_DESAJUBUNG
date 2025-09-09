@@ -7,7 +7,6 @@
 @endsection
 
 @section('content')
-@section('content')
 <div class="content-wrapper">
 
     {{-- =================== HERO =================== --}}
