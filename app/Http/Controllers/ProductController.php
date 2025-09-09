@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Umkm;
 use App\Models\Katalog;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -62,7 +61,10 @@ class ProductController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('gambar')) {
-            $imagePath = $request->file('gambar')->store('product_images', 'public');
+            $file = $request->file('gambar');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('storage/product_images'), $filename);
+            $imagePath = $filename; // simpan nama file
         }
 
         Product::create([
@@ -102,11 +104,15 @@ class ProductController extends Controller
 
         if ($request->hasFile('gambar')) {
             // Hapus gambar lama jika ada
-            if ($product->product_image && Storage::disk('public')->exists($product->product_image)) {
-                Storage::disk('public')->delete($product->product_image);
+            $oldImage = public_path('storage/product_images/' . $product->product_image);
+            if ($product->product_image && file_exists($oldImage)) {
+                unlink($oldImage);
             }
 
-            $imagePath = $request->file('gambar')->store('product_images', 'public');
+            $file = $request->file('gambar');
+            $filename = time().'_'.$file->getClientOriginalName();
+            $file->move(public_path('storage/product_images'), $filename);
+            $imagePath = $filename; // simpan nama file baru
         }
 
         $product->update([
@@ -125,8 +131,9 @@ class ProductController extends Controller
     // Hapus produk
     public function destroy(Product $product)
     {
-        if ($product->product_image && Storage::disk('public')->exists($product->product_image)) {
-            Storage::disk('public')->delete($product->product_image);
+        $imageFile = public_path('storage/product_images/' . $product->product_image);
+        if ($product->product_image && file_exists($imageFile)) {
+            unlink($imageFile);
         }
 
         $product->delete();
