@@ -1,46 +1,55 @@
-@extends('admin.partials.sidebar')
-@section('title', 'Daftar Produk')
+@extends('layouts.admin')
 
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/admin/produk/produk.css') }}">
+<div class="container">
+    <h1 class="mb-3">Daftar Produk</h1>
 
-<div class="produk-container">
-    <h1 class="title">Daftar Produk</h1>
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-    <div class="produk-actions" style="display: flex; gap: 1rem; margin: 1rem 0; align-items: center;">
-        <form action="{{ route('admin.product.index') }}" method="GET" style="display: flex; gap: 0.5rem; flex: 1;">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk..."
-                   style="padding: 0.5rem 0.75rem; border-radius: 0.5rem; border: 1px solid #d1d5db; width: 100%;">
-            <button type="submit"
-                    style="background: var(--primary); color: #fff; padding: 0.5rem 1rem; border-radius: 0.5rem; border: none; cursor: pointer;">Cari</button>
-        </form>
+    <a href="{{ route('admin.product.create') }}" class="btn btn-primary mb-3">Tambah Produk</a>
 
-        <a href="{{ route('admin.product.create') }}" class="btn tambah">Tambah Produk</a>
-    </div>
-
-    <div class="produk-grid">
-        @forelse($products as $product)
-            <div class="produk-card">
-                <img src="{{ $product->product_image ? asset('storage/'.$product->product_image) : asset('images/sample-produk.jpg') }}"
-                     alt="{{ $product->nama_produk }}" class="produk-img">
-                <div class="produk-body">
-                    <h3 class="produk-nama">{{ $product->nama_produk }}</h3>
-                    <p class="produk-desc">{{ $product->umkm->nama_umkm ?? '-' }}</p>
-                    <p class="produk-desc harga">Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
-                </div>
-                <div class="produk-btn-group">
-                    <a href="{{ route('admin.product.edit', $product) }}" class="btn edit">Edit</a>
-
-                    <form action="{{ route('admin.product.destroy', $product) }}" method="POST" onsubmit="return confirm('Yakin hapus produk ini?')">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Gambar</th>
+                <th>Nama Produk</th>
+                <th>Harga</th>
+                <th>UMKM</th>
+                <th>Katalog</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($products as $product)
+            <tr>
+                <td>
+                    @if($product->product_image)
+                        <img src="{{ asset('storage/'.$product->product_image) }}" 
+                             alt="{{ $product->nama_produk }}" 
+                             width="80" class="img-thumbnail">
+                    @else
+                        <span class="text-muted">No Image</span>
+                    @endif
+                </td>
+                <td>{{ $product->nama_produk }}</td>
+                <td>Rp {{ number_format($product->harga, 0, ',', '.') }}</td>
+                <td>{{ $product->umkm->nama_umkm }}</td>
+                <td>{{ $product->katalog->nama_katalog }}</td>
+                <td>
+                    <a href="{{ route('admin.product.edit', $product) }}" class="btn btn-warning btn-sm">Edit</a>
+                    <form action="{{ route('admin.product.destroy', $product) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn hapus">Hapus</button>
+                        <button class="btn btn-danger btn-sm" onclick="return confirm('Yakin hapus produk ini?')">Hapus</button>
                     </form>
-                </div>
-            </div>
-        @empty
-            <p>Belum ada produk yang ditambahkan.</p>
-        @endforelse
-    </div>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    {{ $products->links() }}
 </div>
 @endsection

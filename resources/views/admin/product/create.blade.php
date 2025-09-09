@@ -1,104 +1,75 @@
-@extends('admin.partials.sidebar')
-@section('title', 'Tambah Produk')
-
-@section('styles')
-<link rel="stylesheet" href="{{ asset('css/admin/produk/tambahProduk.css') }}">
-@endsection
+@extends('layouts.admin')
 
 @section('content')
-<div class="produk-container">
-    <h1 class="title">Tambah Produk</h1>
+<div class="container">
+    <h1>Tambah Produk</h1>
 
-    <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data" class="produk-form">
+    <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        <div class="form-group">
-            <label for="nama_produk">Nama Produk</label>
-            <input type="text" id="nama_produk" name="nama_produk" class="form-input"
-                   placeholder="Masukkan nama produk" value="{{ old('nama_produk') }}" required>
+        <div class="mb-3">
+            <label class="form-label">Nama Produk</label>
+            <input type="text" name="nama_produk" class="form-control" required>
         </div>
 
-        <div class="form-group">
-            <label for="harga">Harga Produk</label>
-            <input type="number" id="harga" name="harga" class="form-input"
-                   placeholder="Masukkan harga produk" value="{{ old('harga') }}" required>
+        <div class="mb-3">
+            <label class="form-label">Harga</label>
+            <input type="number" name="harga" class="form-control" required>
         </div>
 
-        <div class="form-group">
-            <label for="umkm_id">Pilih UMKM</label>
-            <select id="umkm_id" name="umkm_id" class="form-input" required>
-                <option value="">-- Pilih UMKM --</option>
+        <div class="mb-3">
+            <label class="form-label">UMKM</label>
+            <select name="umkm_id" class="form-control" required>
                 @foreach($umkms as $umkm)
-                    <option value="{{ $umkm->id }}" {{ old('umkm_id') == $umkm->id ? 'selected' : '' }}>
-                        {{ $umkm->nama_umkm }}
-                    </option>
+                    <option value="{{ $umkm->id }}">{{ $umkm->nama_umkm }}</option>
                 @endforeach
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="katalog_id">Pilih Kategori</label>
-            <select id="katalog_id" name="katalog_id" class="form-input" required>
-                <option value="">-- Pilih Kategori --</option>
+        <div class="mb-3">
+            <label class="form-label">Katalog</label>
+            <select name="katalog_id" class="form-control" required>
                 @foreach($katalogs as $katalog)
-                    <option value="{{ $katalog->id }}" {{ old('katalog_id') == $katalog->id ? 'selected' : '' }}>
-                        {{ $katalog->name }}
-                    </option>
+                    <option value="{{ $katalog->id }}">{{ $katalog->nama_katalog }}</option>
                 @endforeach
             </select>
         </div>
 
-        <div class="form-group full-width">
-            <label for="deskripsi">Deskripsi Produk</label>
-            <textarea id="deskripsi" name="deskripsi" class="form-input" rows="4"
-                      placeholder="Tulis deskripsi produk...">{{ old('deskripsi') }}</textarea>
+        <div class="mb-3">
+            <label class="form-label">Gambar Produk</label>
+            <input type="file" name="gambar" id="gambar" class="form-control">
+            <div id="preview" class="mt-2"></div>
         </div>
 
-        <div class="form-group full-width">
-            <label for="gambar">Upload Gambar</label>
-            <div class="upload-box" id="drop-area" onclick="document.getElementById('gambar').click()">
-                <p id="drop-text">Drag & drop untuk upload<br>atau klik untuk pilih</p>
-                <input type="file" id="gambar" name="gambar" class="file-input" accept="image/*">
-                <div id="preview"></div>
-            </div>
+        <div class="mb-3">
+            <label class="form-label">Deskripsi</label>
+            <textarea name="deskripsi" class="form-control"></textarea>
         </div>
 
-        <div class="form-actions full-width">
-            <a href="{{ route('admin.product.index') }}" class="btn cancel">Batal</a>
-            <button type="submit" class="btn submit">Simpan</button>
-        </div>
+        <button type="submit" class="btn btn-success">Simpan</button>
     </form>
 </div>
 @endsection
 
 @section('scripts')
 <script>
-const gambarInput = document.getElementById('gambar');
-const preview = document.getElementById('preview');
-const dropText = document.getElementById('drop-text');
+    const gambarInput = document.getElementById('gambar');
+    const preview = document.getElementById('preview');
 
-gambarInput.addEventListener('change', function() {
-    preview.innerHTML = '';
-    if(this.files && this.files[0]){
-        const file = this.files[0];
-
-        const info = document.createElement('p');
-        info.textContent = 'File dipilih: ' + file.name;
-        preview.appendChild(info);
-
-        const reader = new FileReader();
-        reader.onload = function(e){
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.style.maxWidth = '150px';
-            img.style.marginTop = '10px';
-            preview.appendChild(img);
+    gambarInput.addEventListener('change', function() {
+        preview.innerHTML = '';
+        if (this.files && this.files[0]) {
+            const file = this.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e){
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '150px';
+                img.classList.add('img-thumbnail');
+                preview.appendChild(img);
+            }
+            reader.readAsDataURL(file);
         }
-        reader.readAsDataURL(file);
-        dropText.style.display = 'none';
-    } else {
-        dropText.style.display = 'block';
-    }
-});
+    });
 </script>
 @endsection
