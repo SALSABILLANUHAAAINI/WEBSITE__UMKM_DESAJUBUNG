@@ -13,7 +13,9 @@
     <h1 class="umkm-title">{{ $umkm->nama_umkm }}</h1>
     <div class="slider">
       <img
-        src="{{ $umkm->gambar ? asset('storage/'.$umkm->gambar) : asset('images/dummy1.png') }}"
+        src="{{ $umkm->gambar 
+                  ? asset('storage/'.$umkm->gambar) 
+                  : asset('images/dummy1.png') }}"
         alt="{{ $umkm->nama_umkm }}">
     </div>
   </div>
@@ -38,14 +40,18 @@
         $firstProduct = $umkm->products->first();
       @endphp
       <img id="mainImage"
-           src="{{ $firstProduct->product_image ? asset('storage/'.$firstProduct->product_image) : asset('images/dummy1.png') }}"
+           src="{{ $firstProduct->product_image 
+                     ? asset('storage/'.$firstProduct->product_image) 
+                     : asset('images/dummy1.png') }}"
            alt="Produk Utama"
            class="main-img"
            loading="lazy">
 
       <div class="thumbnail-container">
         @foreach($umkm->products as $item)
-          <img src="{{ $item->product_image ? asset('storage/'.$item->product_image) : asset('images/dummy1.png') }}"
+          <img src="{{ $item->product_image 
+                        ? asset('storage/'.$item->product_image) 
+                        : asset('images/dummy1.png') }}"
                alt="Thumbnail {{ $item->nama_produk }}"
                data-nama="{{ $item->nama_produk }}"
                data-harga="Rp {{ number_format($item->harga, 0, ',', '.') }}"
@@ -103,7 +109,7 @@
 
 {{-- ====== JS: fungsional + animasi ringan (khusus halaman ini) ====== --}}
 <script>
-  // Ganti gambar & info produk (fungsi asli, tetap dipakai)
+  // Ganti gambar & info produk
   function changeImage(el) {
     document.getElementById('mainImage').src = el.src;
     document.getElementById('produkNama').childNodes[0].nodeValue = el.dataset.nama + ' ';
@@ -119,7 +125,6 @@
       ...document.querySelectorAll('.umkm-contact, .contact-title, .contact-cards, .map-container')
     ];
 
-    // Tambahkan kelas 'reveal' + arah
     revealEls.forEach(el => {
       el.classList.add('reveal');
       if (el.classList.contains('umkm-right') || el.classList.contains('katalog'))
@@ -128,8 +133,8 @@
         el.classList.add('reveal-left');
     });
 
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(en=>{
+    const io = new IntersectionObserver((entries)=> {
+      entries.forEach(en => {
         if(en.isIntersecting){
           en.target.classList.add('is-visible');
           en.target.classList.remove('reveal-left','reveal-right','reveal-up');
@@ -141,7 +146,7 @@
     revealEls.forEach(el => io.observe(el));
 
     // muncul awal untuk gambar
-    document.querySelectorAll('.slider img, .thumbnail-container img').forEach(img=>{
+    document.querySelectorAll('.slider img, .thumbnail-container img').forEach(img => {
       img.classList.add('appear');
     });
   })();
@@ -151,14 +156,14 @@
     const img = document.querySelector('.slider img');
     if(!img) return;
     const maxTilt = 4; // derajat
-    img.addEventListener('mousemove', (e)=>{
+    img.addEventListener('mousemove', (e)=> {
       const r = img.getBoundingClientRect();
-      const rx = ((e.clientY - r.top)/r.height - .5) * maxTilt;   // rotasi X
-      const ry = ((e.clientX - r.left)/r.width - .5) * -maxTilt;  // rotasi Y
+      const rx = ((e.clientY - r.top)/r.height - .5) * maxTilt;
+      const ry = ((e.clientX - r.left)/r.width - .5) * -maxTilt;
       img.style.setProperty('--tiltX', rx.toFixed(2) + 'deg');
       img.style.setProperty('--tiltY', ry.toFixed(2) + 'deg');
     });
-    img.addEventListener('mouseleave', ()=>{
+    img.addEventListener('mouseleave', ()=> {
       img.style.setProperty('--tiltX', '0deg');
       img.style.setProperty('--tiltY', '0deg');
     });

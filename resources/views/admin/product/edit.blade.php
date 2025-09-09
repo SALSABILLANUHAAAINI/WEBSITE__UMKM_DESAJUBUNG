@@ -52,3 +52,38 @@
     </form>
 </div>
 @endsection
+
+@section('scripts')
+<script>
+const gambarInput = document.getElementById('gambar');
+const preview = document.getElementById('preview');
+const dropText = document.getElementById('drop-text');
+
+gambarInput.addEventListener('change', function() {
+    preview.innerHTML = '';
+    if(this.files && this.files[0]){
+        const file = this.files[0];
+
+        const reader = new FileReader();
+        reader.onload = function(e){
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            preview.appendChild(img);
+        }
+        reader.readAsDataURL(file);
+
+        dropText.style.display = 'none';
+    } else {
+        // tampilkan kembali gambar lama jika ada
+        @if($product->product_image)
+            const img = document.createElement('img');
+            img.src = "{{ asset('storage/'.$product->product_image) }}";
+            preview.appendChild(img);
+            dropText.style.display = 'block';
+        @else
+            dropText.style.display = 'block';
+        @endif
+    }
+});
+</script>
+@endsection

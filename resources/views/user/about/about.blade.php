@@ -20,7 +20,10 @@
   <div class="container about-grid">
     <div class="about-media reveal" data-reveal="left">
       <div class="media-frame">
-        <img src="{{ $tentang && $tentang->image1 ? asset('storage/'.$tentang->image1) : asset('images/dummy14.jpg') }}" alt="Gambar 1">
+        <img src="{{ $tentang && $tentang->image1 
+            ? asset('storage/about/' . $tentang->image1) 
+            : asset('images/dummy14.jpg') }}" 
+            alt="Gambar 1">
       </div>
     </div>
     <div class="about-content reveal" data-reveal="right">
@@ -39,7 +42,10 @@
     </div>
     <div class="about-media reveal" data-reveal="right">
       <div class="media-frame">
-        <img src="{{ $tentang && $tentang->image2 ? asset('storage/'.$tentang->image2) : asset('images/dummy13.jpg') }}" alt="Gambar 2">
+        <img src="{{ $tentang && $tentang->image2 
+            ? asset('storage/about/' . $tentang->image2) 
+            : asset('images/dummy13.jpg') }}" 
+            alt="Gambar 2">
       </div>
     </div>
   </div>
@@ -60,7 +66,10 @@
     const els = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(en=>{
-        if(en.isIntersecting){ en.target.classList.add('is-visible'); io.unobserve(en.target); }
+        if(en.isIntersecting){ 
+          en.target.classList.add('is-visible'); 
+          io.unobserve(en.target); 
+        }
       });
     }, {threshold: 0.15});
     els.forEach(el=>io.observe(el));
@@ -75,7 +84,8 @@
         frame.style.setProperty('--tiltY', -dx.toFixed(2) + 'deg');
       });
       frame.addEventListener('mouseleave', ()=>{
-        frame.style.setProperty('--tiltX','0deg'); frame.style.setProperty('--tiltY','0deg');
+        frame.style.setProperty('--tiltX','0deg'); 
+        frame.style.setProperty('--tiltY','0deg');
       });
     });
   })();

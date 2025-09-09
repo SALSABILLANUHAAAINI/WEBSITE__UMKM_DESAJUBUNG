@@ -12,7 +12,7 @@
     {{-- Judul --}}
     <h1 class="katalog-title">Katalog UMKM Desa Jubung</h1>
 
-    <!-- ===== Tambahan: Toolbar Pencarian (kiri) & Kategori (kanan) ===== -->
+    <!-- ===== Toolbar Pencarian & Kategori ===== -->
     <div class="katalog-toolbar">
       <div class="katalog-search">
         <input
@@ -25,7 +25,6 @@
         <button type="button" class="katalog-search-clear" aria-label="Bersihkan pencarian" title="Bersihkan">×</button>
       </div>
 
-      <!-- Kategori (kanan) -->
       <div class="katalog-categories scrollable" aria-label="Filter kategori">
         <button type="button" class="kat-chip is-active" data-cat="semua">Semua</button>
         <button type="button" class="kat-chip" data-cat="makanan">Makanan</button>
@@ -35,84 +34,38 @@
         <button type="button" class="kat-chip" data-cat="lainnya">Lainnya</button>
       </div>
     </div>
-    <!-- ===== Akhir Tambahan ===== -->
 
-    {{-- Card Produk Dummy --}}
+    <!-- ===== Daftar Produk ===== -->
     <div class="katalog-grid">
-
-        <div class="katalog-card">
-           <img src="{{ asset('images/dummy5.PNG') }}" alt="Produk Dummy">
-            <div class="katalog-info">
-                <h3>Keripik Angkasa</h3>
-                <a href="{{ route('katalog.show') }}" class="btn-detail">Lihat Detail</a>
+        @forelse($products as $product)
+            <div class="katalog-card" data-category="{{ $product->kategori ?? 'lainnya' }}">
+                <img src="{{ $product->product_image 
+                    ? asset('storage/products/' . $product->product_image) 
+                    : asset('images/dummy5.PNG') }}" 
+                    alt="{{ $product->nama_produk }}">
+                <div class="katalog-info">
+                    <h3>{{ $product->nama_produk }}</h3>
+                    <a href="{{ route('katalog.show', $product->id) }}" class="btn-detail">Lihat Detail</a>
+                </div>
             </div>
-        </div>
-
-        <div class="katalog-card">
-             <img src="{{ asset('images/dummy9.PNG') }}" alt="Produk 2">
-            <div class="katalog-info">
-                <h3>Pawon Cupik</h3>
-                <a href="{{ route('katalog.show') }}" class="btn-detail">Lihat Detail</a>
+        @empty
+            <div class="katalog-card" data-category="lainnya">
+                <img src="{{ asset('images/dummy5.PNG') }}" alt="Produk Dummy">
+                <div class="katalog-info">
+                    <h3>Produk Belum Tersedia</h3>
+                </div>
             </div>
-        </div>
-
-        <div class="katalog-card">
-            <img src="{{ asset('images/dummy10.PNG') }}" alt="Produk 3">
-            <div class="katalog-info">
-                <h3>Mocci Nayya</h3>
-                <a href="{{ route('katalog') }}" class="btn-detail">Lihat Detail</a>
-            </div>
-        </div>
-
-        <div class="katalog-card">
-            <img src="{{ asset('images/dummy11.PNG') }}" alt="Produk 4">
-            <div class="katalog-info">
-                <h3>Trigapuri</h3>
-                <a href="{{ route('katalog') }}" class="btn-detail">Lihat Detail</a>
-            </div>
-        </div>
-
-        <div class="katalog-card">
-           <img src="{{ asset('images/dummy12.PNG') }}" alt="Produk 4">
-            <div class="katalog-info">
-            <div class="katalog-info">
-                <h3>Warung Bu Romlah</h3>
-                <a href="{{ route('katalog') }}" class="btn-detail">Lihat Detail</a>
-            </div>
-        </div>
-
+        @endforelse
     </div>
 </div>
 
-<!-- ===== Tambahan: Script filter pencarian + kategori ===== -->
+<!-- ===== Script filter pencarian + kategori ===== -->
 <script>
 document.addEventListener('DOMContentLoaded', function(){
   const input = document.getElementById('katalogSearch');
   const clearBtn = document.querySelector('.katalog-search-clear');
   const cards = document.querySelectorAll('.katalog-grid .katalog-card');
   const chips = document.querySelectorAll('.katalog-categories .kat-chip');
-
-  // === Pemetaan kategori (tanpa ubah HTML card) berdasarkan judul ===
-  const rules = [
-    { key: 'makanan',   words: ['keripik','cookies','brownies','kue','snack','roti','pawon','warung','moci','mocci','bakso','mie','nasi','sambal','pecel'] },
-    { key: 'minuman',   words: ['kopi','teh','susu','jus','es','drink','latte'] },
-    { key: 'fashion',   words: ['batik','baju','kaos','tas','sepatu','kain'] },
-    { key: 'kerajinan', words: ['souvenir','kerajinan','handmade','ukir','anyam','gerabah'] },
-  ];
-  function inferCategoryFromTitle(title){
-    const t = (title || '').toLowerCase();
-    for (const r of rules){
-      if (r.words.some(w => t.includes(w))) return r.key;
-    }
-    return 'lainnya';
-  }
-
-  // Tandai data-category tiap card
-  cards.forEach(card => {
-    const titleEl = card.querySelector('h3');
-    const title = titleEl ? titleEl.textContent.trim() : '';
-    card.dataset.category = inferCategoryFromTitle(title);
-  });
 
   // State
   let selectedCategory = 'semua';

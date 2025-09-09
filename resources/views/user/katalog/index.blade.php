@@ -14,13 +14,13 @@
 
     <!-- Toolbar: kategori dropdown + search -->
     <div class="katalog-toolbar">
-        {{-- Dropdown kategori (INI SUDAH DINAMIS) --}}
+        {{-- Dropdown kategori --}}
         <div class="kategori-dropdown">
           <button id="kategoriToggle" class="kategori-btn">Kategori ▾</button>
           <ul id="kategoriMenu" class="kategori-menu">
             <li><button class="kat-btn is-active" data-filter="all">Semua</button></li>
 
-            {{-- Lakukan perulangan pada data kategori dari database --}}
+            {{-- Perulangan kategori --}}
             @foreach($katalogs as $katalog)
                 @if($katalog->is_active)
                     <li>
@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    {{-- Grid produk (INI SUDAH DINAMIS) --}}
+    {{-- Grid produk --}}
     <div class="katalog-grid">
         @forelse($products as $product)
             <div class="katalog-card"
@@ -153,5 +153,3 @@
     </script>
 </div>
 @endsection
-
-

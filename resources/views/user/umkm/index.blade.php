@@ -19,7 +19,9 @@
       @forelse($umkms as $umkm)
         <article class="umkm-card">
           <img
-            src="{{ $umkm->logo ? asset('storage/'.$umkm->logo) : asset('images/dummy1.png') }}"
+            src="{{ $umkm->logo 
+                      ? asset('storage/'.$umkm->logo) 
+                      : asset('images/dummy1.png') }}"
             alt="{{ $umkm->nama_umkm }}"
             class="umkm-cover"
           >

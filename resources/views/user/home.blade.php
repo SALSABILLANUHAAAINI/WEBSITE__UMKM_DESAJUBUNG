@@ -14,7 +14,7 @@
     <section class="hero">
         <div class="hero__container">
             <div class="hero__img hero__img--left">
-                <img src="{{ asset('storage/' . $home->gambar_kiri) }}" alt="Gambar Kiri">
+                <img src="{{ $home->gambar_kiri ? asset('storage/'.$home->gambar_kiri) : asset('images/dummy14.jpg') }}" alt="Gambar Kiri">
             </div>
 
             <div class="hero__content">
@@ -24,7 +24,7 @@
             </div>
 
             <div class="hero__img hero__img--right">
-                <img src="{{ asset('storage/' . $home->gambar_kanan) }}" alt="Gambar Kanan">
+                <img src="{{ $home->gambar_kanan ? asset('storage/'.$home->gambar_kanan) : asset('images/dummy14.jpg') }}" alt="Gambar Kanan">
             </div>
         </div>
     </section>
@@ -58,9 +58,9 @@
                          data-nama="{{ $product->nama_produk }}"
                          data-harga="Rp {{ number_format((float) $product->harga, 0, ',', '.') }}"
                          data-toko="{{ $product->umkm->nama_umkm ?? 'UMKM Desa Jubung' }}"
-                         data-gambar="{{ asset('storage/' . $product->product_image) }}">
+                         data-gambar="{{ $product->product_image ? asset('storage/'.$product->product_image) : asset('images/dummy5.PNG') }}">
 
-                        <img src="{{ asset('storage/' . $product->product_image) }}" alt="{{ $product->nama_produk }}">
+                        <img src="{{ $product->product_image ? asset('storage/'.$product->product_image) : asset('images/dummy5.PNG') }}" alt="{{ $product->nama_produk }}">
                         <div class="katalog-info">
                             <h3 class="katalog-name">{{ $product->nama_produk }}</h3>
                             <p class="harga">Rp {{ number_format((float) $product->harga, 0, ',', '.') }}</p>
@@ -83,7 +83,7 @@
             <div class="umkm-grid">
                 @forelse($umkms as $umkm)
                     <div class="umkm-card">
-                        <img src="{{ $umkm->logo ? asset('storage/' . $umkm->logo) : asset('images/dummy1.png') }}"
+                        <img src="{{ $umkm->logo ? asset('storage/'.$umkm->logo) : asset('images/dummy1.png') }}"
                              alt="{{ $umkm->nama_umkm }}">
                         <div class="umkm-info">
                             <h3 class="umkm-name">{{ $umkm->nama_umkm }}</h3>
