@@ -1,3 +1,28 @@
-@import './partials/navbar.css';
-@import './partials/footer.css';
-@import '../index.css';
+/* ======================================================= */
+/* FILE CSS UTAMA (public/css/user/app.css)       */
+/* ======================================================= */
+
+/* 1. Impor semua file CSS parsial yang Anda butuhkan.
+   Pastikan path filenya sudah benar dari folder 'public'.
+   '../index.css' berarti keluar satu folder (dari 'user') lalu masuk ke 'index.css'.
+*/
+@import url('../index.css');
+@import url('partials/navbar.css');
+@import url('partials/footer.css');
+
+
+/* 2. KODE PERBAIKAN LAYOUT UTAMA
+   Kode ini akan memperbaiki masalah konten yang sempit dan
+   tertutup oleh navbar.
+*/
+.main-content {
+  /* Memaksa konten utama untuk mengambil lebar penuh halaman */
+  width: 100%;
+
+  /* Memberi jarak atas agar konten tidak dimulai di belakang navbar.
+     SESUAIKAN angka 100px ini dengan tinggi navbar Anda.
+     Jika jarak terlalu jauh, kecilkan angkanya.
+     Jika konten masih tertutup navbar, besarkan angkanya.
+  */
+  padding-top: 100px;
+}
