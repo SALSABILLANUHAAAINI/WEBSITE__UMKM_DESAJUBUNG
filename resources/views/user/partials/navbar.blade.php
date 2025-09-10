@@ -35,7 +35,7 @@
     </button>
   </div>
 
-  <!-- Dropdown Mobile -->
+  <!-- Dropdown Mobile (default tersembunyi) -->
   <div class="mobile-menu">
     <ul>
       <li><a href="{{ url('/umkm') }}">UMKM</a></li>
