@@ -54,7 +54,7 @@
 
     <!-- Pagination -->
     <div class="pagination">
-    {{ $umkms->links('vendor.pagination.custom') }}
+    {{ $products->links('vendor.pagination.custom') }}
 </div>
 
     {{-- Modal produk --}}
