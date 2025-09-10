@@ -32,7 +32,7 @@ class UmkmController extends Controller
     {
         $query = Umkm::query();
 
-        if ($request->has('search') && $request->search != '') {
+        if ($request->filled('search')) {
             $query->where('nama_umkm', 'like', '%' . $request->search . '%')
                   ->orWhere('deskripsi', 'like', '%' . $request->search . '%');
         }
@@ -62,7 +62,7 @@ class UmkmController extends Controller
             'gambar'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Upload gambar langsung ke public/umkm_images
+        // Upload gambar ke public/umkm_images
         if ($request->hasFile('gambar')) {
             $filename = time().'_'.$request->file('gambar')->getClientOriginalName();
             $request->file('gambar')->move(public_path('umkm_images'), $filename);
@@ -123,10 +123,7 @@ class UmkmController extends Controller
     // ================= HERO UPDATE =================
     public function updateHero(Request $request)
     {
-        $request->validate([
-            'hero' => 'required|string|max:255',
-        ]);
-
+        $request->validate(['hero' => 'required|string|max:255']);
         $heroUmkm = HeroUmkm::first() ?? new HeroUmkm();
         $heroUmkm->hero = $request->hero;
         $heroUmkm->save();
