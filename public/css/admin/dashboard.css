@@ -117,13 +117,16 @@ body {
    HEADLINE SECTION
    ================================= */
 .section-headline {
-  margin: 2rem 0 1rem;
+  margin-top: 10px;
+  margin-bottom: 10px;
   text-align: left;
   border-left: 5px solid var(--primary-color);
   padding-left: 1rem;
   position: relative;
 }
 .section-headline h2 {
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--primary-color);
@@ -132,10 +135,7 @@ body {
   align-items: center;
   gap: 0.5rem;
 }
-.section-headline p {
-  font-size: 0.95rem;
-  color: var(--text-light);
-}
+
 .section-headline::after {
   content: '';
   position: absolute;
