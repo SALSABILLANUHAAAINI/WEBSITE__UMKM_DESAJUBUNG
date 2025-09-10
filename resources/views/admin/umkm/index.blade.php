@@ -3,7 +3,7 @@
 @section('title', 'Daftar UMKM')
 
 @section('content')
-<link rel="stylesheet" href="{{ asset('css/admin/umkm/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/umkm/umkm.css') }}">
 
 <div class="umkm-index-container">
     <div class="header">
