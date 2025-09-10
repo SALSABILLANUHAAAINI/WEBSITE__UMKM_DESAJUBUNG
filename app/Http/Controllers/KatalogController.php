@@ -9,32 +9,31 @@ use App\Models\Product;
 class KatalogController extends Controller
 {
     // ------------------- USER SIDE -------------------
+    public function userIndex(Request $request)
+    {
+        $katalogs = Katalog::all();
+        $heroKatalog = HeroKatalog::first();
 
-public function userIndex(Request $request)
-{
-    $katalogs = Katalog::all();
-    $heroKatalog = HeroKatalog::first();
+        $query = Product::query()->with(['umkm', 'katalog']); // eager load untuk menghindari N+1
 
-    $query = Product::query();
+        // Filter search
+        if ($request->filled('search')) {
+            $query->where('nama_produk', 'like', '%' . $request->search . '%');
+        }
 
-    // Filter search
-    if ($request->filled('search')) {
-        $query->where('nama_produk', 'like', '%' . $request->search . '%');
+        // Filter kategori
+        if ($request->filled('kategori') && strtolower($request->kategori) !== 'semua') {
+            $kategoriFilter = strtolower($request->kategori);
+            $query->whereHas('katalog', function($q) use ($kategoriFilter){
+                $q->whereRaw('LOWER(name) = ?', [$kategoriFilter]);
+            });
+        }
+
+        // Pagination 10 produk per halaman
+        $products = $query->latest()->paginate(10)->withQueryString();
+
+        return view('user.katalog.index', compact('katalogs', 'heroKatalog', 'products'));
     }
-
-    // Filter kategori
-    if ($request->filled('kategori') && $request->kategori !== 'semua') {
-        $query->whereHas('katalog', function($q) use ($request){
-            $q->where('name', 'like', $request->kategori);
-        });
-    }
-
-    $products = $query->latest()->paginate(10); // 10 produk per halaman
-
-    return view('user.katalog.index', compact('katalogs', 'heroKatalog', 'products'));
-}
-
-
 
     // ------------------- ADMIN SIDE -------------------
     public function index()
@@ -109,7 +108,6 @@ public function userIndex(Request $request)
         $hero->hero = $request->hero;
         $hero->save();
 
-        // Redirect tetap ke halaman katalog
         return redirect()->route('admin.katalog.index')
                         ->with('success', 'Hero Katalog berhasil diperbarui');
     }

@@ -13,22 +13,28 @@
     <h1 class="katalog-title">{{ $heroKatalog->hero ?? 'Explore Our Clients' }}</h1>
 
     {{-- Toolbar: kategori dropdown + search --}}
-    <div class="katalog-toolbar">
+    <form method="GET" action="{{ route('katalog') }}" class="katalog-toolbar">
+        @php
+            $selectedCategory = request('kategori') ?? 'all';
+            $searchQuery = request('search') ?? '';
+        @endphp
+
         {{-- Dropdown kategori --}}
         <div class="kategori-dropdown">
-            @php
-                $selectedCategory = request('kategori') ?? 'all';
-            @endphp
-            <button id="kategoriToggle" class="kategori-btn">
+            <button type="button" id="kategoriToggle" class="kategori-btn">
                 Kategori: {{ ucfirst($selectedCategory) }} ▾
             </button>
             <ul id="kategoriMenu" class="kategori-menu">
-                <li><button class="kat-btn {{ $selectedCategory=='all'?'is-active':'' }}" data-filter="all">Semua</button></li>
+                <li>
+                    <button type="submit" name="kategori" value="all" class="kat-btn {{ $selectedCategory=='all'?'is-active':'' }}">
+                        Semua
+                    </button>
+                </li>
                 @foreach($katalogs as $katalog)
                     @if($katalog->is_active)
                         <li>
-                            <button class="kat-btn {{ strtolower($katalog->name)==$selectedCategory?'is-active':'' }}"
-                                    data-filter="{{ strtolower($katalog->name) }}">
+                            <button type="submit" name="kategori" value="{{ strtolower($katalog->name) }}" 
+                                    class="kat-btn {{ strtolower($katalog->name)==$selectedCategory?'is-active':'' }}">
                                 {{ $katalog->name }}
                             </button>
                         </li>
@@ -39,11 +45,11 @@
 
         {{-- Search --}}
         <div class="katalog-search">
-            <input type="text" id="katalogSearch" class="katalog-search-input"
-                   value="{{ request('search') }}" placeholder="Cari produk...">
-            <button type="button" class="katalog-search-clear" title="Bersihkan">×</button>
+            <input type="text" name="search" id="katalogSearch" class="katalog-search-input"
+                   value="{{ $searchQuery }}" placeholder="Cari produk...">
+            <button type="submit" class="katalog-search-btn">Cari</button>
         </div>
-    </div>
+    </form>
 
     {{-- Grid produk --}}
     <div class="katalog-grid">
@@ -68,7 +74,7 @@
         @endforelse
     </div>
 
-    <!-- Pagination -->
+    {{-- Pagination --}}
     <div class="pagination">
         {{ $products->appends(['kategori'=>request('kategori'),'search'=>request('search')])->links('vendor.pagination.custom') }}
     </div>
@@ -85,59 +91,10 @@
         </div>
     </div>
 
-    {{-- Script filter live + modal --}}
+    {{-- Script modal --}}
     <script>
     document.addEventListener('DOMContentLoaded', function(){
-        const input = document.getElementById('katalogSearch');
-        const clearBtn = document.querySelector('.katalog-search-clear');
         const cards = document.querySelectorAll('.katalog-grid .katalog-card');
-        const katBtns = document.querySelectorAll('.kat-btn');
-        let selectedCategory = '{{ $selectedCategory }}';
-
-        // Filter function
-        function filterProducts(){
-            const query = input.value.trim().toLowerCase();
-            cards.forEach(card => {
-                const title = card.dataset.nama.toLowerCase();
-                const cat = card.dataset.kategori;
-                const matchCategory = selectedCategory === 'all' || cat === selectedCategory;
-                const matchSearch = title.includes(query);
-                card.style.display = (matchCategory && matchSearch) ? '' : 'none';
-            });
-            clearBtn.style.display = query ? 'inline' : 'none';
-        }
-
-        // Search
-        input.addEventListener('input', filterProducts);
-        clearBtn.addEventListener('click', () => {
-            input.value = '';
-            filterProducts();
-            input.focus();
-        });
-
-        // Dropdown kategori
-        katBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                katBtns.forEach(b => b.classList.remove('is-active'));
-                btn.classList.add('is-active');
-                selectedCategory = btn.dataset.filter;
-                document.getElementById('kategoriToggle').textContent = 'Kategori: ' + btn.textContent + ' ▾';
-                filterProducts();
-                menu.classList.remove('show');
-            });
-        });
-
-        // Toggle dropdown
-        const toggleBtn = document.getElementById('kategoriToggle');
-        const menu = document.getElementById('kategoriMenu');
-        toggleBtn.addEventListener('click', () => menu.classList.toggle('show'));
-        document.addEventListener('click', e => {
-            if(!e.target.closest('.kategori-dropdown')) menu.classList.remove('show');
-        });
-
-        filterProducts(); // init filter
-
-        // Modal
         const modal = document.getElementById('produkModal');
         const modalImg = document.getElementById('modalImg');
         const modalNama = document.getElementById('modalNama');
@@ -159,6 +116,14 @@
 
         closeBtn.addEventListener('click', () => modal.style.display = 'none');
         window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
+
+        // Dropdown toggle
+        const toggleBtn = document.getElementById('kategoriToggle');
+        const menu = document.getElementById('kategoriMenu');
+        toggleBtn.addEventListener('click', () => menu.classList.toggle('show'));
+        document.addEventListener('click', e => {
+            if(!e.target.closest('.kategori-dropdown')) menu.classList.remove('show');
+        });
     });
     </script>
 </div>
