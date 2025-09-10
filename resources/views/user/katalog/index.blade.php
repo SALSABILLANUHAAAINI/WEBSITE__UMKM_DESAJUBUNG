@@ -16,13 +16,19 @@
     <div class="katalog-toolbar">
         {{-- Dropdown kategori --}}
         <div class="kategori-dropdown">
-            <button id="kategoriToggle" class="kategori-btn">Kategori ▾</button>
+            @php
+                $selectedCategory = request('kategori') ?? 'all';
+            @endphp
+            <button id="kategoriToggle" class="kategori-btn">
+                Kategori: {{ ucfirst($selectedCategory) }} ▾
+            </button>
             <ul id="kategoriMenu" class="kategori-menu">
-                <li><button class="kat-btn is-active" data-filter="all">Semua</button></li>
+                <li><button class="kat-btn {{ $selectedCategory=='all'?'is-active':'' }}" data-filter="all">Semua</button></li>
                 @foreach($katalogs as $katalog)
                     @if($katalog->is_active)
                         <li>
-                            <button class="kat-btn" data-filter="{{ strtolower($katalog->name) }}">
+                            <button class="kat-btn {{ strtolower($katalog->name)==$selectedCategory?'is-active':'' }}"
+                                    data-filter="{{ strtolower($katalog->name) }}">
                                 {{ $katalog->name }}
                             </button>
                         </li>
@@ -62,98 +68,98 @@
         @endforelse
     </div>
 
-       <!-- Pagination -->
+    <!-- Pagination -->
     <div class="pagination">
-    {{ $products->links('vendor.pagination.custom') }}
-</div>
-
-{{-- Modal Produk --}}
-<div id="produkModal" class="modal">
-    <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <img id="modalImg" src="" alt="">
-        <h2 id="modalNama"></h2>
-        <p id="modalHarga"></p>
-        <p id="modalToko"></p>
-        <p id="modalDeskripsi"></p>
+        {{ $products->appends(['kategori'=>request('kategori'),'search'=>request('search')])->links('vendor.pagination.custom') }}
     </div>
-</div>
 
-{{-- Script filter live + modal --}}
-<script>
-document.addEventListener('DOMContentLoaded', function(){
-    const input = document.getElementById('katalogSearch');
-    const clearBtn = document.querySelector('.katalog-search-clear');
-    const cards = document.querySelectorAll('.katalog-grid .katalog-card');
-    const katBtns = document.querySelectorAll('.kat-btn');
-    let selectedCategory = 'all';
+    {{-- Modal Produk --}}
+    <div id="produkModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img id="modalImg" src="" alt="">
+            <h2 id="modalNama"></h2>
+            <p id="modalHarga"></p>
+            <p id="modalToko"></p>
+            <p id="modalDeskripsi"></p>
+        </div>
+    </div>
 
-    // Filter function
-    function filterProducts(){
-        const query = input.value.trim().toLowerCase();
-        cards.forEach(card => {
-            const title = card.dataset.nama.toLowerCase();
-            const cat = card.dataset.kategori;
-            const matchCategory = selectedCategory === 'all' || cat === selectedCategory;
-            const matchSearch = title.includes(query);
-            card.style.display = (matchCategory && matchSearch) ? '' : 'none';
-        });
-        clearBtn.style.display = query ? 'inline' : 'none';
-    }
+    {{-- Script filter live + modal --}}
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+        const input = document.getElementById('katalogSearch');
+        const clearBtn = document.querySelector('.katalog-search-clear');
+        const cards = document.querySelectorAll('.katalog-grid .katalog-card');
+        const katBtns = document.querySelectorAll('.kat-btn');
+        let selectedCategory = '{{ $selectedCategory }}';
 
-    // Search
-    input.addEventListener('input', filterProducts);
-    clearBtn.addEventListener('click', () => {
-        input.value = '';
-        filterProducts();
-        input.focus();
-    });
+        // Filter function
+        function filterProducts(){
+            const query = input.value.trim().toLowerCase();
+            cards.forEach(card => {
+                const title = card.dataset.nama.toLowerCase();
+                const cat = card.dataset.kategori;
+                const matchCategory = selectedCategory === 'all' || cat === selectedCategory;
+                const matchSearch = title.includes(query);
+                card.style.display = (matchCategory && matchSearch) ? '' : 'none';
+            });
+            clearBtn.style.display = query ? 'inline' : 'none';
+        }
 
-    // Dropdown kategori
-    katBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            katBtns.forEach(b => b.classList.remove('is-active'));
-            btn.classList.add('is-active');
-            selectedCategory = btn.dataset.filter;
-            document.getElementById('kategoriToggle').textContent = 'Kategori: ' + btn.textContent + ' ▾';
+        // Search
+        input.addEventListener('input', filterProducts);
+        clearBtn.addEventListener('click', () => {
+            input.value = '';
             filterProducts();
-
-            menu.classList.remove('show');
+            input.focus();
         });
-    });
 
-    // Toggle dropdown
-    const toggleBtn = document.getElementById('kategoriToggle');
-    const menu = document.getElementById('kategoriMenu');
-    toggleBtn.addEventListener('click', () => menu.classList.toggle('show'));
-    document.addEventListener('click', e => {
-        if(!e.target.closest('.kategori-dropdown')) menu.classList.remove('show');
-    });
-
-    filterProducts(); // init filter
-
-    // Modal
-    const modal = document.getElementById('produkModal');
-    const modalImg = document.getElementById('modalImg');
-    const modalNama = document.getElementById('modalNama');
-    const modalHarga = document.getElementById('modalHarga');
-    const modalToko = document.getElementById('modalToko');
-    const modalDeskripsi = document.getElementById('modalDeskripsi');
-    const closeBtn = document.querySelector('.modal-close');
-
-    cards.forEach(card => {
-        card.addEventListener('click', () => {
-            modalImg.src = card.dataset.gambar;
-            modalNama.textContent = card.dataset.nama;
-            modalHarga.textContent = "Harga: " + card.dataset.harga;
-            modalToko.textContent = "Toko: " + card.dataset.toko;
-            modalDeskripsi.textContent = card.dataset.deskripsi;
-            modal.style.display = 'flex';
+        // Dropdown kategori
+        katBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                katBtns.forEach(b => b.classList.remove('is-active'));
+                btn.classList.add('is-active');
+                selectedCategory = btn.dataset.filter;
+                document.getElementById('kategoriToggle').textContent = 'Kategori: ' + btn.textContent + ' ▾';
+                filterProducts();
+                menu.classList.remove('show');
+            });
         });
-    });
 
-    closeBtn.addEventListener('click', () => modal.style.display = 'none');
-    window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
-});
-</script>
+        // Toggle dropdown
+        const toggleBtn = document.getElementById('kategoriToggle');
+        const menu = document.getElementById('kategoriMenu');
+        toggleBtn.addEventListener('click', () => menu.classList.toggle('show'));
+        document.addEventListener('click', e => {
+            if(!e.target.closest('.kategori-dropdown')) menu.classList.remove('show');
+        });
+
+        filterProducts(); // init filter
+
+        // Modal
+        const modal = document.getElementById('produkModal');
+        const modalImg = document.getElementById('modalImg');
+        const modalNama = document.getElementById('modalNama');
+        const modalHarga = document.getElementById('modalHarga');
+        const modalToko = document.getElementById('modalToko');
+        const modalDeskripsi = document.getElementById('modalDeskripsi');
+        const closeBtn = document.querySelector('.modal-close');
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                modalImg.src = card.dataset.gambar;
+                modalNama.textContent = card.dataset.nama;
+                modalHarga.textContent = "Harga: " + card.dataset.harga;
+                modalToko.textContent = "Toko: " + card.dataset.toko;
+                modalDeskripsi.textContent = card.dataset.deskripsi;
+                modal.style.display = 'flex';
+            });
+        });
+
+        closeBtn.addEventListener('click', () => modal.style.display = 'none');
+        window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
+    });
+    </script>
+</div>
 @endsection
