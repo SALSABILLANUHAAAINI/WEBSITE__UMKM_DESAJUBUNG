@@ -154,27 +154,26 @@ body {
 
 .katalog {
     display: flex;
-    justify-content: center;
-    align-items: stretch; /* tinggi kiri & kanan lebih seragam */
     gap: 32px;
     padding: 22px 16px;
     background: #fff;
     border: 1px solid var(--c-soft);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
+    align-items: flex-start; /* sejajarkan bagian atas */
 }
 
 /* Kiri: display + thumbnails */
 .produk-display {
-    flex: 1; /* biar seimbang dengan deskripsi */
-    max-width: 420px; /* batasi supaya tidak terlalu besar */
+    flex: 0 0 50%; /* ambil setengah lebar */
+    max-width: 460px; /* batasi biar tidak terlalu gede */
     text-align: center;
 }
 
 .main-img {
     width: 100%;
-    height: 320px; /* tinggi tetap, lebih konsisten */
-    object-fit: cover; /* crop rapi */
+    height: 300px; /* lebih proporsional */
+    object-fit: cover;
     border-radius: var(--radius-lg);
     border: 1px solid var(--c-soft);
     box-shadow: var(--shadow-sm);
@@ -202,17 +201,17 @@ body {
     border-color: var(--c-accent);
 }
 
-/* Kanan: deskripsi */
+/* Bagian deskripsi */
 .produk-deskripsi {
-    flex: 1; /* ikut fleksibel */
-    max-width: 500px;
+    flex: 1; /* ambil sisa ruang */
+    max-width: 480px; /* jangan melebar ke kanan */
+    margin: 0 auto;   /* biar lebih balance */
+    padding: 20px 24px;
     background: #fff;
-    padding: 24px 20px; /* tambah padding agar tidak mepet */
-    margin-left: auto; /* pastikan ada ruang dari sisi kiri */
     border-radius: var(--radius-md);
     border: 1px solid var(--c-soft);
     box-shadow: var(--shadow-sm);
-    text-align: left; /* tetap rapi untuk teks */
+    text-align: left; /* teks tetap rata kiri */
 }
 
 .produk-deskripsi h2 {
