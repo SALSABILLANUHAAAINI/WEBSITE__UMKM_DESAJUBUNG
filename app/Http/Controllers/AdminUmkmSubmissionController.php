@@ -50,49 +50,49 @@ class AdminUmkmSubmissionController extends Controller
     }
 
     public function accept($id)
-    {
-        $submission = UmkmSubmission::with('products')->findOrFail($id);
+{
+    $submission = UmkmSubmission::with('products')->findOrFail($id);
 
-        DB::beginTransaction();
+    DB::beginTransaction();
+    try {
+        // Simpan UMKM baru
+        $umkm = Umkm::create([
+            'nama_umkm' => $submission->nama_umkm,
+            'owner' => $submission->owner,
+            'deskripsi' => $submission->deskripsi,
+            'alamat' => $submission->alamat,
+            'kontak' => $submission->kontak,
+            'logo' => $submission->logo, // tetap path lengkap
+            'gmaps' => $submission->gmaps,
+            'social' => $submission->social,
+            'store' => $submission->store,
+        ]);
 
-        try {
-            // Simpan UMKM baru
-            $umkm = Umkm::create([
-                'nama_umkm' => $submission->nama_umkm,
-                'owner' => $submission->owner,
-                'deskripsi' => $submission->deskripsi,
-                'alamat' => $submission->alamat,
-                'kontak' => $submission->kontak,
-                'logo' => $submission->logo, // gunakan path yang sama
-                'gmaps' => $submission->gmaps,
-                'social' => $submission->social,
-                'store' => $submission->store,
+        // Masukkan produk
+        foreach ($submission->products as $productSub) {
+            Product::create([
+                'umkm_id' => $umkm->id,
+                'nama_produk' => $productSub->nama_produk,
+                'harga' => $productSub->harga,
+                'deskripsi' => $productSub->deskripsi,
+                'product_image' => $productSub->product_image, // path lengkap
             ]);
-
-            // Masukkan produk
-            foreach ($submission->products as $productSub) {
-                Product::create([
-                    'umkm_id' => $umkm->id,
-                    'nama_produk' => $productSub->nama_produk,
-                    'harga' => $productSub->harga,
-                    'deskripsi' => $productSub->deskripsi,
-                    'product_image' => $productSub->product_image, // gunakan path sama
-                ]);
-            }
-
-            $submission->status = 'accepted';
-            $submission->save();
-
-            DB::commit();
-            return redirect()->route('admin.service.settings')
-                ->with('success', 'Submission diterima, data UMKM & produk sudah dibuat.');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error("Gagal accept submission: " . $e->getMessage());
-            return redirect()->route('admin.service.settings')
-                ->with('error', 'Terjadi kesalahan saat memproses submission.');
         }
+
+        $submission->status = 'accepted';
+        $submission->save();
+
+        DB::commit();
+        return redirect()->route('admin.service.settings')
+            ->with('success', 'Submission diterima, data UMKM & produk sudah dibuat.');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        Log::error("Gagal accept submission: " . $e->getMessage());
+        return redirect()->route('admin.service.settings')
+            ->with('error', 'Terjadi kesalahan saat memproses submission.');
     }
+}
+
 
     public function reject($id)
     {

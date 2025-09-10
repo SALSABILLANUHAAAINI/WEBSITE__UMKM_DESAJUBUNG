@@ -11,7 +11,7 @@
         <p class="service-subtitle">Berikut adalah data submission UMKM pending.</p>
     </div>
 
-    <!-- 1. Data UMKM -->
+    <!-- Data UMKM -->
     <div class="form-block">
         <h2 class="block-title">1. Data UMKM</h2>
         <div class="grid-2">
@@ -24,14 +24,17 @@
                 <input type="text" value="{{ $submission->owner ?? '-' }}" readonly>
             </div>
         </div>
+
         <div class="form-group">
             <label>Alamat UMKM*</label>
             <textarea rows="2" readonly>{{ $submission->alamat ?? '-' }}</textarea>
         </div>
+
         <div class="form-group">
             <label>Deskripsi UMKM*</label>
             <textarea rows="3" readonly>{{ $submission->deskripsi ?? '-' }}</textarea>
         </div>
+
         <div class="grid-2">
             <div class="form-group">
                 <label>Kontak / WhatsApp*</label>
@@ -45,10 +48,12 @@
                 </div>
             </div>
         </div>
+
         <div class="form-group">
             <label>Link Google Maps</label>
             <input type="text" value="{{ $submission->gmaps ?? '-' }}" readonly>
         </div>
+
         <div class="grid-2">
             <div class="form-group">
                 <label>Link Sosial Media / Marketplace</label>
@@ -61,7 +66,7 @@
         </div>
     </div>
 
-    <!-- 2. Data Produk -->
+    <!-- Data Produk -->
     <div class="form-block">
         <h2 class="block-title">2. Data Produk</h2>
         @if(isset($submission->products) && $submission->products->count() > 0)

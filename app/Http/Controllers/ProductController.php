@@ -61,20 +61,21 @@ class ProductController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('gambar')) {
-            $file = $request->file('gambar');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('storage/product_images'), $filename);
-            $imagePath = $filename; // simpan nama file
-        }
+    $file = $request->file('gambar');
+    $filename = time().'_'.$file->getClientOriginalName();
+    $file->move(public_path('product_images'), $filename);
+    $imagePath = 'product_images/' . $filename; // path lengkap
+}
 
-        Product::create([
-            'nama_produk' => $request->nama_produk,
-            'harga' => (float) $request->harga,
-            'umkm_id' => $request->umkm_id,
-            'katalog_id' => $request->katalog_id,
-            'deskripsi' => $request->deskripsi,
-            'product_image' => $imagePath,
-        ]);
+Product::create([
+    'nama_produk' => $request->nama_produk,
+    'harga' => (float) $request->harga,
+    'umkm_id' => $request->umkm_id,
+    'katalog_id' => $request->katalog_id,
+    'deskripsi' => $request->deskripsi,
+    'product_image' => $imagePath,
+]);
+
 
         return redirect()->route('admin.product.index')
                          ->with('success', 'Produk berhasil ditambahkan.');
@@ -102,27 +103,28 @@ class ProductController extends Controller
 
         $imagePath = $product->product_image;
 
-        if ($request->hasFile('gambar')) {
-            // Hapus gambar lama jika ada
-            $oldImage = public_path('storage/product_images/' . $product->product_image);
-            if ($product->product_image && file_exists($oldImage)) {
-                unlink($oldImage);
-            }
+if ($request->hasFile('gambar')) {
+    // Hapus gambar lama jika ada
+    $oldImage = public_path($product->product_image);
+    if ($product->product_image && file_exists($oldImage)) {
+        unlink($oldImage);
+    }
 
-            $file = $request->file('gambar');
-            $filename = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('storage/product_images'), $filename);
-            $imagePath = $filename; // simpan nama file baru
-        }
+    $file = $request->file('gambar');
+    $filename = time().'_'.$file->getClientOriginalName();
+    $file->move(public_path('product_images'), $filename);
+    $imagePath = 'product_images/' . $filename; // path lengkap
+}
 
-        $product->update([
-            'nama_produk' => $request->nama_produk,
-            'harga' => (float) $request->harga,
-            'umkm_id' => $request->umkm_id,
-            'katalog_id' => $request->katalog_id,
-            'deskripsi' => $request->deskripsi,
-            'product_image' => $imagePath,
-        ]);
+$product->update([
+    'nama_produk' => $request->nama_produk,
+    'harga' => (float) $request->harga,
+    'umkm_id' => $request->umkm_id,
+    'katalog_id' => $request->katalog_id,
+    'deskripsi' => $request->deskripsi,
+    'product_image' => $imagePath,
+]);
+
 
         return redirect()->route('admin.product.index')
                          ->with('success', 'Produk berhasil diperbarui.');

@@ -30,7 +30,6 @@
                     <label for="brand">Nama UMKM*</label>
                     <input type="text" id="brand" name="nama_umkm" value="{{ old('nama_umkm') }}" required>
                 </div>
-
                 <div class="form-group">
                     <label for="owner">Nama Pemilik / Penanggung Jawab*</label>
                     <input type="text" id="owner" name="owner" value="{{ old('owner') }}" required>
@@ -54,8 +53,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="umkm_logo">Logo UMKM (JPEG/PNG, maks 2MB)</label>
-                    <input type="file" id="umkm_logo" name="logo" accept="image/png,image/jpeg,image/jpg">
+                    <label for="umkmLogo">Logo UMKM (JPEG/PNG, maks 2MB)</label>
+                    <input type="file" id="umkmLogo" name="logo" accept="image/png,image/jpeg,image/jpg">
                     <div class="single-preview" id="umkmLogoPreview">
                         <img src="{{ asset('images/dummy5.PNG') }}" alt="Logo UMKM" class="thumb">
                     </div>
@@ -72,7 +71,6 @@
                     <label for="social">Sosial Media / Marketplace</label>
                     <input type="text" id="social" name="social" value="{{ old('social') }}">
                 </div>
-
                 <div class="form-group">
                     <label for="store">Lokasi Penjualan Offline</label>
                     <input type="text" id="store" name="store" value="{{ old('store') }}">
@@ -118,13 +116,32 @@
     </form>
 </section>
 
+<style>
+/* Preview Logo dan Produk */
+.single-preview img.thumb,
+.preview-grid img.preview-thumb {
+    min-height: 170px;
+    max-height: 204px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+.preview-grid {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+</style>
+
 <script>
 (() => {
     const MAX_SIZE = 2 * 1024 * 1024; // 2MB
     const ALLOWED = ["image/jpeg","image/png","image/jpg"];
 
     // Preview Logo UMKM
-    const umkmLogoInput = document.getElementById('umkm_logo');
+    const umkmLogoInput = document.getElementById('umkmLogo');
     const umkmLogoPreview = document.getElementById('umkmLogoPreview');
     umkmLogoInput?.addEventListener('change', () => {
         umkmLogoPreview.innerHTML = '';
@@ -141,19 +158,20 @@
         umkmLogoPreview.appendChild(img);
     });
 
-    // Preview Produk
-    document.querySelectorAll('.product-file-input').forEach(input => {
+    // Fungsi preview untuk file input produk
+    const attachPreviewEvent = input => {
         input.addEventListener('change', e => {
-            const container = input.closest('.form-group').querySelector('.preview-grid');
+            const container = e.target.closest('.form-group').querySelector('.preview-grid');
             container.innerHTML = '';
-            Array.from(input.files).forEach(file => {
+            Array.from(e.target.files).forEach(file => {
                 const img = document.createElement('img');
                 img.className = 'preview-thumb';
                 img.src = URL.createObjectURL(file);
                 container.appendChild(img);
             });
         });
-    });
+    };
+    document.querySelectorAll('.product-file-input').forEach(attachPreviewEvent);
 
     // Tambah Produk Dinamis
     const productWrapper = document.getElementById('productWrapper');
@@ -167,10 +185,9 @@
             if(el.name.includes('product_images')){
                 el.name = `product_images[${productIndex}][]`;
                 el.value = '';
-                el.closest('.form-group').querySelector('.preview-grid').innerHTML = '<img src="{{ asset("images/dummy5.PNG") }}" alt="Produk" class="preview-thumb">';
-            } else {
-                el.value = '';
-            }
+                el.closest('.form-group').querySelector('.preview-grid').innerHTML =
+                    '<img src="{{ asset("images/dummy5.PNG") }}" alt="Produk" class="preview-thumb">';
+            } else el.value = '';
         });
 
         // Tombol hapus
@@ -184,19 +201,10 @@
         clone.appendChild(removeBtn);
 
         productWrapper.appendChild(clone);
-        productIndex++;
 
-        // Tambahkan event preview untuk file baru
-        clone.querySelector('.product-file-input').addEventListener('change', e => {
-            const container = e.target.closest('.form-group').querySelector('.preview-grid');
-            container.innerHTML = '';
-            Array.from(e.target.files).forEach(file => {
-                const img = document.createElement('img');
-                img.className = 'preview-thumb';
-                img.src = URL.createObjectURL(file);
-                container.appendChild(img);
-            });
-        });
+        // Event preview untuk file baru
+        attachPreviewEvent(clone.querySelector('.product-file-input'));
+        productIndex++;
     });
 })();
 </script>
