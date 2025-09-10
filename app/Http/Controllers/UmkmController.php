@@ -66,7 +66,7 @@ class UmkmController extends Controller
         if ($request->hasFile('gambar')) {
             $filename = time().'_'.$request->file('gambar')->getClientOriginalName();
             $request->file('gambar')->move(public_path('umkm_images'), $filename);
-            $data['gambar'] = $filename;
+            $data['gambar'] = 'umkm_images/'.$filename;
         }
 
         Umkm::create($data);
@@ -94,9 +94,14 @@ class UmkmController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
+            // Hapus gambar lama jika ada
+            if ($umkm->gambar && file_exists(public_path($umkm->gambar))) {
+                unlink(public_path($umkm->gambar));
+            }
+
             $filename = time().'_'.$request->file('gambar')->getClientOriginalName();
             $request->file('gambar')->move(public_path('umkm_images'), $filename);
-            $data['gambar'] = $filename;
+            $data['gambar'] = 'umkm_images/'.$filename;
         }
 
         $umkm->update($data);
@@ -106,7 +111,12 @@ class UmkmController extends Controller
 
     public function destroy(Umkm $umkm)
     {
+        if ($umkm->gambar && file_exists(public_path($umkm->gambar))) {
+            unlink(public_path($umkm->gambar));
+        }
+
         $umkm->delete();
+
         return redirect()->route('admin.umkm.index')->with('success', 'UMKM berhasil dihapus!');
     }
 
