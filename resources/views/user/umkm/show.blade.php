@@ -9,9 +9,7 @@
 @section('content')
 
 <main class="umkm-detail">
-    <!-- Bagian Gambar + Judul -->
     <div class="umkm-left">
-        <h1 class="umkm-title">{{ $umkm->nama_umkm }}</h1>
         <div class="slider">
             <img
                 src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}"
@@ -21,7 +19,10 @@
         </div>
     </div>
 
-    <!-- Bagian Deskripsi -->
+    <div class="umkm-center">
+        <h1 class="umkm-title">{{ $umkm->nama_umkm }}</h1>
+    </div>
+
     <div class="umkm-right">
         <p>{{ $umkm->deskripsi }}</p>
     </div>
