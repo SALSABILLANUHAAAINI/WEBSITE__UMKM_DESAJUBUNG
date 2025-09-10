@@ -30,20 +30,19 @@ class UmkmController extends Controller
 
     // -------- ADMIN SIDE --------
     public function adminIndex(Request $request)
-{
-    $query = Umkm::query();
+    {
+        $query = Umkm::query();
 
-    if ($request->has('search') && $request->search != '') {
-        $query->where('nama_umkm', 'like', '%' . $request->search . '%')
-              ->orWhere('deskripsi', 'like', '%' . $request->search . '%');
+        if ($request->has('search') && $request->search != '') {
+            $query->where('nama_umkm', 'like', '%' . $request->search . '%')
+                  ->orWhere('deskripsi', 'like', '%' . $request->search . '%');
+        }
+
+        $umkms = $query->latest()->paginate(6)->withQueryString();
+        $heroUmkm = HeroUmkm::first() ?? new HeroUmkm(['hero' => 'Berbagai Macam UMKM Desa Jubung']);
+
+        return view('admin.umkm.index', compact('umkms', 'heroUmkm'));
     }
-
-    $umkms = $query->latest()->paginate(6)->withQueryString();
-    $heroUmkm = HeroUmkm::first() ?? new HeroUmkm(['hero' => 'Berbagai Macam UMKM Desa Jubung']);
-
-    return view('admin.umkm.index', compact('umkms', 'heroUmkm'));
-}
-
 
     public function adminCreate()
     {
@@ -61,19 +60,14 @@ class UmkmController extends Controller
             'gmaps'     => 'nullable|url',
             'social'    => 'nullable|url',
             'store'     => 'nullable|string|max:255',
-            'logo'      => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'gambar'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-        if ($request->hasFile('logo')) {
-            $data['logo'] = $request->file('logo')->store('umkm_logos', 'public');
-        }
 
         if ($request->hasFile('gambar')) {
             $data['gambar'] = $request->file('gambar')->store('umkm_images', 'public');
         }
 
-        Umkm::create($data); // Lebih ringkas dan aman
+        Umkm::create($data);
 
         return redirect()->route('admin.umkm.index')->with('success', 'UMKM berhasil ditambahkan!');
     }
@@ -94,20 +88,11 @@ class UmkmController extends Controller
             'gmaps'     => 'nullable|url',
             'social'    => 'nullable|url',
             'store'     => 'nullable|string|max:255',
-            'logo'      => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'gambar'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        if ($request->hasFile('logo')) {
-            // HAPUS FILE LAMA JIKA ADA
-            if ($umkm->logo) {
-                Storage::disk('public')->delete($umkm->logo);
-            }
-            $data['logo'] = $request->file('logo')->store('umkm_logos', 'public');
-        }
-
         if ($request->hasFile('gambar')) {
-            // HAPUS FILE LAMA JIKA ADA
+            // Hapus file lama jika ada
             if ($umkm->gambar) {
                 Storage::disk('public')->delete($umkm->gambar);
             }
@@ -121,10 +106,6 @@ class UmkmController extends Controller
 
     public function destroy(Umkm $umkm)
     {
-        // HAPUS FILE SEBELUM MENGHAPUS DATA
-        if ($umkm->logo) {
-            Storage::disk('public')->delete($umkm->logo);
-        }
         if ($umkm->gambar) {
             Storage::disk('public')->delete($umkm->gambar);
         }

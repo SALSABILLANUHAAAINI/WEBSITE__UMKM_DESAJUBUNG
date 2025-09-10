@@ -6,12 +6,12 @@
 
 <link rel="stylesheet" href="{{ asset('css/admin/umkm/umkm.css') }}?v={{ time() }}">
 
-<div class="umkm-container">
+<div class="produk-container">
 
     <!-- Header -->
-    <div class="umkm-header">
-        <h1 class="umkm-title">UMKM - Admin Setting</h1>
-        <div class="umkm-actions">
+    <div class="produk-header">
+        <h1 class="produk-title">UMKM - Admin Setting</h1>
+        <div class="produk-actions">
             <a href="{{ route('admin.umkm.create') }}" class="btn tambah">+ Tambah UMKM</a>
         </div>
     </div>
@@ -39,7 +39,7 @@
             <form action="{{ route('admin.umkm.hero.update', $heroUmkm->id) }}" method="POST" class="modal-form">
                 @csrf
                 @method('PUT')
-                <input type="text" name="hero" class="form-control" value="{{ old('hero', $heroUmkm->hero ?? '') }}" placeholder="Masukkan teks hero UMKM">
+                <input type="text" name="hero" class="form-control" value="{{ $heroUmkm->hero ?? '' }}" placeholder="Masukkan teks hero UMKM">
 
                 <div class="form-actions">
                     <button type="button" class="btn cancel" onclick="closeHeroModal()">Batal</button>
@@ -63,15 +63,15 @@
     </div>
 
     <!-- Daftar UMKM -->
-    <div class="umkm-list">
+    <div class="produk-list">
         @forelse($umkms as $umkm)
-            <div class="umkm-card">
-                <img src="{{ $umkm->logo ? asset('storage/'.$umkm->logo) : asset('images/dummy1.png') }}"
-                     alt="{{ $umkm->nama_umkm }}" class="umkm-img">
-                <div class="umkm-body">
-                    <h2 class="umkm-name">{{ $umkm->nama_umkm }}</h2>
-                    <p class="umkm-desc">{{ Str::limit($umkm->deskripsi, 150) }}</p>
-                    <div class="umkm-btn-group">
+            <div class="produk-card">
+                <img src="{{ $umkm->gambar ? asset('storage/'.$umkm->gambar) : 'https://via.placeholder.com/500x300?text=No+Image' }}"
+                     alt="{{ $umkm->nama_umkm }}" class="produk-img">
+                <div class="produk-body">
+                    <h2 class="produk-nama">{{ $umkm->nama_umkm }}</h2>
+                    <p class="produk-desc">{{ Str::limit($umkm->deskripsi, 150) }}</p>
+                    <div class="produk-btn-group">
                         <a href="{{ route('admin.umkm.edit', $umkm->id) }}" class="btn edit">Edit</a>
                         <form action="{{ route('admin.umkm.destroy', $umkm->id) }}" method="POST" style="display:inline;">
                             @csrf
@@ -82,13 +82,11 @@
                 </div>
             </div>
         @empty
-            <p class="empty-state">Belum ada data UMKM.</p>
+            <p>Belum ada data UMKM.</p>
         @endforelse
     </div>
-
 </div>
 
-<!-- Script Modal -->
 <script>
 function openHeroModal() {
     document.getElementById("heroModal").style.display = "flex";
