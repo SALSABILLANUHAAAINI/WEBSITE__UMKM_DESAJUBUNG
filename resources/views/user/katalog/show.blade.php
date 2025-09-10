@@ -39,18 +39,18 @@
     <div class="katalog-grid">
         @forelse($products as $product)
             <div class="katalog-card" data-category="{{ $product->kategori ?? 'lainnya' }}">
-                <img src="{{ $product->product_image 
-                    ? asset('storage/products/' . $product->product_image) 
-                    : asset('images/dummy5.PNG') }}" 
+                <img src="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
                     alt="{{ $product->nama_produk }}">
                 <div class="katalog-info">
                     <h3>{{ $product->nama_produk }}</h3>
+                    <p class="produk-umkm">{{ $product->umkm->nama_umkm ?? '-' }}</p>
+                    <p class="produk-harga">Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
                     <a href="{{ route('katalog.show', $product->id) }}" class="btn-detail">Lihat Detail</a>
                 </div>
             </div>
         @empty
             <div class="katalog-card" data-category="lainnya">
-                <img src="{{ asset('images/dummy5.PNG') }}" alt="Produk Dummy">
+                <img src="{{ asset('images/sample-produk.jpg') }}" alt="Produk Dummy">
                 <div class="katalog-info">
                     <h3>Produk Belum Tersedia</h3>
                 </div>
