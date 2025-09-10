@@ -26,31 +26,31 @@
             <div class="grid-2">
                 <div class="form-group">
                     <label>Nama UMKM*</label>
-                    <input type="text" name="nama_umkm" value="{{ old('nama_umkm') }}" required>
+                    <input type="text" name="nama_umkm" value="{{ old('nama_umkm') }}" required placeholder="Masukkan nama UMKM">
                 </div>
                 <div class="form-group">
                     <label>Nama Pemilik / Penanggung Jawab*</label>
-                    <input type="text" name="owner" value="{{ old('owner') }}" required>
+                    <input type="text" name="owner" value="{{ old('owner') }}" required placeholder="Masukkan nama pemilik">
                 </div>
             </div>
 
             <div class="form-group">
                 <label>Alamat UMKM*</label>
-                <textarea name="alamat" rows="2" required>{{ old('alamat') }}</textarea>
+                <textarea name="alamat" rows="2" required placeholder="Contoh: Jalan Raya No.10, Desa Jubung">{{ old('alamat') }}</textarea>
             </div>
 
             <div class="form-group">
                 <label>Deskripsi UMKM*</label>
-                <textarea name="deskripsi" rows="3" required>{{ old('deskripsi') }}</textarea>
+                <textarea name="deskripsi" rows="3" required placeholder="Tuliskan deskripsi singkat UMKM">{{ old('deskripsi') }}</textarea>
             </div>
 
             <div class="grid-2">
                 <div class="form-group">
                     <label>Kontak / WhatsApp*</label>
-                    <input type="text" name="kontak" value="{{ old('kontak') }}" required>
+                    <input type="text" name="kontak" value="{{ old('kontak') }}" required placeholder="Contoh: 08123456789">
                 </div>
                 <div class="form-group">
-                    <label>Gambar UMKM (maks 2MB)</label>
+                    <label>Gambar UMKM (maks 2MB, JPG/PNG)</label>
                     <input type="file" name="gambar" accept="image/png,image/jpeg">
                     <div class="single-preview">
                         <img src="{{ asset('images/dummy5.PNG') }}" class="thumb" alt="Gambar UMKM">
@@ -60,17 +60,20 @@
 
             <div class="form-group">
                 <label>Link Google Maps</label>
-                <input type="text" name="gmaps" value="{{ old('gmaps') }}">
+                <input type="text" name="gmaps" value="{{ old('gmaps') }}"
+                       placeholder="Masukkan URL Google Maps, misal: https://goo.gl/maps/xxxx">
             </div>
 
             <div class="grid-2">
                 <div class="form-group">
                     <label>Sosial Media / Marketplace</label>
-                    <input type="text" name="social" value="{{ old('social') }}">
+                    <input type="text" name="social" value="{{ old('social') }}"
+                           placeholder="Contoh: https://instagram.com/nama_umkm atau https://shopee.co.id/nama_toko">
                 </div>
                 <div class="form-group">
                     <label>Lokasi Penjualan Offline</label>
-                    <input type="text" name="store" value="{{ old('store') }}">
+                    <input type="text" name="store" value="{{ old('store') }}"
+                           placeholder="Contoh: Jalan Raya No. 10, Desa Jubung">
                 </div>
             </div>
         </div>
@@ -82,18 +85,18 @@
                 <div class="grid-2 product-item" style="position:relative;">
                     <div class="form-group">
                         <label>Nama Produk*</label>
-                        <input type="text" name="product[]" required>
+                        <input type="text" name="product[]" required placeholder="Nama produk">
                     </div>
                     <div class="form-group">
                         <label>Harga Produk*</label>
-                        <input type="text" name="price[]" required>
+                        <input type="text" name="price[]" required placeholder="Harga, misal: 25000">
                     </div>
                     <div class="form-group">
                         <label>Deskripsi Produk*</label>
-                        <textarea name="description[]" rows="3" required></textarea>
+                        <textarea name="description[]" rows="3" required placeholder="Deskripsi produk">{{ old('description.0') }}</textarea>
                     </div>
                     <div class="form-group">
-                        <label>Foto Produk</label>
+                        <label>Foto Produk (maks 2MB, JPG/PNG)</label>
                         <input type="file" name="product_images[0][]" multiple accept="image/png,image/jpeg" class="product-file-input">
                         <div class="preview-grid">
                             <img src="{{ asset('images/dummy5.PNG') }}" class="preview-thumb" alt="Produk">
@@ -120,7 +123,6 @@
     display: block;
     margin: 0 auto;
 }
-
 .preview-grid { display:flex; gap:10px; flex-wrap:wrap; }
 </style>
 
