@@ -45,10 +45,11 @@
 
         {{-- Search --}}
         <div class="katalog-search">
-            <input type="text" name="search" id="katalogSearch" class="katalog-search-input"
-                   value="{{ $searchQuery }}" placeholder="Cari produk...">
-            <button type="submit" class="katalog-search-btn">Cari</button>
-        </div>
+    <input type="text" name="search" id="katalogSearch" class="katalog-search-input"
+           value="{{ $searchQuery }}" placeholder="Cari produk...">
+    {{-- <button type="submit" class="katalog-search-btn">Cari</button> --}}
+</div>
+
     </form>
 
     {{-- Grid produk --}}
@@ -124,6 +125,18 @@
         document.addEventListener('click', e => {
             if(!e.target.closest('.kategori-dropdown')) menu.classList.remove('show');
         });
+        const searchInput = document.getElementById('katalogSearch');
+
+    let typingTimer;
+    const typingDelay = 500; // delay 500ms setelah user berhenti mengetik
+
+    searchInput.addEventListener('keyup', () => {
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+            // submit form otomatis
+            searchInput.form.submit();
+        }, typingDelay);
+    });
     });
     </script>
 </div>
