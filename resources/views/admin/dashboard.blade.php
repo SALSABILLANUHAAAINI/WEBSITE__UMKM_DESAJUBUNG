@@ -4,7 +4,7 @@
 
 @section('content')
 
-<link rel="stylesheet" href="{{ asset('css/admin/produk/produk.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
 
 <div class="dashboard-container">
 
@@ -13,7 +13,7 @@
         <p>Selamat datang di halaman Admin Website UMKM Desa Jubung</p>
     </section>
 
-    {{-- KARTU STATISTIK --}}
+    {{-- KARTU STATISTIK (DINAMIS) --}}
     <section class="grid-container">
         <div class="stat-card">
             <h3 class="stat-value">{{ $jumlahUmkm }}</h3>
@@ -26,38 +26,31 @@
         </div>
     </section>
 
-    {{-- PRODUK TERBARU --}}
-    <section class="list-section">
-        <h2 class="section-title">Produk Terbaru</h2>
-        <div class="produk-grid">
-            @forelse($recentProducts as $product)
-                <div class="produk-card">
-                    <img src="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
-                        alt="{{ $product->nama_produk }}" class="produk-img">
+<div class="grid-container">
+    @forelse($recentProducts as $product)
+        <div class="produk-card-dashboard">
+            <div class="produk-body">
+                <h3 class="produk-nama">{{ $product->nama_produk }}</h3>
+                <p class="produk-sub">{{ $product->umkm->nama_umkm ?? '-' }}</p>
+                <p class="produk-desc harga">Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
+            </div>
 
-                    <div class="produk-body">
-                        <h3 class="produk-nama">{{ $product->nama_produk }}</h3>
-                        <p class="produk-desc">{{ $product->umkm->nama_umkm ?? '-' }}</p>
-                        <p class="produk-desc harga">Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
-                    </div>
+            <div class="produk-btn-group">
+                <a href="{{ route('admin.product.edit', $product->id) }}" class="btn edit">Edit</a>
 
-                    <div class="produk-btn-group">
-                        <a href="{{ route('admin.product.edit', $product->id) }}" class="btn edit">Edit</a>
-
-                        <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button class="btn hapus" onclick="return confirm('Yakin hapus produk ini?')">Hapus</button>
-                        </form>
-                    </div>
-                </div>
-            @empty
-                <p class="col-span-full">Belum ada produk.</p>
-            @endforelse
+                <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn hapus" onclick="return confirm('Yakin hapus produk ini?')">Hapus</button>
+                </form>
+            </div>
         </div>
-    </section>
+    @empty
+        <p class="col-span-full">Belum ada produk.</p>
+    @endforelse
+</div>
 
-    {{-- KATEGORI KATALOG TERBARU --}}
+    {{-- DAFTAR KATEGORI KATALOG TERBARU --}}
     <section class="list-section">
         <h2 class="section-title">Kategori Katalog Terbaru</h2>
         <div class="grid-container">
