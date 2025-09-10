@@ -5,6 +5,7 @@
   --primary-color: #3b82f6; /* Biru */
   --success-color: #16a34a; /* Hijau */
   --danger-color: #dc2626;  /* Merah */
+  --danger-soft: #f87171;   /* Merah soft untuk katalog */
   --bg-light: #f8f9fa;      /* Latar belakang utama */
   --bg-card: #ffffff;       /* Latar belakang kartu */
   --text-dark: #1f2937;     /* Teks utama */
@@ -118,11 +119,7 @@ body {
 }
 
 /* =================================
-   SHARED CARD UNTUK PRODUK & KATEGORI
-   ================================= */
-
-   /* =================================
-   HEADLINE PRODUK
+   HEADLINE SECTION
    ================================= */
 .section-headline {
   margin: 2rem 0 1rem;
@@ -130,7 +127,6 @@ body {
   border-left: 5px solid var(--primary-color);
   padding-left: 1rem;
 }
-
 .section-headline h2 {
   font-size: 1.5rem;
   font-weight: 700;
@@ -140,90 +136,99 @@ body {
   align-items: center;
   gap: 0.5rem;
 }
-
 .section-headline p {
   font-size: 0.95rem;
   color: var(--text-light);
 }
 
-
-.card-dashboard {
+/* =================================
+   CARD PRODUK
+   ================================= */
+.card-produk {
   background: var(--bg-card);
   border-radius: var(--border-radius);
-  overflow: hidden;
   box-shadow: var(--shadow);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
   border: 1px solid var(--border-color);
   padding: 1rem;
   position: relative;
+  min-height: 250px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* biar konten & tombol rapi */
-  min-height: 250px; /* ukuran konsisten */
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.card-dashboard::before {
+.card-produk::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, rgba(59,130,246,0.05), rgba(16,185,129,0.05));
+  background: linear-gradient(120deg, rgba(59,130,246,0.08), rgba(16,185,129,0.05));
   opacity: 0.5;
   border-radius: var(--border-radius);
-  pointer-events: none;
 }
-.card-dashboard:hover {
+.card-produk:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.15);
 }
-.card-dashboard .produk-nama::before {
+.card-produk .produk-nama::before {
   content: '🛍️';
   margin-right: 0.5rem;
 }
-.card-dashboard .produk-btn-group {
-  display: flex;
-  gap: 0.5rem;
-  justify-content: flex-end;
-  opacity: 0;
-  transform: translateY(5px);
-  transition: opacity 0.3s, transform 0.3s;
-}
-.card-dashboard:hover .produk-btn-group {
-  opacity: 1;
-  transform: translateY(0);
-}
-.card-dashboard .produk-nama {
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-.card-dashboard .produk-sub {
-  font-size: 0.9rem;
-  color: var(--text-light);
-  margin-bottom: 0.5rem;
-}
-.card-dashboard .produk-desc.harga {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  margin-bottom: 1rem;
-}
-.card-dashboard .btn.edit {
+.card-produk .btn.edit {
   background: var(--primary-color);
-  color: white;
 }
-.card-dashboard .btn.edit:hover {
+.card-produk .btn.edit:hover {
   background: #2563eb;
 }
-.card-dashboard .btn.lihat {
-  background: var(--success-color);
-}
-.card-dashboard .btn.lihat:hover {
-  background: #15803d;
-}
-.card-dashboard .btn.hapus {
+.card-produk .btn.hapus {
   background: var(--danger-color);
 }
-.card-dashboard .btn.hapus:hover {
+.card-produk .btn.hapus:hover {
   background: #b91c1c;
+}
+
+/* =================================
+   CARD KATALOG
+   ================================= */
+.card-katalog {
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  position: relative;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card-katalog::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(16,185,129,0.08), rgba(59,130,246,0.05));
+  opacity: 0.5;
+  border-radius: var(--border-radius);
+}
+.card-katalog:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px -3px rgb(0 0 0 / 0.1);
+}
+.card-katalog .produk-nama::before {
+  content: '📂';
+  margin-right: 0.5rem;
+}
+.card-katalog .btn.lihat {
+  background: var(--success-color);
+}
+.card-katalog .btn.lihat:hover {
+  background: #15803d;
+}
+.card-katalog .btn.hapus {
+  background: var(--danger-soft);
+}
+.card-katalog .btn.hapus:hover {
+  background: #ef4444;
 }
 
 /* =================================
@@ -234,7 +239,6 @@ body {
   gap: 0.75rem;
   justify-content: flex-end;
 }
-
 .btn {
   padding: 0.6rem 1.2rem;
   border: none;
