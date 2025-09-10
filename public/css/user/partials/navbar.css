@@ -24,10 +24,8 @@
 
 /* Grid 3 kolom agar logo 100% di tengah */
 .navbar__wrap {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 0 .75rem;
-    min-height: 72px;
 
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -131,6 +129,10 @@
     display: flex;
     align-items: center;
     gap: .75rem;
+}
+
+.katalog-container, .content-wrapper {
+    padding-top: 20px; /* sesuaikan dengan min-height navbar */
 }
 
 /* ===== Admin ikon (tanpa teks) ===== */
