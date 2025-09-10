@@ -17,7 +17,7 @@ class AdminUmkmSubmissionController extends Controller
     {
         $submissions = UmkmSubmission::with('products')
             ->orderBy('created_at', 'desc')
-            ->get(); // ambil semua submission termasuk accepted/rejected
+            ->get();
 
         $settings = ServiceSetting::first();
         return view('admin.setting.form', compact('submissions', 'settings'));
@@ -58,7 +58,7 @@ class AdminUmkmSubmissionController extends Controller
                 'deskripsi' => $submission->deskripsi,
                 'alamat' => $submission->alamat,
                 'kontak' => $submission->kontak,
-                'logo' => $submission->logo, 
+                'logo' => $submission->logo, // path langsung dari submission
                 'gmaps' => $submission->gmaps,
                 'social' => $submission->social,
                 'store' => $submission->store,
@@ -70,7 +70,7 @@ class AdminUmkmSubmissionController extends Controller
                     'nama_produk' => $productSub->nama_produk,
                     'harga' => $productSub->harga,
                     'deskripsi' => $productSub->deskripsi,
-                    'product_image' => $productSub->product_image,
+                    'product_image' => $productSub->product_image, // langsung pakai path publik
                 ]);
             }
 
