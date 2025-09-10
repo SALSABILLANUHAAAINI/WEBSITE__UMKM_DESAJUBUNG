@@ -12,6 +12,9 @@
     <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
+    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+<script src="{{ asset('js/navbar.js') }}" defer></script>
+
 
     {{-- File CSS admin tidak perlu dimuat di halaman user --}}
     {{-- <link rel="stylesheet" href="{{ asset('css/admin/login.css') }}"> --}}
