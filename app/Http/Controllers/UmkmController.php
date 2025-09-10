@@ -13,7 +13,7 @@ class UmkmController extends Controller
     // ================= USER SIDE =================
     public function index()
     {
-        $umkms = Umkm::latest()->paginate(6);
+        $umkms = Umkm::latest()->paginate(8);
         $products = Product::with(['umkm', 'katalog'])->get();
         $katalogs = Katalog::where('is_active', 1)->get();
         $heroUmkm = HeroUmkm::first() ?? new HeroUmkm(['hero' => 'Berbagai Macam UMKM Desa Jubung']);
