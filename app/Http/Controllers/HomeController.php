@@ -6,31 +6,29 @@ use Illuminate\Http\Request;
 use App\Models\Umkm;
 use App\Models\HomeSetting;
 use App\Models\Katalog;
-use App\Models\Product; // ✅ ambil produk untuk katalog
+use App\Models\Product;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        // Ambil 8 data umkm
-        $umkms = Umkm::take(8)->get();
+        // Ambil 8 data UMKM terbaru
+        $umkms = Umkm::latest()->take(8)->get();
 
-        // Ambil home setting
-        $homeSetting = HomeSetting::first();
+        // Ambil hero UMKM (HomeSetting)
+        $heroUmkm = HomeSetting::first(); // bisa null jika belum ada data
 
-        // Ambil 8 produk katalog
-        $products = Product::with(['katalog', 'umkm'])->take(8)->get();
+        // Ambil 8 produk terbaru dengan relasi
+        $products = Product::with(['katalog', 'umkm'])->latest()->take(8)->get();
 
-        // Ambil kategori katalog aktif
+        // Ambil kategori katalog aktif (opsional, jika nanti butuh filter)
         $katalogs = Katalog::where('is_active', true)->get();
 
         return view('user.home', [
-            'umkms'    => $umkms,
-            'home'     => $homeSetting,
-            'products' => $products,
-            'katalogs' => $katalogs,
+            'umkms'     => $umkms,
+            'heroUmkm'  => $heroUmkm,
+            'products'  => $products,
+            'katalogs'  => $katalogs,
         ]);
     }
 }
-
-
