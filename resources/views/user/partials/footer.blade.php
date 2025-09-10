@@ -10,5 +10,4 @@
     <p class="copyright">&copy; {{ date('Y') }} UMKM Desa Jubung. All rights reserved.</p>
 </footer>
 
-<!-- Font Awesome -->
-<script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
+
