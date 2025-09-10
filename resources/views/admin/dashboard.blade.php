@@ -5,6 +5,7 @@
 @section('content')
 
 <link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/produk/produk.css') }}">
 
 <div class="dashboard-container">
 
@@ -33,15 +34,21 @@
     <p>3 produk terbaru yang ditambahkan ke sistem</p>
 </section>
 
-<div class="grid-container">
+<div class="produk-grid">
     @forelse($recentProducts as $product)
-        <div class="card-produk">
+        <div class="produk-card">
+            {{-- Gambar Produk --}}
+            <img src="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
+                alt="{{ $product->nama_produk }}" class="produk-img">
+
+            {{-- Body Produk --}}
             <div class="produk-body">
                 <h3 class="produk-nama">{{ $product->nama_produk }}</h3>
-                <p class="produk-sub">{{ $product->umkm->nama_umkm ?? '-' }}</p>
+                <p class="produk-desc">{{ $product->umkm->nama_umkm ?? '-' }}</p>
                 <p class="produk-desc harga">Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
             </div>
 
+            {{-- Tombol Aksi --}}
             <div class="produk-btn-group">
                 <a href="{{ route('admin.product.edit', $product->id) }}" class="btn edit">Edit</a>
                 <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST">
