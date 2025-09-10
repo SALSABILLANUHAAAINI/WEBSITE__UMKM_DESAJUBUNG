@@ -28,7 +28,7 @@
     <div class="form-group">
       <label for="gambar">Upload Gambar</label>
       <div>
-        <img id="previewImage" src="{{ $umkm->gambar ? asset('umkm_images/'.$umkm->gambar) : asset('images/dummy1.png') }}" alt="Preview Gambar" width="150">
+        <img id="previewImage" src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}" alt="Preview Gambar" width="150">
       </div>
       <input type="file" id="gambar" name="gambar" class="file-input" onchange="previewFile(this)">
     </div>
@@ -51,7 +51,7 @@
       <input type="text" id="kontak" name="kontak" class="form-input" value="{{ old('kontak', $umkm->kontak) }}">
     </div>
 
-    <!-- Link Maps -->
+    <!-- Google Maps -->
     <div class="form-group">
       <label for="gmaps">Link Google Maps</label>
       <input type="url" id="gmaps" name="gmaps" class="form-input" value="{{ old('gmaps', $umkm->gmaps) }}">
@@ -63,9 +63,9 @@
       <input type="url" id="social" name="social" class="form-input" value="{{ old('social', $umkm->social) }}">
     </div>
 
-    <!-- Store Link -->
+    <!-- Store -->
     <div class="form-group">
-      <label for="store">Toko Offline</label>
+      <label for="store">Toko Offline / Online</label>
       <input type="text" id="store" name="store" class="form-input" value="{{ old('store', $umkm->store) }}">
     </div>
 
@@ -89,5 +89,4 @@ function previewFile(input){
     }
 }
 </script>
-
 @endsection

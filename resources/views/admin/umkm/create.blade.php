@@ -14,7 +14,8 @@
     <!-- Nama UMKM -->
     <div class="form-group">
       <label for="nama_umkm">Nama UMKM</label>
-      <input type="text" id="nama_umkm" name="nama_umkm" class="form-input @error('nama_umkm') is-invalid @enderror" placeholder="Masukkan nama UMKM" value="{{ old('nama_umkm') }}" required>
+      <input type="text" id="nama_umkm" name="nama_umkm" class="form-input @error('nama_umkm') is-invalid @enderror"
+             placeholder="Masukkan nama UMKM" value="{{ old('nama_umkm') }}" required>
       @error('nama_umkm')
         <div class="invalid-feedback">{{ $message }}</div>
       @enderror
@@ -23,7 +24,8 @@
     <!-- Owner -->
     <div class="form-group">
       <label for="owner">Nama Pemilik</label>
-      <input type="text" id="owner" name="owner" class="form-input @error('owner') is-invalid @enderror" placeholder="Nama pemilik UMKM" value="{{ old('owner') }}" required>
+      <input type="text" id="owner" name="owner" class="form-input @error('owner') is-invalid @enderror"
+             placeholder="Nama pemilik UMKM" value="{{ old('owner') }}" required>
       @error('owner')
         <div class="invalid-feedback">{{ $message }}</div>
       @enderror
@@ -35,7 +37,8 @@
       <div>
         <img id="previewImage" src="{{ asset('images/dummy1.png') }}" alt="Preview Gambar" width="150">
       </div>
-      <input type="file" id="gambar" name="gambar" class="file-input @error('gambar') is-invalid @enderror" onchange="previewFile(this)">
+      <input type="file" id="gambar" name="gambar" class="file-input @error('gambar') is-invalid @enderror"
+             onchange="previewFile(this)">
       @error('gambar')
         <div class="invalid-feedback">{{ $message }}</div>
       @enderror
@@ -44,7 +47,8 @@
     <!-- Deskripsi -->
     <div class="form-group">
       <label for="deskripsi">Deskripsi</label>
-      <textarea id="deskripsi" name="deskripsi" class="form-input @error('deskripsi') is-invalid @enderror" rows="4" placeholder="Tulis deskripsi UMKM...">{{ old('deskripsi') }}</textarea>
+      <textarea id="deskripsi" name="deskripsi" class="form-input @error('deskripsi') is-invalid @enderror"
+                rows="4" placeholder="Tulis deskripsi UMKM...">{{ old('deskripsi') }}</textarea>
       @error('deskripsi')
         <div class="invalid-feedback">{{ $message }}</div>
       @enderror
@@ -53,7 +57,8 @@
     <!-- Alamat -->
     <div class="form-group">
       <label for="alamat">Alamat</label>
-      <textarea id="alamat" name="alamat" class="form-input @error('alamat') is-invalid @enderror" rows="2" placeholder="Masukkan alamat UMKM...">{{ old('alamat') }}</textarea>
+      <textarea id="alamat" name="alamat" class="form-input @error('alamat') is-invalid @enderror"
+                rows="2" placeholder="Masukkan alamat UMKM...">{{ old('alamat') }}</textarea>
       @error('alamat')
         <div class="invalid-feedback">{{ $message }}</div>
       @enderror
@@ -62,16 +67,18 @@
     <!-- Kontak -->
     <div class="form-group">
       <label for="kontak">Kontak</label>
-      <input type="text" id="kontak" name="kontak" class="form-input @error('kontak') is-invalid @enderror" placeholder="Nomor HP / WhatsApp / Email" value="{{ old('kontak') }}">
+      <input type="text" id="kontak" name="kontak" class="form-input @error('kontak') is-invalid @enderror"
+             placeholder="Nomor HP / WhatsApp / Email" value="{{ old('kontak') }}">
       @error('kontak')
         <div class="invalid-feedback">{{ $message }}</div>
       @enderror
     </div>
 
-    <!-- Link Maps -->
+    <!-- Google Maps -->
     <div class="form-group">
       <label for="gmaps">Link Google Maps</label>
-      <input type="url" id="gmaps" name="gmaps" class="form-input @error('gmaps') is-invalid @enderror" placeholder="https://goo.gl/maps/..." value="{{ old('gmaps') }}">
+      <input type="url" id="gmaps" name="gmaps" class="form-input @error('gmaps') is-invalid @enderror"
+             placeholder="https://goo.gl/maps/..." value="{{ old('gmaps') }}">
       @error('gmaps')
         <div class="invalid-feedback">{{ $message }}</div>
       @enderror
@@ -80,16 +87,18 @@
     <!-- Social Media -->
     <div class="form-group">
       <label for="social">Sosial Media</label>
-      <input type="url" id="social" name="social" class="form-input @error('social') is-invalid @enderror" placeholder="https://instagram.com/..." value="{{ old('social') }}">
+      <input type="url" id="social" name="social" class="form-input @error('social') is-invalid @enderror"
+             placeholder="https://instagram.com/..." value="{{ old('social') }}">
       @error('social')
         <div class="invalid-feedback">{{ $message }}</div>
       @enderror
     </div>
 
-    <!-- Store Link -->
+    <!-- Store -->
     <div class="form-group">
-      <label for="store">Toko Offline</label>
-      <input type="text" id="store" name="store" class="form-input @error('store') is-invalid @enderror" placeholder="https://shopee.co.id/..." value="{{ old('store') }}">
+      <label for="store">Toko Offline / Online</label>
+      <input type="text" id="store" name="store" class="form-input @error('store') is-invalid @enderror"
+             placeholder="https://shopee.co.id/..." value="{{ old('store') }}">
       @error('store')
         <div class="invalid-feedback">{{ $message }}</div>
       @enderror
@@ -115,5 +124,4 @@ function previewFile(input){
     }
 }
 </script>
-
 @endsection

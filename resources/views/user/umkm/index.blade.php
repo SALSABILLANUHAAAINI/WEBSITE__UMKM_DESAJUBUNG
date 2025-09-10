@@ -3,7 +3,7 @@
 @section('title', 'UMKM Desa Jubung')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/user/umkm/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/user/umkm/index.css') }}">
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
       @forelse($umkms as $umkm)
         <article class="umkm-card">
           <img
-            src="{{ $umkm->gambar ? asset('umkm_images/'.$umkm->gambar) : asset('images/dummy1.png') }}"
+            src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}"
             alt="{{ $umkm->nama_umkm }}"
             class="umkm-cover"
           >
@@ -36,7 +36,7 @@
 
     <!-- Pagination -->
     <div class="pagination-wrapper">
-        {{ $umkms->links() }}
+      {{ $umkms->links() }}
     </div>
   </div>
 </section>
