@@ -9,7 +9,7 @@
 @section('content')
 <section class="umkm-section">
   <div class="container">
-    <!-- Judul -->
+    <!-- Judul Hero -->
     <h2 class="umkm-title">
       {{ $heroUmkm->hero ?? 'Berbagai Macam UMKM Desa Jubung' }}
     </h2>
@@ -19,9 +19,7 @@
       @forelse($umkms as $umkm)
         <article class="umkm-card">
           <img
-            src="{{ $umkm->logo 
-                      ? asset('storage/'.$umkm->logo) 
-                      : asset('images/dummy1.png') }}"
+            src="{{ $umkm->gambar ? asset('umkm_images/'.$umkm->gambar) : asset('images/dummy1.png') }}"
             alt="{{ $umkm->nama_umkm }}"
             class="umkm-cover"
           >
@@ -34,6 +32,11 @@
       @empty
         <p class="empty-state">Belum ada data UMKM.</p>
       @endforelse
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper">
+        {{ $umkms->links() }}
     </div>
   </div>
 </section>

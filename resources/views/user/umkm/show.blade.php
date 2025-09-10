@@ -2,28 +2,30 @@
 
 @section('title', 'Detail UMKM - ' . $umkm->nama_umkm)
 
+@section('styles')
+<link rel="stylesheet" href="{{ asset('css/user/umkm/show.css') }}">
+@endsection
+
 @section('content')
 
-{{-- CSS halaman detail UMKM --}}
-<link rel="stylesheet" href="{{ asset('css/user/umkm/show.css') }}">
-
 <main class="umkm-detail">
-  <!-- Bagian Gambar + Judul -->
+
+  {{-- Bagian Gambar + Judul --}}
   <div class="umkm-left">
     <h1 class="umkm-title">{{ $umkm->nama_umkm }}</h1>
     <div class="slider">
       <img
-        src="{{ $umkm->gambar 
-                  ? asset('storage/'.$umkm->gambar) 
-                  : asset('images/dummy1.png') }}"
-        alt="{{ $umkm->nama_umkm }}">
+        src="{{ $umkm->gambar ? asset('storage/umkm_images/'.$umkm->gambar) : asset('images/dummy1.png') }}"
+        alt="{{ $umkm->nama_umkm }}"
+        class="main-slider-img">
     </div>
   </div>
 
-  <!-- Bagian Deskripsi -->
+  {{-- Bagian Deskripsi --}}
   <div class="umkm-right">
     <p>{{ $umkm->deskripsi }}</p>
   </div>
+
 </main>
 
 {{-- ========================= --}}
@@ -35,24 +37,20 @@
 
   <main class="katalog">
     <div class="produk-display">
-      {{-- Produk utama (ambil produk pertama) --}}
+      {{-- Produk utama --}}
       @php
         $firstProduct = $umkm->products->first();
       @endphp
       <img id="mainImage"
-           src="{{ $firstProduct->product_image 
-                     ? asset('storage/'.$firstProduct->product_image) 
-                     : asset('images/dummy1.png') }}"
-           alt="Produk Utama"
+           src="{{ $firstProduct->product_image ? asset('storage/product_images/'.$firstProduct->product_image) : asset('images/dummy1.png') }}"
+           alt="{{ $firstProduct->nama_produk }}"
            class="main-img"
            loading="lazy">
 
       <div class="thumbnail-container">
         @foreach($umkm->products as $item)
-          <img src="{{ $item->product_image 
-                        ? asset('storage/'.$item->product_image) 
-                        : asset('images/dummy1.png') }}"
-               alt="Thumbnail {{ $item->nama_produk }}"
+          <img src="{{ $item->product_image ? asset('storage/product_images/'.$item->product_image) : asset('images/dummy1.png') }}"
+               alt="{{ $item->nama_produk }}"
                data-nama="{{ $item->nama_produk }}"
                data-harga="Rp {{ number_format($item->harga, 0, ',', '.') }}"
                data-deskripsi="{{ $item->deskripsi }}"
@@ -83,20 +81,24 @@
   <h2 class="contact-title">Kontak & Alamat</h2>
 
   <div class="contact-cards">
-    <!-- KONTAK -->
+    {{-- Kontak WhatsApp --}}
+    @if($umkm->kontak)
     <a href="https://wa.me/{{ $umkm->kontak }}" target="_blank" class="contact-card">
       <h3>Kontak WhatsApp</h3>
       <p>{{ $umkm->kontak }}</p>
     </a>
+    @endif
 
-    <!-- ALAMAT -->
+    {{-- Alamat --}}
+    @if($umkm->alamat)
     <div class="contact-card">
       <h3>Alamat</h3>
       <p>{{ $umkm->alamat }}</p>
     </div>
+    @endif
   </div>
 
-  <!-- Google Maps -->
+  {{-- Google Maps --}}
   @if($umkm->gmaps)
   <div class="map-container">
     <iframe
@@ -107,7 +109,7 @@
   @endif
 </section>
 
-{{-- ====== JS: fungsional + animasi ringan (khusus halaman ini) ====== --}}
+{{-- ====== JS: fungsional + animasi ====== --}}
 <script>
   // Ganti gambar & info produk
   function changeImage(el) {
@@ -117,7 +119,7 @@
     document.getElementById('produkDesc').innerText = el.dataset.deskripsi;
   }
 
-  // ===== Scroll Reveal + efek muncul halus =====
+  // Scroll Reveal + animasi muncul halus
   (function(){
     const revealEls = [
       ...document.querySelectorAll('.umkm-detail, .umkm-title, .umkm-right'),
@@ -151,7 +153,7 @@
     });
   })();
 
-  // ===== Tilt ringan pada gambar utama mengikuti kursor =====
+  // Tilt ringan pada gambar utama mengikuti kursor
   (function(){
     const img = document.querySelector('.slider img');
     if(!img) return;
