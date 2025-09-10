@@ -8,7 +8,7 @@
 
     <!-- HEADER -->
     <div class="service-header">
-        @if(isset($settings) && $settings)
+        @if($settings && $settings->judul_hero)
             <h1 class="service-title">{{ $settings->judul_hero }}</h1>
             <p class="service-subtitle">{{ $settings->subjudul_hero }}</p>
         @else
@@ -17,71 +17,67 @@
         @endif
     </div>
 
-    <!-- FORM -->
-    <form action="{{ route('service.submit') }}" method="POST" class="service-form" enctype="multipart/form-data" id="serviceForm">
+    <form action="{{ route('service.submit') }}" method="POST" class="service-form" enctype="multipart/form-data">
         @csrf
 
-        <!-- 1. Data UMKM -->
+        <!-- Data UMKM -->
         <div class="form-block">
             <h2 class="block-title">1. Data UMKM</h2>
-
             <div class="grid-2">
                 <div class="form-group">
-                    <label for="brand">Nama UMKM*</label>
-                    <input type="text" id="brand" name="nama_umkm" value="{{ old('nama_umkm') }}" required>
+                    <label>Nama UMKM*</label>
+                    <input type="text" name="nama_umkm" value="{{ old('nama_umkm') }}" required>
                 </div>
                 <div class="form-group">
-                    <label for="owner">Nama Pemilik / Penanggung Jawab*</label>
-                    <input type="text" id="owner" name="owner" value="{{ old('owner') }}" required>
+                    <label>Nama Pemilik / Penanggung Jawab*</label>
+                    <input type="text" name="owner" value="{{ old('owner') }}" required>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="address">Alamat UMKM*</label>
-                <textarea id="address" name="alamat" rows="2" required>{{ old('alamat') }}</textarea>
+                <label>Alamat UMKM*</label>
+                <textarea name="alamat" rows="2" required>{{ old('alamat') }}</textarea>
             </div>
 
             <div class="form-group">
-                <label for="deskripsi">Deskripsi UMKM*</label>
-                <textarea id="deskripsi" name="deskripsi" rows="3" required>{{ old('deskripsi') }}</textarea>
+                <label>Deskripsi UMKM*</label>
+                <textarea name="deskripsi" rows="3" required>{{ old('deskripsi') }}</textarea>
             </div>
 
             <div class="grid-2">
                 <div class="form-group">
-                    <label for="phone">Kontak / WhatsApp*</label>
-                    <input type="text" id="phone" name="kontak" value="{{ old('kontak') }}" required>
+                    <label>Kontak / WhatsApp*</label>
+                    <input type="text" name="kontak" value="{{ old('kontak') }}" required>
                 </div>
-
                 <div class="form-group">
-                    <label for="umkmLogo">Logo UMKM (JPEG/PNG, maks 2MB)</label>
-                    <input type="file" id="umkmLogo" name="logo" accept="image/png,image/jpeg,image/jpg">
-                    <div class="single-preview" id="umkmLogoPreview">
-                        <img src="{{ asset('images/dummy5.PNG') }}" alt="Logo UMKM" class="thumb">
+                    <label>Logo UMKM (maks 2MB)</label>
+                    <input type="file" name="logo" accept="image/png,image/jpeg">
+                    <div class="single-preview">
+                        <img src="{{ asset('images/dummy5.PNG') }}" class="thumb" alt="Logo">
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="gmaps">Link Google Maps (opsional)</label>
-                <input type="text" id="gmaps" name="gmaps" value="{{ old('gmaps') }}">
+                <label>Link Google Maps</label>
+                <input type="text" name="gmaps" value="{{ old('gmaps') }}">
             </div>
 
             <div class="grid-2">
                 <div class="form-group">
-                    <label for="social">Sosial Media / Marketplace</label>
-                    <input type="text" id="social" name="social" value="{{ old('social') }}">
+                    <label>Sosial Media / Marketplace</label>
+                    <input type="text" name="social" value="{{ old('social') }}">
                 </div>
                 <div class="form-group">
-                    <label for="store">Lokasi Penjualan Offline</label>
-                    <input type="text" id="store" name="store" value="{{ old('store') }}">
+                    <label>Lokasi Penjualan Offline</label>
+                    <input type="text" name="store" value="{{ old('store') }}">
                 </div>
             </div>
         </div>
 
-        <!-- 2. Data Produk -->
+        <!-- Data Produk -->
         <div class="form-block">
             <h2 class="block-title">2. Data Produk</h2>
-
             <div id="productWrapper">
                 <div class="grid-2 product-item" style="position:relative;">
                     <div class="form-group">
@@ -98,9 +94,9 @@
                     </div>
                     <div class="form-group">
                         <label>Foto Produk</label>
-                        <input type="file" name="product_images[0][]" multiple accept="image/png,image/jpeg,image/jpg" class="product-file-input">
+                        <input type="file" name="product_images[0][]" multiple accept="image/png,image/jpeg" class="product-file-input">
                         <div class="preview-grid">
-                            <img src="{{ asset('images/dummy5.PNG') }}" alt="Produk" class="preview-thumb">
+                            <img src="{{ asset('images/dummy5.PNG') }}" class="preview-thumb" alt="Produk">
                         </div>
                     </div>
                 </div>
@@ -109,7 +105,6 @@
             <button type="button" id="addProduct" class="btn-add">Tambah Produk</button>
         </div>
 
-        <!-- Submit -->
         <div class="form-actions">
             <button type="submit" class="btn-submit">Kirim Data</button>
         </div>
@@ -117,9 +112,7 @@
 </section>
 
 <style>
-/* Preview Logo dan Produk */
-.single-preview img.thumb,
-.preview-grid img.preview-thumb {
+.single-preview img.thumb, .preview-grid img.preview-thumb {
     min-height: 170px;
     max-height: 204px;
     width: auto;
@@ -128,83 +121,69 @@
     margin: 0 auto;
 }
 
-.preview-grid {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
+.preview-grid { display:flex; gap:10px; flex-wrap:wrap; }
 </style>
 
 <script>
 (() => {
-    const MAX_SIZE = 2 * 1024 * 1024; // 2MB
-    const ALLOWED = ["image/jpeg","image/png","image/jpg"];
+    const MAX_SIZE = 2 * 1024 * 1024;
+    const ALLOWED = ["image/jpeg","image/png"];
 
-    // Preview Logo UMKM
-    const umkmLogoInput = document.getElementById('umkmLogo');
-    const umkmLogoPreview = document.getElementById('umkmLogoPreview');
-    umkmLogoInput?.addEventListener('change', () => {
-        umkmLogoPreview.innerHTML = '';
-        const file = umkmLogoInput.files[0];
-        if(!file) return;
-        if(!ALLOWED.includes(file.type) || file.size > MAX_SIZE){
-            alert('Format harus JPG/PNG dan ukuran maks 2MB.');
-            umkmLogoInput.value='';
-            return;
-        }
-        const img = document.createElement('img');
-        img.className = 'thumb';
-        img.src = URL.createObjectURL(file);
-        umkmLogoPreview.appendChild(img);
+    // Preview logo
+    document.querySelectorAll('input[name="logo"]').forEach(input => {
+        input.addEventListener('change', e => {
+            const file = e.target.files[0];
+            const container = e.target.nextElementSibling;
+            container.innerHTML = '';
+            if(file && ALLOWED.includes(file.type) && file.size <= MAX_SIZE){
+                const img = document.createElement('img');
+                img.className='thumb';
+                img.src=URL.createObjectURL(file);
+                container.appendChild(img);
+            } else {
+                alert('Format harus JPG/PNG & ukuran maks 2MB');
+                e.target.value='';
+            }
+        });
     });
 
-    // Fungsi preview untuk file input produk
-    const attachPreviewEvent = input => {
+    // Preview produk
+    const attachPreview = input => {
         input.addEventListener('change', e => {
             const container = e.target.closest('.form-group').querySelector('.preview-grid');
-            container.innerHTML = '';
+            container.innerHTML='';
             Array.from(e.target.files).forEach(file => {
-                const img = document.createElement('img');
-                img.className = 'preview-thumb';
-                img.src = URL.createObjectURL(file);
+                const img=document.createElement('img');
+                img.className='preview-thumb';
+                img.src=URL.createObjectURL(file);
                 container.appendChild(img);
             });
         });
     };
-    document.querySelectorAll('.product-file-input').forEach(attachPreviewEvent);
+    document.querySelectorAll('.product-file-input').forEach(attachPreview);
 
-    // Tambah Produk Dinamis
-    const productWrapper = document.getElementById('productWrapper');
-    let productIndex = 1;
-    document.getElementById('addProduct').addEventListener('click', () => {
-        const first = document.querySelector('.product-item');
-        const clone = first.cloneNode(true);
-
-        // Reset semua input
-        clone.querySelectorAll('input,textarea').forEach(el => {
+    // Tambah produk
+    const wrapper=document.getElementById('productWrapper');
+    let index=1;
+    document.getElementById('addProduct').addEventListener('click',()=>{
+        const clone=wrapper.querySelector('.product-item').cloneNode(true);
+        clone.querySelectorAll('input,textarea').forEach(el=>{
             if(el.name.includes('product_images')){
-                el.name = `product_images[${productIndex}][]`;
-                el.value = '';
-                el.closest('.form-group').querySelector('.preview-grid').innerHTML =
-                    '<img src="{{ asset("images/dummy5.PNG") }}" alt="Produk" class="preview-thumb">';
-            } else el.value = '';
+                el.name=`product_images[${index}][]`;
+                el.value='';
+                el.closest('.form-group').querySelector('.preview-grid').innerHTML=
+                '<img src="{{ asset("images/dummy5.PNG") }}" class="preview-thumb" alt="Produk">';
+            } else el.value='';
         });
-
-        // Tombol hapus
-        const removeBtn = document.createElement('button');
-        removeBtn.type = 'button';
-        removeBtn.className = 'remove-btn';
-        removeBtn.textContent = '×';
-        removeBtn.style.cssText = "position:absolute;top:-10px;right:-10px;background:#000;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;";
-        removeBtn.addEventListener('click', ()=> clone.remove());
-        clone.style.position = "relative";
-        clone.appendChild(removeBtn);
-
-        productWrapper.appendChild(clone);
-
-        // Event preview untuk file baru
-        attachPreviewEvent(clone.querySelector('.product-file-input'));
-        productIndex++;
+        const btn=document.createElement('button');
+        btn.type='button'; btn.textContent='×';
+        btn.style.cssText="position:absolute;top:-10px;right:-10px;background:#000;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;";
+        btn.addEventListener('click',()=>clone.remove());
+        clone.style.position='relative';
+        clone.appendChild(btn);
+        wrapper.appendChild(clone);
+        attachPreview(clone.querySelector('.product-file-input'));
+        index++;
     });
 })();
 </script>

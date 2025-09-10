@@ -17,7 +17,7 @@ class AdminUmkmSubmissionController extends Controller
     {
         $submissions = UmkmSubmission::with('products')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->get(); // ambil semua submission termasuk accepted/rejected
 
         $settings = ServiceSetting::first();
         return view('admin.setting.form', compact('submissions', 'settings'));
@@ -36,10 +36,7 @@ class AdminUmkmSubmissionController extends Controller
 
     public function index()
     {
-        $submissions = UmkmSubmission::where('status', 'pending')
-            ->with('products')
-            ->get();
-
+        $submissions = UmkmSubmission::with('products')->orderBy('created_at','desc')->get();
         return view('admin.submissions.index', compact('submissions'));
     }
 
@@ -50,49 +47,46 @@ class AdminUmkmSubmissionController extends Controller
     }
 
     public function accept($id)
-{
-    $submission = UmkmSubmission::with('products')->findOrFail($id);
+    {
+        $submission = UmkmSubmission::with('products')->findOrFail($id);
 
-    DB::beginTransaction();
-    try {
-        // Simpan UMKM baru
-        $umkm = Umkm::create([
-            'nama_umkm' => $submission->nama_umkm,
-            'owner' => $submission->owner,
-            'deskripsi' => $submission->deskripsi,
-            'alamat' => $submission->alamat,
-            'kontak' => $submission->kontak,
-            'logo' => $submission->logo, // tetap path lengkap
-            'gmaps' => $submission->gmaps,
-            'social' => $submission->social,
-            'store' => $submission->store,
-        ]);
-
-        // Masukkan produk
-        foreach ($submission->products as $productSub) {
-            Product::create([
-                'umkm_id' => $umkm->id,
-                'nama_produk' => $productSub->nama_produk,
-                'harga' => $productSub->harga,
-                'deskripsi' => $productSub->deskripsi,
-                'product_image' => $productSub->product_image, // path lengkap
+        DB::beginTransaction();
+        try {
+            $umkm = Umkm::create([
+                'nama_umkm' => $submission->nama_umkm,
+                'owner' => $submission->owner,
+                'deskripsi' => $submission->deskripsi,
+                'alamat' => $submission->alamat,
+                'kontak' => $submission->kontak,
+                'logo' => $submission->logo, 
+                'gmaps' => $submission->gmaps,
+                'social' => $submission->social,
+                'store' => $submission->store,
             ]);
+
+            foreach ($submission->products as $productSub) {
+                Product::create([
+                    'umkm_id' => $umkm->id,
+                    'nama_produk' => $productSub->nama_produk,
+                    'harga' => $productSub->harga,
+                    'deskripsi' => $productSub->deskripsi,
+                    'product_image' => $productSub->product_image,
+                ]);
+            }
+
+            $submission->status = 'accepted';
+            $submission->save();
+
+            DB::commit();
+            return redirect()->route('admin.service.settings')
+                ->with('success', 'Submission diterima, data UMKM & produk sudah dibuat.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error("Gagal accept submission: " . $e->getMessage());
+            return redirect()->route('admin.service.settings')
+                ->with('error', 'Terjadi kesalahan saat memproses submission.');
         }
-
-        $submission->status = 'accepted';
-        $submission->save();
-
-        DB::commit();
-        return redirect()->route('admin.service.settings')
-            ->with('success', 'Submission diterima, data UMKM & produk sudah dibuat.');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error("Gagal accept submission: " . $e->getMessage());
-        return redirect()->route('admin.service.settings')
-            ->with('error', 'Terjadi kesalahan saat memproses submission.');
     }
-}
-
 
     public function reject($id)
     {
