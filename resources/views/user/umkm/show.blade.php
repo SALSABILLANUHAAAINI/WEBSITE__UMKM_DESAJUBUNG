@@ -8,6 +8,9 @@
 
 @section('content')
 
+<!-- Nama UMKM: ditempatkan di tengah atas -->
+<h1 class="umkm-title">{{ $umkm->nama_umkm }}</h1>
+
 <main class="umkm-detail">
     <div class="umkm-left">
         <div class="slider">
@@ -17,10 +20,6 @@
                 class="main-slider-img appear"
             >
         </div>
-    </div>
-
-    <div class="umkm-center">
-        <h1 class="umkm-title">{{ $umkm->nama_umkm }}</h1>
     </div>
 
     <div class="umkm-right">
