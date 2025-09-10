@@ -58,7 +58,7 @@
     <div class="produk-list">
         @foreach($umkms as $umkm)
         <div class="produk-card">
-            <img src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}" alt="{{ $umkm->nama_umkm }}" class="produk-img">
+            <img src="{{ $umkm->gambar ? asset('storage/umkm_images/' . $umkm->gambar) : asset('images/dummy1.png') }}" alt="{{ $umkm->nama_umkm }}" class="produk-img">
             <div class="produk-body">
                 <h3 class="produk-nama">{{ $umkm->nama_umkm }}</h3>
                 <p class="produk-desc">{{ Str::limit($umkm->deskripsi, 80) }}</p>
@@ -85,23 +85,17 @@
 
 </div>
 
-{{-- JS untuk modal --}}
+{{-- JS modal --}}
 <script>
 function openHeroModal() {
     document.getElementById('heroModal').style.display = 'flex';
 }
-
 function closeHeroModal() {
     document.getElementById('heroModal').style.display = 'none';
 }
-
-// Tutup modal jika klik di luar konten
 window.onclick = function(event) {
     const modal = document.getElementById('heroModal');
-    if(event.target === modal) {
-        modal.style.display = 'none';
-    }
+    if(event.target === modal) modal.style.display = 'none';
 }
 </script>
-
 @endsection
