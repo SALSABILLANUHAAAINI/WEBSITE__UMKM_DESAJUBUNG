@@ -141,73 +141,7 @@ body {
   color: var(--text-light);
 }
 
-/* =================================
-   CARD KATALOG
-   ================================= */
-.card-katalog {
-  background: var(--bg-card);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border-color);
-  padding: 1rem;
-  position: relative;
-  min-height: 220px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.card-katalog::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, rgba(16,185,129,0.08), rgba(59,130,246,0.05));
-  opacity: 0.5;
-  border-radius: var(--border-radius);
-}
-.card-katalog:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 12px -3px rgb(0 0 0 / 0.1);
-}
-.card-katalog .produk-nama::before {
-  content: '📂';
-  margin-right: 0.5rem;
-}
-.card-katalog .btn.lihat {
-  background: var(--success-color);
-}
-.card-katalog .btn.lihat:hover {
-  background: #15803d;
-}
-.card-katalog .btn.hapus {
-  background: var(--danger-soft);
-}
-.card-katalog .btn.hapus:hover {
-  background: #ef4444;
-}
 
-/* =================================
-   TOMBOL
-   ================================= */
-.produk-btn-group {
-  display: flex;
-  gap: 0.75rem;
-  justify-content: flex-end;
-}
-.btn {
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 600;
-  transition: background-color 0.2s, transform 0.1s;
-  text-align: center;
-  color: white;
-}
-.btn:active {
-    transform: scale(0.98);
-}
 
 /* =================================
    FOOTER DASHBOARD
