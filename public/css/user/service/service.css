@@ -1,5 +1,5 @@
 /* =========================
-   Color Palette & Vars
+   Color Palette & Variables
 ========================= */
 :root {
     --c-white: #FCFDFB;
@@ -39,7 +39,7 @@ body {
 }
 
 /* =========================
-   Containers & Sections
+   Section Container
 ========================= */
 .service-section {
     max-width: var(--container);
@@ -130,7 +130,6 @@ body {
     gap: var(--gap-md);
 }
 
-/* Full width untuk alamat & deskripsi */
 .grid-2 .form-group.full-width {
     grid-column: 1 / -1;
 }
@@ -140,13 +139,13 @@ body {
 ========================= */
 .form-group input,
 .form-group textarea {
+    width: 100%;
     padding: 12px 14px;
     border: 1px solid var(--c-brown-border);
     border-radius: var(--radius-sm);
     font-size: 0.95rem;
-    transition: all var(--speed) ease;
     background: var(--c-white);
-    width: 100%;
+    transition: all var(--speed) ease;
 }
 
 .form-group textarea {
@@ -161,7 +160,7 @@ body {
 }
 
 /* =========================
-   Upload Area
+   Upload Area & Preview
 ========================= */
 .upload-area {
     position: relative;
@@ -179,19 +178,28 @@ body {
     border-color: var(--c-accent-deep);
 }
 
-/* =========================
-   Preview Images
-========================= */
 .single-preview .thumb,
+.preview-grid img,
 .preview-card img {
     border-radius: var(--radius-sm);
+    max-height: 200px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .single-preview .thumb:hover,
+.preview-grid img:hover,
 .preview-card img:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 16px rgba(93, 78, 55, 0.12);
+}
+
+.preview-grid {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .preview-card {
@@ -255,8 +263,22 @@ body {
     opacity: 0.9;
 }
 
+.btn-add {
+    padding: 10px 18px;
+    background: var(--c-accent);
+    color: var(--c-white);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--speed) ease;
+}
+
+.btn-add:hover {
+    opacity: 0.9;
+}
+
 /* =========================
-   Divider / Sekat Produk Baru
+   Divider & Remove Product
 ========================= */
 .product-divider {
     height: 2px;
@@ -265,7 +287,6 @@ body {
     border-radius: var(--radius-sm);
 }
 
-/* Tombol hapus produk */
 .remove-btn {
     position: absolute;
     top: -10px;
@@ -337,37 +358,18 @@ body {
    Animations
 ========================= */
 @keyframes fadeInDown {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
+    0% { opacity: 0; }
+    100% { opacity: 1; }
 }
 
 @keyframes scaleIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
+    0% { opacity: 0; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
 /* =========================
@@ -377,7 +379,6 @@ body {
     .grid-2 {
         grid-template-columns: 1fr;
     }
-
     .service-section {
         padding: 24px;
     }

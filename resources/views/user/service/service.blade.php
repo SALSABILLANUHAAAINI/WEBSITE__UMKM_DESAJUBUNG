@@ -49,31 +49,29 @@
                     <label>Kontak / WhatsApp*</label>
                     <input type="text" name="kontak" value="{{ old('kontak') }}" required placeholder="Contoh: 08123456789">
                 </div>
-                <div class="form-group">
+                <div class="form-group upload-area">
                     <label>Gambar UMKM (maks 2MB, JPG/PNG)</label>
                     <input type="file" name="gambar" accept="image/png,image/jpeg">
-                    <div class="single-preview">
-                        <img src="{{ asset('images/dummy5.PNG') }}" class="thumb" alt="Gambar UMKM">
-                    </div>
+                    <div class="single-preview"></div>
                 </div>
             </div>
 
             <div class="form-group">
                 <label>Link Google Maps</label>
                 <input type="text" name="gmaps" value="{{ old('gmaps') }}"
-                       placeholder="Masukkan URL Google Maps, misal: https://goo.gl/maps/xxxx">
+                    placeholder="Masukkan URL Google Maps, misal: https://goo.gl/maps/xxxx">
             </div>
 
             <div class="grid-2">
                 <div class="form-group">
                     <label>Sosial Media / Marketplace</label>
                     <input type="text" name="social" value="{{ old('social') }}"
-                           placeholder="Contoh: https://instagram.com/nama_umkm atau https://shopee.co.id/nama_toko">
+                        placeholder="Contoh: https://instagram.com/nama_umkm atau https://shopee.co.id/nama_toko">
                 </div>
                 <div class="form-group">
                     <label>Lokasi Penjualan Offline</label>
                     <input type="text" name="store" value="{{ old('store') }}"
-                           placeholder="Contoh: Jalan Raya No. 10, Desa Jubung">
+                        placeholder="Contoh: Jalan Raya No. 10, Desa Jubung">
                 </div>
             </div>
         </div>
@@ -95,12 +93,10 @@
                         <label>Deskripsi Produk*</label>
                         <textarea name="description[]" rows="3" required placeholder="Deskripsi produk">{{ old('description.0') }}</textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group upload-area">
                         <label>Foto Produk (maks 2MB, JPG/PNG)</label>
                         <input type="file" name="product_images[0][]" multiple accept="image/png,image/jpeg" class="product-file-input">
-                        <div class="preview-grid">
-                            <img src="{{ asset('images/dummy5.PNG') }}" class="preview-thumb" alt="Produk">
-                        </div>
+                        <div class="preview-grid"></div>
                     </div>
                 </div>
             </div>
@@ -114,18 +110,6 @@
     </form>
 </section>
 
-<style>
-.single-preview img.thumb, .preview-grid img.preview-thumb {
-    min-height: 170px;
-    max-height: 204px;
-    width: auto;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto;
-}
-.preview-grid { display:flex; gap:10px; flex-wrap:wrap; }
-</style>
-
 <script>
 (() => {
     const MAX_SIZE = 2 * 1024 * 1024;
@@ -135,7 +119,7 @@
     document.querySelectorAll('input[name="gambar"]').forEach(input => {
         input.addEventListener('change', e => {
             const file = e.target.files[0];
-            const container = e.target.nextElementSibling;
+            const container = e.target.closest('.upload-area').querySelector('.single-preview');
             container.innerHTML = '';
             if(file && ALLOWED.includes(file.type) && file.size <= MAX_SIZE){
                 const img = document.createElement('img');
@@ -152,7 +136,7 @@
     // Preview produk
     const attachPreview = input => {
         input.addEventListener('change', e => {
-            const container = e.target.closest('.form-group').querySelector('.preview-grid');
+            const container = e.target.closest('.upload-area').querySelector('.preview-grid');
             container.innerHTML='';
             Array.from(e.target.files).forEach(file => {
                 const img=document.createElement('img');
@@ -173,13 +157,12 @@
             if(el.name.includes('product_images')){
                 el.name=`product_images[${index}][]`;
                 el.value='';
-                el.closest('.form-group').querySelector('.preview-grid').innerHTML=
-                '<img src="{{ asset("images/dummy5.PNG") }}" class="preview-thumb" alt="Produk">';
+                el.closest('.upload-area').querySelector('.preview-grid').innerHTML='';
             } else el.value='';
         });
         const btn=document.createElement('button');
         btn.type='button'; btn.textContent='×';
-        btn.style.cssText="position:absolute;top:-10px;right:-10px;background:#000;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;";
+        btn.className='remove-btn';
         btn.addEventListener('click',()=>clone.remove());
         clone.style.position='relative';
         clone.appendChild(btn);
