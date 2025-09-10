@@ -10,10 +10,12 @@ use Illuminate\Http\Request;
 class UmkmSubmissionController extends Controller
 {
     public function showForm()
-    {
-        $katalogs = Katalog::where('is_active', 1)->get();
-        return view('user.service.service', compact('katalogs'));
-    }
+{
+    $katalogs = Katalog::where('is_active', 1)->get();
+    $settings = \App\Models\ServiceSetting::first(); // ambil settings hero
+    return view('user.service.service', compact('katalogs', 'settings'));
+}
+
 
     public function store(Request $request)
     {
