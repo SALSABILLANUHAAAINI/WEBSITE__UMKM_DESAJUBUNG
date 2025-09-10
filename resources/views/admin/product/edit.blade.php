@@ -2,7 +2,7 @@
 @section('title', 'Edit Produk')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('css/admin/produk/tambahProduk.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/produk/produk.css') }}">
 @endsection
 
 @section('content')
