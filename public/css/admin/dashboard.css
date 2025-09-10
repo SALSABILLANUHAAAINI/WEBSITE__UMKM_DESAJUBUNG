@@ -2,18 +2,24 @@
    VARIABEL & GAYA DASAR
    ================================= */
 :root {
-  --primary-color: #3b82f6; /* Biru */
-  --success-color: #16a34a; /* Hijau */
-  --danger-color: #dc2626;  /* Merah */
-  --bg-light: #f8f9fa;      /* Latar belakang utama */
-  --bg-card: #ffffff;      /* Latar belakang kartu */
-  --text-dark: #1f2937;     /* Teks utama */
-  --text-light: #6b7280;    /* Teks sekunder */
-  --border-color: #e5e7eb;  /* Warna border */
+  --primary-color: #3b82f6;   /* Biru */
+  --success-color: #16a34a;   /* Hijau */
+  --danger-color: #dc2626;    /* Merah */
+  --bg-light: #f8f9fa;        /* Latar belakang utama */
+  --bg-card: #ffffff;          /* Latar belakang kartu */
+  --text-dark: #1f2937;       /* Teks utama */
+  --text-light: #6b7280;      /* Teks sekunder */
+  --border-color: #e5e7eb;    /* Warna border */
   --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --border-radius: 0.75rem; /* 12px */
+  --shadow-soft: 0 2px 4px rgba(0,0,0,0.06);
+  --border-radius: 0.75rem;   /* 12px */
+  --muted: #6b7280;
+  --bg: #ffffff;
 }
 
+/* =================================
+   BODY
+   ================================= */
 body {
   background-color: var(--bg-light);
   color: var(--text-dark);
@@ -41,10 +47,16 @@ body {
   color: var(--text-light);
 }
 
-
 /* =================================
    KARTU STATISTIK
    ================================= */
+.grid-container {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
 .stat-card {
   background: var(--bg-card);
   border-radius: var(--border-radius);
@@ -53,6 +65,8 @@ body {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border: 1px solid var(--border-color);
   text-align: center;
+  flex: 1;              /* agar kartu sama besar */
+  min-width: 200px;     /* minimal lebar kartu */
 }
 .stat-card:hover {
   transform: translateY(-5px);
@@ -71,88 +85,87 @@ body {
   letter-spacing: 0.5px;
 }
 
-
 /* =================================
-   KARTU PRODUK
+   PRODUK TERBARU
    ================================= */
-   .produk-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    background: var(--bg);
-    border-radius: 1rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    color: var(--text);
+.produk-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-soft);
+  color: var(--text-dark);
+}
+
+.section-headline h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.produk-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
 }
 
 .produk-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: var(--card);
-    border-radius: 0.75rem;
-    box-shadow: var(--shadow-soft);
-    overflow: hidden;
-    transition: transform .18s ease, box-shadow .25s ease;
-    border: 1px solid rgba(17, 24, 39, .06);
-    position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  transition: transform .18s ease, box-shadow .25s ease;
+  border: 1px solid rgba(17, 24, 39, .06);
+  position: relative;
 }
-
 .produk-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
 }
-
-/* Hiasan dekoratif atas card */
 .produk-card::before {
-    content: "";
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: rgba(37, 99, 235, 0.08);
-    top: -20px;
-    right: -20px;
-    z-index: 0;
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(37, 99, 235, 0.08);
+  top: -20px;
+  right: -20px;
+  z-index: 0;
 }
-
-/* Gambar Produk */
 .produk-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
 }
-
-/* Info Card */
 .produk-body {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0.5rem;
-    position: relative;
-    z-index: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 1;
 }
-
 .produk-nama {
-    font-size: 1.2rem;
-    font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
-
 .produk-desc {
-    font-size: 0.9rem;
-    color: var(--muted);
+  font-size: 0.9rem;
+  color: var(--muted);
 }
-
 .produk-desc.harga {
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 2px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 2px;
 }
-
-
 
 /* =================================
    TOMBOL
@@ -160,9 +173,8 @@ body {
 .produk-btn-group {
   display: flex;
   gap: 0.75rem;
-  justify-content: flex-end; /* Mendorong tombol ke kanan */
+  justify-content: flex-end;
 }
-
 .btn {
   padding: 0.6rem 1.2rem;
   border: none;
@@ -175,20 +187,59 @@ body {
   color: white;
 }
 .btn:active {
-    transform: scale(0.98);
+  transform: scale(0.98);
 }
-
-/* Menggunakan 'lihat' karena di blade kita ganti dari 'edit' */
-.btn.lihat {
+.btn.lihat, .btn.edit {
   background: var(--success-color);
 }
-.btn.lihat:hover {
-  background: #15803d; /* Versi lebih gelap dari success-color */
+.btn.lihat:hover, .btn.edit:hover {
+  background: #15803d;
 }
-
 .btn.hapus {
   background: var(--danger-color);
 }
 .btn.hapus:hover {
-  background: #b91c1c; /* Versi lebih gelap dari danger-color */
+  background: #b91c1c;
+}
+
+/* =================================
+   TABEL KATALOG
+   ================================= */
+.katalog-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: var(--bg-card);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+.katalog-table th,
+.katalog-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+.katalog-table th {
+  background: var(--primary-color);
+  color: #fff;
+  font-weight: 600;
+}
+.katalog-table tr:last-child td {
+  border-bottom: none;
+}
+.katalog-table td .btn {
+  margin-right: 0.5rem;
+}
+
+/* =================================
+   RESPONSIVE
+   ================================= */
+@media (max-width: 768px) {
+  .grid-container {
+    flex-direction: column;
+  }
+  .produk-grid {
+    grid-template-columns: 1fr;
+  }
 }
