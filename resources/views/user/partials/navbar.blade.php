@@ -1,26 +1,24 @@
 <nav class="navbar" role="navigation" aria-label="Primary">
   <div class="navbar__wrap">
 
-    <!-- Hamburger (mobile) -->
-    <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+    <!-- Tombol Hamburger (muncul di mobile) -->
+    <button class="hamburger" aria-label="Toggle Menu" aria-expanded="false">
       <span></span>
       <span></span>
       <span></span>
     </button>
 
-    <!-- Logo -->
+    <ul class="nav-links nav-left">
+      <li><a href="{{ url('/umkm') }}">UMKM</a></li>
+      <li><a href="{{ url('/about') }}">Tentang</a></li>
+    </ul>
+
     <a href="{{ url('/') }}" class="logo" aria-label="Beranda">
       <span class="logo__title">UMKM Desa Jubung</span>
       <span class="logo__sub">Produk Lokal • Digital</span>
     </a>
 
-    <!-- Menu -->
-    <div class="nav-menu" id="navMenu">
-      <ul class="nav-links nav-left">
-        <li><a href="{{ url('/umkm') }}">UMKM</a></li>
-        <li><a href="{{ url('/about') }}">Tentang</a></li>
-      </ul>
-
+    <div class="nav-right-group">
       <ul class="nav-links nav-right">
         <li><a href="{{ url('/service') }}">Service</a></li>
         <li><a href="{{ url('/katalog') }}">Katalog</a></li>
@@ -36,13 +34,15 @@
     </div>
 
   </div>
-</nav>
-<script>
-  // Toggle Hamburger Menu
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const navMenu = document.getElementById('navMenu');
 
-  hamburgerBtn.addEventListener('click', () => {
-    navMenu.classList.toggle('nav-menu--active');
-    hamburgerBtn.classList.toggle('is-active');
-  });
+  <!-- Dropdown Menu (muncul di HP saat hamburger di klik) -->
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="{{ url('/umkm') }}">UMKM</a></li>
+      <li><a href="{{ url('/about') }}">Tentang</a></li>
+      <li><a href="{{ url('/service') }}">Service</a></li>
+      <li><a href="{{ url('/katalog') }}">Katalog</a></li>
+      <li><a href="{{ url('/admin/login') }}">Admin Login</a></li>
+    </ul>
+  </div>
+</nav>

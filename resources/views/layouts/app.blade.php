@@ -8,7 +8,9 @@
     {{-- CSS global --}}
     {{-- Pastikan urutan ini benar. app.css harus memuat semua style lain --}}
     <link rel="stylesheet" href="{{ asset('css/user/app.css') }}">
-    
+    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+<script src="{{ asset('js/navbar.js') }}" defer></script>
+
     {{-- File CSS admin tidak perlu dimuat di halaman user --}}
     {{-- <link rel="stylesheet" href="{{ asset('css/admin/login.css') }}"> --}}
     {{-- <link rel="stylesheet" href="{{ asset('css/admin/sidebar.css') }}"> --}}
