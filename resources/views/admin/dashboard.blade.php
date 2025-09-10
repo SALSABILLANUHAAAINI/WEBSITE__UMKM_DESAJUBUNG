@@ -4,7 +4,7 @@
 
 @section('content')
 
-<link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/produk/produk.css') }}">
 
 <div class="dashboard-container">
 
@@ -13,7 +13,7 @@
         <p>Selamat datang di halaman Admin Website UMKM Desa Jubung</p>
     </section>
 
-    {{-- KARTU STATISTIK (DINAMIS) --}}
+    {{-- KARTU STATISTIK --}}
     <section class="grid-container">
         <div class="stat-card">
             <h3 class="stat-value">{{ $jumlahUmkm }}</h3>
@@ -26,47 +26,38 @@
         </div>
     </section>
 
-    {{-- DAFTAR PRODUK TERBARU --}}
-<section class="list-section">
-    <h2 class="section-title">Produk Terbaru</h2>
-    <div class="grid-container">
-        @forelse($recentProducts as $product)
-            <div class="produk-card">
-                {{-- Gunakan product_image seperti di halaman produk --}}
-                <img
-                    src="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
-                    alt="{{ $product->nama_produk }}"
-                    class="produk-img">
+    {{-- PRODUK TERBARU --}}
+    <section class="list-section">
+        <h2 class="section-title">Produk Terbaru</h2>
+        <div class="produk-grid">
+            @forelse($recentProducts as $product)
+                <div class="produk-card">
+                    <img src="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
+                        alt="{{ $product->nama_produk }}" class="produk-img">
 
-                <div class="produk-body">
-                    <h3 class="produk-nama">{{ $product->nama_produk }}</h3>
-                    <p class="produk-desc">{{ $product->umkm->nama_umkm ?? '-' }}</p>
-                    <p class="produk-desc harga">Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
+                    <div class="produk-body">
+                        <h3 class="produk-nama">{{ $product->nama_produk }}</h3>
+                        <p class="produk-desc">{{ $product->umkm->nama_umkm ?? '-' }}</p>
+                        <p class="produk-desc harga">Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
+                    </div>
+
+                    <div class="produk-btn-group">
+                        <a href="{{ route('admin.product.edit', $product->id) }}" class="btn edit">Edit</a>
+
+                        <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn hapus" onclick="return confirm('Yakin hapus produk ini?')">Hapus</button>
+                        </form>
+                    </div>
                 </div>
+            @empty
+                <p class="col-span-full">Belum ada produk.</p>
+            @endforelse
+        </div>
+    </section>
 
-                <div class="produk-btn-group">
-                    <a href="{{ route('admin.product.edit', $product->id) }}" class="btn edit">Edit</a>
-
-                    <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn hapus" onclick="return confirm('Yakin hapus produk ini?')">Hapus</button>
-                    </form>
-                </div>
-            </div>
-        @empty
-            <p class="col-span-full">Belum ada produk.</p>
-        @endforelse
-    </div>
-
-    {{-- Opsional pagination jika ingin --}}
-    {{-- <div class="pagination">
-        {{ $recentProducts->links() }}
-    </div> --}}
-</section>
-
-
-    {{-- DAFTAR KATEGORI KATALOG TERBARU --}}
+    {{-- KATEGORI KATALOG TERBARU --}}
     <section class="list-section">
         <h2 class="section-title">Kategori Katalog Terbaru</h2>
         <div class="grid-container">
