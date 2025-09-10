@@ -6,16 +6,15 @@
 
 <link rel="stylesheet" href="{{ asset('css/admin/umkm/umkm.css') }}?v={{ time() }}">
 
-<div class="produk-container">
+<div class="umkm-container">
 
     <!-- Header -->
-    <div class="produk-header">
-        <h1 class="produk-title">UMKM - Admin Setting</h1>
-        <div class="produk-actions">
+    <div class="umkm-header">
+        <h1 class="umkm-title">UMKM - Admin Setting</h1>
+        <div class="umkm-actions">
             <a href="{{ route('admin.umkm.create') }}" class="btn tambah">+ Tambah UMKM</a>
         </div>
     </div>
-
 
     <!-- Hero Section -->
     <div class="hero-section">
@@ -40,7 +39,7 @@
             <form action="{{ route('admin.umkm.hero.update', $heroUmkm->id) }}" method="POST" class="modal-form">
                 @csrf
                 @method('PUT')
-                <input type="text" name="hero" class="form-control" value="{{ $heroUmkm->hero ?? '' }}" placeholder="Masukkan teks hero UMKM">
+                <input type="text" name="hero" class="form-control" value="{{ old('hero', $heroUmkm->hero ?? '') }}" placeholder="Masukkan teks hero UMKM">
 
                 <div class="form-actions">
                     <button type="button" class="btn cancel" onclick="closeHeroModal()">Batal</button>
@@ -50,32 +49,29 @@
         </div>
     </div>
 
-
-<!-- Form Pencarian -->
-<div class="search-container">
-    <form action="{{ route('admin.umkm.index') }}" method="GET" class="search-form">
-        <input type="text" name="search" class="search-input"
-               placeholder="Cari UMKM..."
-               value="{{ request('search') }}">
-        <button type="submit" class="btn search-btn">Cari</button>
-        @if(request('search'))
-            <a href="{{ route('admin.umkm.index') }}" class="btn reset-btn">Reset</a>
-        @endif
-    </form>
-</div>
-
-
+    <!-- Form Pencarian -->
+    <div class="search-container">
+        <form action="{{ route('admin.umkm.index') }}" method="GET" class="search-form">
+            <input type="text" name="search" class="search-input"
+                   placeholder="Cari UMKM..."
+                   value="{{ request('search') }}">
+            <button type="submit" class="btn search-btn">Cari</button>
+            @if(request('search'))
+                <a href="{{ route('admin.umkm.index') }}" class="btn reset-btn">Reset</a>
+            @endif
+        </form>
+    </div>
 
     <!-- Daftar UMKM -->
-    <div class="produk-list">
+    <div class="umkm-list">
         @forelse($umkms as $umkm)
-            <div class="produk-card">
-                <img src="{{ $umkm->gambar ? asset('storage/'.$umkm->gambar) : 'https://via.placeholder.com/500x300?text=No+Image' }}"
-                     alt="{{ $umkm->nama_umkm }}" class="produk-img">
-                <div class="produk-body">
-                    <h2 class="produk-nama">{{ $umkm->nama_umkm }}</h2>
-                    <p class="produk-desc">{{ Str::limit($umkm->deskripsi, 150) }}</p>
-                    <div class="produk-btn-group">
+            <div class="umkm-card">
+                <img src="{{ $umkm->logo ? asset('storage/'.$umkm->logo) : asset('images/dummy1.png') }}"
+                     alt="{{ $umkm->nama_umkm }}" class="umkm-img">
+                <div class="umkm-body">
+                    <h2 class="umkm-name">{{ $umkm->nama_umkm }}</h2>
+                    <p class="umkm-desc">{{ Str::limit($umkm->deskripsi, 150) }}</p>
+                    <div class="umkm-btn-group">
                         <a href="{{ route('admin.umkm.edit', $umkm->id) }}" class="btn edit">Edit</a>
                         <form action="{{ route('admin.umkm.destroy', $umkm->id) }}" method="POST" style="display:inline;">
                             @csrf
@@ -86,9 +82,10 @@
                 </div>
             </div>
         @empty
-            <p>Belum ada data UMKM.</p>
+            <p class="empty-state">Belum ada data UMKM.</p>
         @endforelse
     </div>
+
 </div>
 
 <!-- Script Modal -->
