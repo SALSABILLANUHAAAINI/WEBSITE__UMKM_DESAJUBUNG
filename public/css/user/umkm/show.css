@@ -332,3 +332,77 @@ body {
     .produk-deskripsi h2 { font-size: 1.2rem; }
     .harga { font-size: .95rem; }
 }
+
+/* ====== RESPONSIVE ====== */
+/* Laptop / tablet besar */
+@media (max-width: 1024px) {
+  .katalog { gap: 22px; }
+  .main-img { height: 300px; }
+}
+
+/* Tablet & HP */
+@media (max-width: 768px) {
+  .katalog {
+    flex-direction: column; /* stack vertikal */
+    gap: 20px;
+    padding: 16px 12px;
+  }
+
+  .produk-display {
+    max-width: 100%;
+  }
+
+  .main-img {
+    height: auto; 
+    max-height: 280px;
+  }
+
+  .thumbnail-container { justify-content: center; }
+  .thumbnail-container img { width: 72px; height: 54px; }
+
+  .produk-deskripsi {
+    max-width: 100%;
+    margin-left: 0;
+    padding: 20px 16px;
+  }
+
+  .produk-deskripsi h2 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .harga {
+    display: block;
+    text-align: center;
+    margin: 8px 0;
+  }
+
+  .produk-deskripsi p {
+    font-size: 0.95rem;
+    text-align: justify;
+  }
+}
+
+/* HP kecil */
+@media (max-width: 480px) {
+  .main-img {
+    max-height: 220px;
+  }
+
+  .thumbnail-container img {
+    width: 60px;
+    height: 45px;
+  }
+
+  .produk-deskripsi {
+    padding: 16px 12px;
+  }
+
+  .produk-deskripsi h2 {
+    font-size: 1.05rem;
+  }
+
+  .harga {
+    font-size: 0.95rem;
+  }
+}
