@@ -54,13 +54,14 @@
             <div class="katalog-grid">
                 @forelse($products as $product)
                     <div class="katalog-card"
-                         data-kategori="{{ strtolower($product->katalog->name ?? '') }}"
-                         data-nama="{{ $product->nama_produk }}"
-                         data-harga="Rp {{ number_format((float) $product->harga, 0, ',', '.') }}"
-                         data-toko="{{ $product->umkm->nama_umkm ?? 'UMKM Desa Jubung' }}"
-                         data-gambar="{{ $product->product_image ? asset('product_images/'.$product->product_image) : asset('images/dummy5.PNG') }}">
+                        data-kategori="{{ strtolower($product->katalog->name ?? '') }}"
+                        data-nama="{{ $product->nama_produk }}"
+                        data-harga="Rp {{ number_format((float) $product->harga, 0, ',', '.') }}"
+                        data-toko="{{ $product->umkm->nama_umkm ?? 'UMKM Desa Jubung' }}"
+                        data-gambar="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}">
 
-                        <img src="{{ $product->product_image ? asset('product_images/'.$product->product_image) : asset('images/dummy5.PNG') }}" alt="{{ $product->nama_produk }}">
+                        <img src="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
+                            alt="{{ $product->nama_produk }}">
                         <div class="katalog-info">
                             <h3 class="katalog-name">{{ $product->nama_produk }}</h3>
                             <p class="harga">Rp {{ number_format((float) $product->harga, 0, ',', '.') }}</p>
@@ -70,7 +71,6 @@
                     <p class="empty-state">Belum ada produk yang tersedia saat ini.</p>
                 @endforelse
             </div>
-        </div>
     </section>
 
     {{-- ===================== UMKM ===================== --}}
