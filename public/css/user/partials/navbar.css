@@ -137,7 +137,6 @@
     background: none;
     cursor: pointer;
 }
-
 .hamburger span {
     display: block;
     width: 100%;
@@ -147,9 +146,20 @@
     transition: transform .3s, opacity .3s;
 }
 
+/* animasi hamburger -> X */
+.hamburger.is-active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.is-active span:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.is-active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
 /* ===== Mobile Menu ===== */
 .mobile-menu {
-    display: none; /* awalnya disembunyikan */
+    display: none;
     background: #fff;
     border-top: 1px solid var(--c-green-soft);
 }
@@ -160,22 +170,33 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    text-align: center;
 }
 .mobile-menu a {
     text-decoration: none;
     color: var(--c-green-deep);
     font-weight: 600;
+    padding: .5rem;
+}
+.mobile-menu a:hover {
+    color: var(--c-green-main);
 }
 
-/* saat aktif (tombol ditekan) */
+/* tampilkan menu saat toggle */
 .mobile-menu.show {
     display: block;
 }
 
-
 /* ===== Responsive ===== */
 @media (max-width: 960px) {
-    .nav-left, .nav-right-group { display: none; }
-    .hamburger { display: flex; }
-    .navbar__wrap { grid-template-columns: auto 1fr auto; }
+    .nav-left, 
+    .nav-right-group { 
+        display: none; 
+    }
+    .hamburger { 
+        display: flex; 
+    }
+    .navbar__wrap { 
+        grid-template-columns: 1fr auto 1fr; 
+    }
 }

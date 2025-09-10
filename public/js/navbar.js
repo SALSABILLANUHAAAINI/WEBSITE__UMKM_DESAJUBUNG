@@ -2,14 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const hamburger = document.querySelector(".hamburger");
   const mobileMenu = document.querySelector(".mobile-menu");
 
-  if (hamburger && mobileMenu) {
+  if (hamburger) {
     hamburger.addEventListener("click", () => {
-      const expanded = hamburger.getAttribute("aria-expanded") === "true" || false;
-      hamburger.setAttribute("aria-expanded", !expanded);
+      hamburger.classList.toggle("is-active");
       mobileMenu.classList.toggle("show");
 
-      // Animasi hamburger
-      hamburger.classList.toggle("is-active");
+      const expanded = hamburger.getAttribute("aria-expanded") === "true";
+      hamburger.setAttribute("aria-expanded", !expanded);
     });
   }
 });
