@@ -20,21 +20,6 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-
-/* =================================
-   LAYOUT UTAMA & GRID
-   ================================= */
-.dashboard-container {
-    padding: 2rem;
-}
-
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-
 /* =================================
    HERO SECTION / HEADER
    ================================= */
@@ -90,6 +75,16 @@ body {
 /* =================================
    KARTU PRODUK
    ================================= */
+   .produk-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: var(--bg);
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    color: var(--text);
+}
+
 .produk-card {
     display: flex;
     flex-direction: column;
@@ -120,6 +115,7 @@ body {
     right: -20px;
     z-index: 0;
 }
+
 /* Gambar Produk */
 .produk-img {
     width: 100%;
