@@ -38,7 +38,7 @@
     </section>
 
     <div class="produk-grid">
-        @forelse($products as $product)
+        @forelse($recentProducts  as $product)
             <div class="produk-card">
                 <img src="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
                     alt="{{ $product->nama_produk }}" class="produk-img">
