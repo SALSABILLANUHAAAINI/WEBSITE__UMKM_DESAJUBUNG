@@ -8,7 +8,7 @@
     {{-- CSS global --}}
     {{-- Pastikan urutan ini benar. app.css harus memuat semua style lain --}}
     <link rel="stylesheet" href="{{ asset('css/user/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/partials/navbar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user/partials/navbar.css') }}">
     <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <script src="{{ asset('js/navbar.js') }}" defer></script>
