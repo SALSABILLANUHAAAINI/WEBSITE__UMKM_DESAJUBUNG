@@ -26,6 +26,12 @@
         </div>
     </section>
 
+{{-- PRODUK TERBARU --}}
+<section class="section-headline">
+    <h2>🛍️ Produk Terbaru</h2>
+    <p>3 produk terbaru yang ditambahkan ke sistem</p>
+</section>
+
 <div class="grid-container">
     @forelse($recentProducts as $product)
         <div class="card-dashboard">
@@ -37,7 +43,6 @@
 
             <div class="produk-btn-group">
                 <a href="{{ route('admin.product.edit', $product->id) }}" class="btn edit">Edit</a>
-
                 <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST">
                     @csrf
                     @method('DELETE')
@@ -49,6 +54,7 @@
         <p class="col-span-full">Belum ada produk.</p>
     @endforelse
 </div>
+
 
     {{-- DAFTAR KATEGORI KATALOG TERBARU --}}
    <div class="grid-container">
