@@ -137,7 +137,7 @@ body {
     box-shadow: var(--shadow-sm);
 }
 
-/* ====== KATALOG PRODUK ====== */
+/* ====== KATALOG PRODUK (galeri) ====== */
 .katalog-wrap {
     max-width: 1100px;
     margin: 2.25rem auto;
@@ -152,65 +152,64 @@ body {
     font-size: clamp(1.2rem, 1rem + .8vw, 1.6rem);
 }
 
-/* Layout katalog → grid agar seimbang */
+/* Layout */
 .katalog {
-    display: grid;
-    grid-template-columns: minmax(260px, 1fr) 360px; 
-    /* ⬆️ kiri fleksibel, kanan fix 360px → deskripsi tidak terlalu jauh */
-    gap: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 28px; /* sedikit lebih rapat */
     padding: 22px 16px;
     background: #fff;
     border: 1px solid var(--c-soft);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
-    align-items: start;
 }
 
-/* Kiri */
-.produk-display { text-align: center; }
+/* Kiri: display + thumbnails */
+.produk-display {
+    flex: 0 0 auto; /* jangan memaksa ikut melar */
+    text-align: center;
+}
 
 .main-img {
     width: 100%;
+    max-width: 380px; /* lebih kecil dari 480px */
     height: auto;
     aspect-ratio: 4 / 3;
     object-fit: cover;
     display: block;
+    margin: 0 auto;
     border-radius: var(--radius-lg);
     border: 1px solid var(--c-soft);
     box-shadow: var(--shadow-sm);
-    margin: 0 auto;
 }
 
 .thumbnail-container {
     margin-top: 12px;
     display: flex;
-    justify-content: flex-start; 
-    /* ⬆️ thumbnail rata kiri agar lebih rapih */
+    justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
 }
 
 .thumbnail-container img {
-    width: 88px;
-    height: 66px;
+    width: 90px;
+    height: 68px;
     object-fit: cover;
     border-radius: 8px;
-    cursor: pointer;
     border: 1px solid var(--c-soft);
-    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease, opacity .35s ease;
-    background: #fff;
+    transition: transform .2s ease, border-color .2s ease;
 }
 
 .thumbnail-container img:hover {
     transform: scale(1.05);
     border-color: var(--c-accent);
-    box-shadow: 0 0 0 4px rgba(143, 188, 143, .18);
 }
 
-/* Kanan */
+/* Kanan: deskripsi */
 .produk-deskripsi {
-    width: 100%;
-    max-width: 360px; /* ⬆️ seragam dengan grid */
+    flex: 1; /* biar melar ambil ruang kosong */
+    max-width: 500px; /* biar tidak terlalu panjang */
     background: #fff;
     padding: 18px;
     border-radius: var(--radius-md);
@@ -247,6 +246,7 @@ body {
     background: var(--c-soft);
     margin: .8rem 0 .6rem;
 }
+
 
 /* ====== ANIMASI ====== */
 @media (prefers-reduced-motion: reduce) {
