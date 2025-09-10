@@ -66,7 +66,7 @@
     <div class="produk-list">
         @forelse($umkms as $umkm)
             <div class="produk-card">
-                <img src="{{ $umkm->gambar ? asset('storage/'.$umkm->gambar) : 'https://via.placeholder.com/500x300?text=No+Image' }}"
+                <img src="{{ $umkm->gambar ? asset('umkm_images/'.$umkm->gambar) : asset('images/dummy1.png') }}"
                      alt="{{ $umkm->nama_umkm }}" class="produk-img">
                 <div class="produk-body">
                     <h2 class="produk-nama">{{ $umkm->nama_umkm }}</h2>

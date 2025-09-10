@@ -10,12 +10,19 @@
 <div class="content-wrapper">
 
     {{-- =================== HERO =================== --}}
-    @if($heroUmkm)
+    @if($heroUmkm && $heroUmkm->hero)
     <section class="hero">
         <div class="hero__container">
             <div class="hero__content">
                 <h1 class="hero__title">{{ $heroUmkm->hero }}</h1>
             </div>
+        </div>
+    </section>
+    @else
+    <section class="hero hero--fallback">
+        <div class="hero__container hero__container--center">
+            <h1 class="hero__title">Selamat Datang di UMKM Desa Jubung</h1>
+            <p class="hero__desc">Konten sedang dalam penyiapan. Silakan cek kembali nanti.</p>
         </div>
     </section>
     @endif
@@ -27,14 +34,16 @@
 
             <div class="katalog-grid">
                 @forelse($products as $product)
+                    @php
+                        $productImage = $product->product_image ? asset('storage/product_images/'.$product->product_image) : asset('images/dummy5.PNG');
+                    @endphp
                     <div class="katalog-card"
                          data-kategori="{{ strtolower($product->katalog->name ?? '') }}"
                          data-nama="{{ $product->nama_produk }}"
                          data-harga="Rp {{ number_format((float) $product->harga, 0, ',', '.') }}"
                          data-toko="{{ $product->umkm->nama_umkm ?? 'UMKM Desa Jubung' }}"
-                         data-gambar="{{ $product->product_image ? asset('storage/product_images/'.$product->product_image) : asset('images/dummy5.PNG') }}">
-
-                        <img src="{{ $product->product_image ? asset('storage/product_images/'.$product->product_image) : asset('images/dummy5.PNG') }}" alt="{{ $product->nama_produk }}">
+                         data-gambar="{{ $productImage }}">
+                        <img src="{{ $productImage }}" alt="{{ $product->nama_produk }}">
                         <div class="katalog-info">
                             <h3 class="katalog-name">{{ $product->nama_produk }}</h3>
                             <p class="harga">Rp {{ number_format((float) $product->harga, 0, ',', '.') }}</p>
@@ -56,8 +65,11 @@
 
             <div class="umkm-grid">
                 @forelse($umkms as $umkm)
+                    @php
+                        $umkmImage = $umkm->gambar ? asset('storage/'.$umkm->gambar) : asset('images/dummy1.png');
+                    @endphp
                     <div class="umkm-card">
-                        <img src="{{ $umkm->gambar ? asset('storage/'.$umkm->gambar) : asset('images/dummy1.png') }}" alt="{{ $umkm->nama_umkm }}">
+                        <img src="{{ $umkmImage }}" alt="{{ $umkm->nama_umkm }}">
                         <div class="umkm-info">
                             <h3 class="umkm-name">{{ $umkm->nama_umkm }}</h3>
                             <p class="umkm-desc">{{ Str::limit($umkm->deskripsi, 150) }}</p>

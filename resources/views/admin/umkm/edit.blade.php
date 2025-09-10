@@ -1,7 +1,8 @@
 @extends('admin.partials.sidebar')
-@section('title', 'Edit UMKM')
-@section('content')
 
+@section('title', 'Edit UMKM')
+
+@section('content')
 <link rel="stylesheet" href="{{ asset('css/admin/umkm/tambahumkm.css') }}">
 
 <div class="umkm-container">
@@ -77,5 +78,4 @@
     </div>
   </form>
 </div>
-
 @endsection

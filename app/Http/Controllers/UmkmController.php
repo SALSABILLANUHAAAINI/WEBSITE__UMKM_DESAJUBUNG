@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\Storage;
 
 class UmkmController extends Controller
 {
-    // -------- USER SIDE --------
+    // ================= USER SIDE =================
     public function index()
     {
-        $umkms = Umkm::latest()->paginate(6); // pagination 6 data
+        $umkms = Umkm::latest()->paginate(6); // Pagination 6 data
         $products = Product::with(['umkm', 'katalog'])->get();
         $katalogs = Katalog::where('is_active', 1)->get();
         $heroUmkm = HeroUmkm::first() ?? new HeroUmkm(['hero' => 'Berbagai Macam UMKM Desa Jubung']);
@@ -28,7 +28,7 @@ class UmkmController extends Controller
         return view('user.umkm.show', compact('umkm'));
     }
 
-    // -------- ADMIN SIDE --------
+    // ================= ADMIN SIDE =================
     public function adminIndex(Request $request)
     {
         $query = Umkm::query();
@@ -92,7 +92,6 @@ class UmkmController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            // Hapus file lama jika ada
             if ($umkm->gambar) {
                 Storage::disk('public')->delete($umkm->gambar);
             }
@@ -111,10 +110,11 @@ class UmkmController extends Controller
         }
 
         $umkm->delete();
+
         return redirect()->route('admin.umkm.index')->with('success', 'UMKM berhasil dihapus!');
     }
 
-    // -------- HERO UPDATE --------
+    // ================= HERO UPDATE =================
     public function updateHero(Request $request)
     {
         $request->validate([
