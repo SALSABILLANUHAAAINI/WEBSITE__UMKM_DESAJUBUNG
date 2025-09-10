@@ -30,7 +30,8 @@
     <div class="form-group">
       <label for="gambar">Upload Gambar</label>
       <div>
-        <img id="previewImage" src="{{ $umkm->gambar ? asset('storage/umkm_images/' . $umkm->gambar) : asset('images/dummy1.png') }}" alt="Preview Gambar" width="150">
+        <!-- Gunakan path yang sesuai controller -->
+        <img id="previewImage" src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}" alt="Preview Gambar" width="150">
       </div>
       <input type="file" id="gambar" name="gambar" class="file-input @error('gambar') is-invalid @enderror" onchange="previewFile(this)">
       @error('gambar') <div class="invalid-feedback">{{ $message }}</div> @enderror

@@ -29,6 +29,7 @@
     <div class="form-group">
       <label for="gambar">Upload Gambar</label>
       <div>
+        <!-- Tampilkan dummy image jika belum ada -->
         <img id="previewImage" src="{{ asset('images/dummy1.png') }}" alt="Preview Gambar" width="150">
       </div>
       <input type="file" id="gambar" name="gambar" class="file-input @error('gambar') is-invalid @enderror" onchange="previewFile(this)">

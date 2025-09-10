@@ -58,7 +58,7 @@
     <div class="produk-list">
         @foreach($umkms as $umkm)
         <div class="produk-card">
-            <img src="{{ $umkm->gambar ? asset('storage/umkm_images/' . $umkm->gambar) : asset('images/dummy1.png') }}" alt="{{ $umkm->nama_umkm }}" class="produk-img">
+            <img src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}" alt="{{ $umkm->nama_umkm }}" class="produk-img">
             <div class="produk-body">
                 <h3 class="produk-nama">{{ $umkm->nama_umkm }}</h3>
                 <p class="produk-desc">{{ Str::limit($umkm->deskripsi, 80) }}</p>
