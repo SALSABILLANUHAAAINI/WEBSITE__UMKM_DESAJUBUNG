@@ -142,51 +142,6 @@ body {
 }
 
 /* =================================
-   CARD PRODUK
-   ================================= */
-.card-produk {
-  background: var(--bg-card);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border-color);
-  padding: 1rem;
-  position: relative;
-  min-height: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.card-produk::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, rgba(59,130,246,0.08), rgba(16,185,129,0.05));
-  opacity: 0.5;
-  border-radius: var(--border-radius);
-}
-.card-produk:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.15);
-}
-.card-produk .produk-nama::before {
-  content: '🛍️';
-  margin-right: 0.5rem;
-}
-.card-produk .btn.edit {
-  background: var(--primary-color);
-}
-.card-produk .btn.edit:hover {
-  background: #2563eb;
-}
-.card-produk .btn.hapus {
-  background: var(--danger-color);
-}
-.card-produk .btn.hapus:hover {
-  background: #b91c1c;
-}
-
-/* =================================
    CARD KATALOG
    ================================= */
 .card-katalog {

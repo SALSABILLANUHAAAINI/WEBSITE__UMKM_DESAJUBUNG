@@ -6,6 +6,7 @@
 
 <link rel="stylesheet" href="{{ asset('css/admin/dashboard.css') }}">
 <link rel="stylesheet" href="{{ asset('css/admin/produk/produk.css') }}">
+<link rel="stylesheet" href="{{ asset('css/admin/katalog/katalogsetting.css') }}">
 
 <div class="dashboard-container">
 
@@ -66,30 +67,43 @@
 {{-- KATEGORI KATALOG TERBARU --}}
 <section class="section-headline">
     <h2>Kategori Katalog Terbaru</h2>
-    <p>3 kategori katalog terbaru yang ditambahkan</p>
+    <p>5 kategori katalog terbaru yang ditambahkan</p>
 </section>
 
-<div class="grid-container">
-    @forelse($recentKatalogs as $katalog)
-        <div class="card-katalog">
-            <div class="produk-body">
-                <h4 class="produk-nama">{{ $katalog->name }}</h4>
-                <p class="produk-sub">Status: {{ $katalog->is_active ? 'Aktif' : 'Tidak Aktif' }}</p>
-            </div>
-
-            <div class="produk-btn-group">
-                <a href="{{ route('admin.katalog.edit', $katalog->id) }}" class="btn lihat">Edit</a>
-                <form action="{{ route('admin.katalog.destroy', $katalog->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn hapus" onclick="return confirm('Anda yakin?')">Hapus</button>
-                </form>
-            </div>
-        </div>
-    @empty
-        <p class="col-span-full">Belum ada kategori katalog.</p>
-    @endforelse
+<div class="katalog-container">
+    <table class="katalog-table">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Kategori</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($recentKatalogs as $index => $katalog)
+            <tr>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ $katalog->name }}</td>
+                <td>{{ $katalog->is_active ? 'Aktif' : 'Tidak Aktif' }}</td>
+                <td>
+                    <a href="{{ route('admin.katalog.edit', $katalog->id) }}" class="btn edit">Edit</a>
+                    <form action="{{ route('admin.katalog.destroy', $katalog->id) }}" method="POST" style="display:inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn hapus" onclick="return confirm('Yakin ingin menghapus kategori ini?')">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="4">Belum ada kategori katalog.</td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
 </div>
+
 
 </div>
 
