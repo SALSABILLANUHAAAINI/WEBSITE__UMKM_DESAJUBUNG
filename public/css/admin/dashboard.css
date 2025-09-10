@@ -141,6 +141,15 @@ body {
   color: var(--text-light);
 }
 
+/* Batasi grid produk hanya di dashboard */
+.dashboard-container .produk-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+}
+.dashboard-container .produk-img {
+    height: 150px; /* kecilin tinggi gambar */
+}
+
 
 
 /* =================================
