@@ -113,7 +113,7 @@ body {
 
 .produk-body {
   /* Padding atas-bawah (1.5rem) lebih besar dari kiri-kanan (1.25rem) */
-  padding: 1.5rem 1.25rem; 
+  padding: 1.5rem 1.25rem;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -167,7 +167,7 @@ body {
 }
 
 /* Menggunakan 'lihat' karena di blade kita ganti dari 'edit' */
-.btn.lihat { 
+.btn.lihat {
   background: var(--success-color);
 }
 .btn.lihat:hover {
