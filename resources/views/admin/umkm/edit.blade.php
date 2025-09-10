@@ -15,13 +15,15 @@
     <!-- Nama UMKM -->
     <div class="form-group">
       <label for="nama_umkm">Nama UMKM</label>
-      <input type="text" id="nama_umkm" name="nama_umkm" class="form-input" value="{{ old('nama_umkm', $umkm->nama_umkm) }}" required>
+      <input type="text" id="nama_umkm" name="nama_umkm" class="form-input @error('nama_umkm') is-invalid @enderror" value="{{ old('nama_umkm', $umkm->nama_umkm) }}" required>
+      @error('nama_umkm') <div class="invalid-feedback">{{ $message }}</div> @enderror
     </div>
 
     <!-- Owner -->
     <div class="form-group">
       <label for="owner">Nama Pemilik</label>
-      <input type="text" id="owner" name="owner" class="form-input" value="{{ old('owner', $umkm->owner) }}" required>
+      <input type="text" id="owner" name="owner" class="form-input @error('owner') is-invalid @enderror" value="{{ old('owner', $umkm->owner) }}">
+      @error('owner') <div class="invalid-feedback">{{ $message }}</div> @enderror
     </div>
 
     <!-- Upload Gambar -->
@@ -30,46 +32,52 @@
       <div>
         <img id="previewImage" src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}" alt="Preview Gambar" width="150">
       </div>
-      <input type="file" id="gambar" name="gambar" class="file-input" onchange="previewFile(this)">
+      <input type="file" id="gambar" name="gambar" class="file-input @error('gambar') is-invalid @enderror" onchange="previewFile(this)">
+      @error('gambar') <div class="invalid-feedback">{{ $message }}</div> @enderror
     </div>
 
     <!-- Deskripsi -->
     <div class="form-group">
       <label for="deskripsi">Deskripsi</label>
-      <textarea id="deskripsi" name="deskripsi" class="form-input" rows="4">{{ old('deskripsi', $umkm->deskripsi) }}</textarea>
+      <textarea id="deskripsi" name="deskripsi" class="form-input @error('deskripsi') is-invalid @enderror" rows="4">{{ old('deskripsi', $umkm->deskripsi) }}</textarea>
+      @error('deskripsi') <div class="invalid-feedback">{{ $message }}</div> @enderror
     </div>
 
     <!-- Alamat -->
     <div class="form-group">
       <label for="alamat">Alamat</label>
-      <textarea id="alamat" name="alamat" class="form-input" rows="2">{{ old('alamat', $umkm->alamat) }}</textarea>
+      <textarea id="alamat" name="alamat" class="form-input @error('alamat') is-invalid @enderror" rows="2">{{ old('alamat', $umkm->alamat) }}</textarea>
+      @error('alamat') <div class="invalid-feedback">{{ $message }}</div> @enderror
     </div>
 
     <!-- Kontak -->
     <div class="form-group">
       <label for="kontak">Kontak</label>
-      <input type="text" id="kontak" name="kontak" class="form-input" value="{{ old('kontak', $umkm->kontak) }}">
+      <input type="text" id="kontak" name="kontak" class="form-input @error('kontak') is-invalid @enderror" value="{{ old('kontak', $umkm->kontak) }}">
+      @error('kontak') <div class="invalid-feedback">{{ $message }}</div> @enderror
     </div>
 
     <!-- Google Maps -->
     <div class="form-group">
       <label for="gmaps">Link Google Maps</label>
-      <input type="url" id="gmaps" name="gmaps" class="form-input" value="{{ old('gmaps', $umkm->gmaps) }}">
+      <input type="url" id="gmaps" name="gmaps" class="form-input @error('gmaps') is-invalid @enderror" value="{{ old('gmaps', $umkm->gmaps) }}">
+      @error('gmaps') <div class="invalid-feedback">{{ $message }}</div> @enderror
     </div>
 
-    <!-- Social Media -->
+    <!-- Sosial Media -->
     <div class="form-group">
       <label for="social">Sosial Media</label>
-      <input type="url" id="social" name="social" class="form-input" value="{{ old('social', $umkm->social) }}">
+      <input type="url" id="social" name="social" class="form-input @error('social') is-invalid @enderror" value="{{ old('social', $umkm->social) }}">
+      @error('social') <div class="invalid-feedback">{{ $message }}</div> @enderror
     </div>
 
-    <!-- Store -->
+    <!-- Toko Offline -->
     <div class="form-group">
-      <label for="store">Toko Offline / Online</label>
-      <input type="text" id="store" name="store" class="form-input" value="{{ old('store', $umkm->store) }}">
+      <label for="store">Toko Offline</label>
+      <input type="text" id="store" name="store" class="form-input @error('store') is-invalid @enderror" value="{{ old('store', $umkm->store) }}">
+      @error('store') <div class="invalid-feedback">{{ $message }}</div> @enderror
     </div>
 
-    <!-- Tombol -->
     <div class="form-actions">
       <a href="{{ route('admin.umkm.index') }}" class="btn cancel">Batal</a>
       <button type="submit" class="btn submit">Update</button>

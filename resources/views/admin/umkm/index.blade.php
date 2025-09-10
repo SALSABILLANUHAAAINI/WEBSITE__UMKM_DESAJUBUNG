@@ -1,31 +1,22 @@
 @extends('admin.partials.sidebar')
 
-@section('title', 'Setting UMKM')
+@section('title', 'Daftar UMKM')
 
 @section('content')
+<link rel="stylesheet" href="{{ asset('css/admin/umkm/index.css') }}">
 
-<link rel="stylesheet" href="{{ asset('css/admin/umkm/umkm.css') }}?v={{ time() }}">
-
-<div class="umkm-container">
-
-    <!-- Header -->
-    <div class="umkm-header">
-        <h1 class="umkm-title">UMKM - Admin Setting</h1>
-        <div class="umkm-actions">
-            <a href="{{ route('admin.umkm.create') }}" class="btn tambah">+ Tambah UMKM</a>
-        </div>
+<div class="umkm-index-container">
+    <div class="header">
+        <h1>Daftar UMKM</h1>
+        <a href="{{ route('admin.umkm.create') }}" class="btn add-btn">+ Tambah UMKM</a>
     </div>
 
     <!-- Hero Section -->
     <div class="hero-section">
         <div class="hero-card">
-            <div class="hero-body">
-                <h2 class="hero-title">Hero Section</h2>
-                <p class="hero-desc">Teks yang tampil di halaman utama UMKM Desa Jubung.</p>
-                <div class="hero-btn-group">
-                    <button class="btn hero-edit" onclick="openHeroModal()">Edit Hero</button>
-                </div>
-            </div>
+            <h2>Hero UMKM</h2>
+            <p>{{ $heroUmkm->hero ?? 'Berbagai Macam UMKM Desa Jubung' }}</p>
+            <button class="btn hero-edit" onclick="openHeroModal()">Edit Hero</button>
         </div>
     </div>
 
@@ -33,14 +24,11 @@
     <div id="heroModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeHeroModal()">&times;</span>
-            <h2 class="modal-title">Edit Hero Section</h2>
-            <p class="modal-subtitle">Ubah teks hero yang ditampilkan di halaman UMKM.</p>
-
-            <form action="{{ route('admin.umkm.hero.update', $heroUmkm->id ?? 0) }}" method="POST" class="modal-form">
+            <h2>Edit Hero Section</h2>
+            <form action="{{ route('admin.umkm.hero.update', $heroUmkm->id) }}" method="POST">
                 @csrf
                 @method('PUT')
-                <input type="text" name="hero" class="form-control" value="{{ $heroUmkm->hero ?? '' }}" placeholder="Masukkan teks hero UMKM">
-
+                <input type="text" name="hero" value="{{ $heroUmkm->hero ?? '' }}" placeholder="Masukkan teks hero">
                 <div class="form-actions">
                     <button type="button" class="btn cancel" onclick="closeHeroModal()">Batal</button>
                     <button type="submit" class="btn submit">Simpan</button>
@@ -49,57 +37,60 @@
         </div>
     </div>
 
-    <!-- Form Pencarian -->
-    <div class="search-container">
-        <form action="{{ route('admin.umkm.index') }}" method="GET" class="search-form">
-            <input type="text" name="search" class="search-input"
-                   placeholder="Cari UMKM..."
-                   value="{{ request('search') }}">
-            <button type="submit" class="btn search-btn">Cari</button>
-            @if(request('search'))
-                <a href="{{ route('admin.umkm.index') }}" class="btn reset-btn">Reset</a>
-            @endif
-        </form>
-    </div>
+    @if(session('success'))
+        <div class="alert success">{{ session('success') }}</div>
+    @endif
+    @if(session('error'))
+        <div class="alert error">{{ session('error') }}</div>
+    @endif
 
-    <!-- Daftar UMKM -->
-    <div class="umkm-list">
-        @forelse($umkms as $umkm)
-            <div class="umkm-card">
-                <img src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}"
-                     alt="{{ $umkm->nama_umkm }}" class="umkm-img">
-
-                <div class="umkm-body">
-                    <h2 class="umkm-nama">{{ $umkm->nama_umkm }}</h2>
-                    <p class="umkm-desc">{{ Str::limit($umkm->deskripsi, 150) }}</p>
-
-                    <div class="umkm-btn-group">
-                        <a href="{{ route('admin.umkm.edit', $umkm->id) }}" class="btn edit">Edit</a>
-                        <form action="{{ route('admin.umkm.destroy', $umkm->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn hapus" onclick="return confirm('Yakin mau hapus?')">Hapus</button>
-                        </form>
-                    </div>
-                </div>
+    <!-- Grid UMKM -->
+    @if($umkms->count() > 0)
+    <div class="umkm-grid">
+        @foreach($umkms as $umkm)
+        <div class="umkm-card">
+            <div class="umkm-image">
+                <img src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}" alt="{{ $umkm->nama_umkm }}">
             </div>
-        @empty
-            <p class="empty-state">Belum ada data UMKM.</p>
-        @endforelse
+            <div class="umkm-info">
+                <h3>{{ $umkm->nama_umkm }}</h3>
+                <p>{{ Str::limit($umkm->deskripsi, 60) }}</p>
+            </div>
+            <div class="umkm-actions">
+                <a href="{{ route('admin.umkm.edit', $umkm->id) }}" class="btn edit-btn">Edit</a>
+                <form action="{{ route('admin.umkm.destroy', $umkm->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus UMKM ini?');">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn delete-btn">Hapus</button>
+                </form>
+            </div>
+        </div>
+        @endforeach
     </div>
 
-    <!-- Pagination -->
-    <div class="pagination-wrapper">
+    <div class="pagination">
         {{ $umkms->links() }}
     </div>
+
+    @else
+        <p class="empty">Belum ada UMKM yang terdaftar.</p>
+    @endif
 </div>
 
 <script>
 function openHeroModal() {
-    document.getElementById("heroModal").style.display = "flex";
+    document.getElementById('heroModal').style.display = 'flex';
 }
 function closeHeroModal() {
-    document.getElementById("heroModal").style.display = "none";
+    document.getElementById('heroModal').style.display = 'none';
+}
+
+// Tutup modal ketika klik di luar konten
+window.onclick = function(event) {
+    const modal = document.getElementById('heroModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
 }
 </script>
 
