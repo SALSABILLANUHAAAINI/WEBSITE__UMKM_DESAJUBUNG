@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
 use App\Models\Umkm;
 use App\Models\Katalog;
@@ -23,29 +22,32 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-{
-    // Membuat View Composer untuk view 'admin.dashboard'
-    View::composer('admin.dashboard', function ($view) {
-        
-        // 1. Ambil jumlah UMKM
-        $jumlahUmkm = Umkm::count();
+    {
+        // Membuat View Composer untuk view 'admin.dashboard'
+        View::composer('admin.dashboard', function ($view) {
 
-        // 2. Ambil jumlah Kategori Katalog
-        $jumlahKatalog = Katalog::count();
+            // 1. Ambil jumlah UMKM
+            $jumlahUmkm = Umkm::count();
 
-        // 3. Ambil 5 produk terbaru untuk ditampilkan
-        $recentProducts = Product::latest()->take(3)->get();
+            // 2. Ambil jumlah Kategori Katalog
+            $jumlahKatalog = Katalog::count();
 
-        // 4. Ambil 5 katalog terbaru untuk ditampilkan
-        $recentKatalogs = Katalog::latest()->take(3)->get();
+            // 3. Ambil 5 produk terbaru beserta relasi UMKM dan Katalog
+            $recentProducts = Product::with(['umkm', 'katalog'])
+                                    ->latest()
+                                    ->take(5)
+                                    ->get();
 
-        // 4. Kirim semua data ini ke view
-        $view->with([
-            'jumlahUmkm' => $jumlahUmkm,
-            'jumlahKatalog' => $jumlahKatalog,
-            'recentProducts' => $recentProducts,
-            'recentKatalogs' => $recentKatalogs,
-        ]);
-    });
-}
+            // 4. Ambil 5 katalog terbaru
+            $recentKatalogs = Katalog::latest()->take(5)->get();
+
+            // 5. Kirim semua data ini ke view
+            $view->with([
+                'jumlahUmkm' => $jumlahUmkm,
+                'jumlahKatalog' => $jumlahKatalog,
+                'recentProducts' => $recentProducts,
+                'recentKatalogs' => $recentKatalogs,
+            ]);
+        });
+    }
 }
