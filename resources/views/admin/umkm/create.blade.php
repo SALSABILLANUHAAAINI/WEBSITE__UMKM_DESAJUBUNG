@@ -32,7 +32,10 @@
     <!-- Upload Gambar -->
     <div class="form-group">
       <label for="gambar">Upload Gambar</label>
-      <input type="file" id="gambar" name="gambar" class="file-input @error('gambar') is-invalid @enderror">
+      <div>
+        <img id="previewImage" src="{{ asset('images/dummy1.png') }}" alt="Preview Gambar" width="150">
+      </div>
+      <input type="file" id="gambar" name="gambar" class="file-input @error('gambar') is-invalid @enderror" onchange="previewFile(this)">
       @error('gambar')
         <div class="invalid-feedback">{{ $message }}</div>
       @enderror
@@ -95,8 +98,22 @@
     <!-- Tombol -->
     <div class="form-actions">
       <a href="{{ route('admin.umkm.index') }}" class="btn cancel">Batal</a>
-      <button type="submit" class="btn submit"> Simpan</button>
+      <button type="submit" class="btn submit">Simpan</button>
     </div>
   </form>
 </div>
+
+<script>
+function previewFile(input){
+    const file = input.files[0];
+    if(file){
+        const reader = new FileReader();
+        reader.onload = function(e){
+            document.getElementById('previewImage').src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+}
+</script>
+
 @endsection

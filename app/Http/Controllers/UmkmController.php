@@ -7,14 +7,13 @@ use App\Models\Product;
 use App\Models\Katalog;
 use App\Models\HeroUmkm;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class UmkmController extends Controller
 {
     // ================= USER SIDE =================
     public function index()
     {
-        $umkms = Umkm::latest()->paginate(6); // Pagination 6 data
+        $umkms = Umkm::latest()->paginate(6);
         $products = Product::with(['umkm', 'katalog'])->get();
         $katalogs = Katalog::where('is_active', 1)->get();
         $heroUmkm = HeroUmkm::first() ?? new HeroUmkm(['hero' => 'Berbagai Macam UMKM Desa Jubung']);
@@ -63,8 +62,11 @@ class UmkmController extends Controller
             'gambar'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        // Upload gambar langsung ke public/umkm_images
         if ($request->hasFile('gambar')) {
-            $data['gambar'] = $request->file('gambar')->store('umkm_images', 'public');
+            $filename = time().'_'.$request->file('gambar')->getClientOriginalName();
+            $request->file('gambar')->move(public_path('umkm_images'), $filename);
+            $data['gambar'] = $filename;
         }
 
         Umkm::create($data);
@@ -92,10 +94,9 @@ class UmkmController extends Controller
         ]);
 
         if ($request->hasFile('gambar')) {
-            if ($umkm->gambar) {
-                Storage::disk('public')->delete($umkm->gambar);
-            }
-            $data['gambar'] = $request->file('gambar')->store('umkm_images', 'public');
+            $filename = time().'_'.$request->file('gambar')->getClientOriginalName();
+            $request->file('gambar')->move(public_path('umkm_images'), $filename);
+            $data['gambar'] = $filename;
         }
 
         $umkm->update($data);
@@ -105,12 +106,7 @@ class UmkmController extends Controller
 
     public function destroy(Umkm $umkm)
     {
-        if ($umkm->gambar) {
-            Storage::disk('public')->delete($umkm->gambar);
-        }
-
         $umkm->delete();
-
         return redirect()->route('admin.umkm.index')->with('success', 'UMKM berhasil dihapus!');
     }
 

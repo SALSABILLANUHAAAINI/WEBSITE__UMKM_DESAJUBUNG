@@ -68,9 +68,11 @@
             <div class="produk-card">
                 <img src="{{ $umkm->gambar ? asset('umkm_images/'.$umkm->gambar) : asset('images/dummy1.png') }}"
                      alt="{{ $umkm->nama_umkm }}" class="produk-img">
+
                 <div class="produk-body">
                     <h2 class="produk-nama">{{ $umkm->nama_umkm }}</h2>
                     <p class="produk-desc">{{ Str::limit($umkm->deskripsi, 150) }}</p>
+
                     <div class="produk-btn-group">
                         <a href="{{ route('admin.umkm.edit', $umkm->id) }}" class="btn edit">Edit</a>
                         <form action="{{ route('admin.umkm.destroy', $umkm->id) }}" method="POST" style="display:inline;">

@@ -27,12 +27,10 @@
     <!-- Upload Gambar -->
     <div class="form-group">
       <label for="gambar">Upload Gambar</label>
-      @if($umkm->gambar)
-        <div>
-          <img src="{{ asset('storage/'.$umkm->gambar) }}" alt="Gambar UMKM" width="150">
-        </div>
-      @endif
-      <input type="file" id="gambar" name="gambar" class="file-input">
+      <div>
+        <img id="previewImage" src="{{ $umkm->gambar ? asset('umkm_images/'.$umkm->gambar) : asset('images/dummy1.png') }}" alt="Preview Gambar" width="150">
+      </div>
+      <input type="file" id="gambar" name="gambar" class="file-input" onchange="previewFile(this)">
     </div>
 
     <!-- Deskripsi -->
@@ -78,4 +76,18 @@
     </div>
   </form>
 </div>
+
+<script>
+function previewFile(input){
+    const file = input.files[0];
+    if(file){
+        const reader = new FileReader();
+        reader.onload = function(e){
+            document.getElementById('previewImage').src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    }
+}
+</script>
+
 @endsection
