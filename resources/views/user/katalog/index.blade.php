@@ -52,10 +52,10 @@
         @endforelse
     </div>
 
-    {{-- Pagination --}}
-    <div class="pagination-wrapper">
-        {{ $products->withQueryString()->links() }}
-    </div>
+    <!-- Pagination -->
+    <div class="pagination">
+    {{ $umkms->links('vendor.pagination.custom') }}
+</div>
 
     {{-- Modal produk --}}
     <div id="produkModal" class="modal">
