@@ -57,8 +57,7 @@
                     <label for="umkm_logo">Logo UMKM (JPEG/PNG, maks 2MB)</label>
                     <input type="file" id="umkm_logo" name="logo" accept="image/png,image/jpeg,image/jpg">
                     <div class="single-preview" id="umkmLogoPreview">
-                        <img src="{{ isset($umkm) && $umkm->logo ? asset($umkm->logo) : asset('images/dummy5.PNG') }}" 
-                            alt="{{ $umkm->nama_umkm ?? 'Logo UMKM' }}" class="thumb">
+                        <img src="{{ asset('images/dummy5.PNG') }}" alt="Logo UMKM" class="thumb">
                     </div>
                 </div>
             </div>
@@ -101,9 +100,9 @@
                     </div>
                     <div class="form-group">
                         <label>Foto Produk</label>
-                        <input type="file" name="product_images[0][]" multiple accept="image/png,image/jpeg,image/jpg">
+                        <input type="file" name="product_images[0][]" multiple accept="image/png,image/jpeg,image/jpg" class="product-file-input">
                         <div class="preview-grid">
-                            <img src="{{ asset('images/dummy5.PNG') }}" alt="Produk">
+                            <img src="{{ asset('images/dummy5.PNG') }}" alt="Produk" class="preview-thumb">
                         </div>
                     </div>
                 </div>
@@ -119,101 +118,85 @@
     </form>
 </section>
 
-<!-- Popup Tambah Produk -->
-<div id="popupConfirm" class="popup-overlay" style="display:none;">
-    <div class="popup-box">
-        <p id="popupText">Apakah Anda yakin ingin menambahkan produk baru?</p>
-        <div class="popup-actions">
-            <button type="button" id="popupYes" class="btn-yes">Ya</button>
-            <button type="button" id="popupNo" class="btn-no">Batal</button>
-        </div>
-    </div>
-</div>
-
 <script>
 (() => {
     const MAX_SIZE = 2 * 1024 * 1024; // 2MB
     const ALLOWED = ["image/jpeg","image/png","image/jpg"];
 
-    function clear(el){ while(el.firstChild) el.removeChild(el.firstChild); }
-
+    // Preview Logo UMKM
     const umkmLogoInput = document.getElementById('umkm_logo');
     const umkmLogoPreview = document.getElementById('umkmLogoPreview');
-    if(umkmLogoInput){
-        umkmLogoInput.addEventListener('change', () => {
-            clear(umkmLogoPreview);
-            const file = umkmLogoInput.files[0];
-            if(!file) return;
-            if(!ALLOWED.includes(file.type) || file.size > MAX_SIZE){
-                alert('Format harus JPG/PNG dan ukuran maks 2MB.');
-                umkmLogoInput.value='';
-                return;
-            }
-            const img = document.createElement('img');
-            img.className = 'thumb';
-            img.src = URL.createObjectURL(file);
-            umkmLogoPreview.appendChild(img);
-        });
-    }
-
-    const productWrapper = document.getElementById('productWrapper');
-    const addProductBtn = document.getElementById('addProduct');
-    let productIndex = 1;
-
-    const popup = document.getElementById('popupConfirm');
-    const popupYes = document.getElementById('popupYes');
-    const popupNo = document.getElementById('popupNo');
-    let currentAction = null; 
-    let targetElement = null;
-
-    function showPopup(action, text, element=null){
-        currentAction = action;
-        targetElement = element;
-        document.getElementById('popupText').textContent = text;
-        popup.style.display = 'flex';
-    }
-
-    addProductBtn.addEventListener('click', ()=>{ showPopup('add','Apakah Anda yakin ingin menambahkan produk baru?'); });
-
-    popupYes.addEventListener('click', ()=>{
-        if(currentAction === 'add'){
-            const firstProduct = document.querySelector('.product-item');
-            const template = firstProduct.cloneNode(true);
-
-            const firstInputs = firstProduct.querySelectorAll('input,textarea');
-            const newInputs = template.querySelectorAll('input,textarea');
-
-            newInputs.forEach((el, i) => {
-                if(el.name.includes('product_images')) {
-                    el.name = `product_images[${productIndex}][]`;
-                    el.value = '';
-                    template.querySelector('.preview-grid').innerHTML = '<img src="{{ asset("images/dummy5.PNG") }}" alt="Produk">';
-                } else {
-                    el.value = firstInputs[i].value;
-                }
-            });
-
-            const removeBtn = document.createElement('button');
-            removeBtn.type = 'button';
-            removeBtn.className = 'remove-btn';
-            removeBtn.textContent = '×';
-            removeBtn.style.cssText = "position:absolute;top:-10px;right:-10px;background:#000;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;";
-            removeBtn.addEventListener('click', ()=> showPopup('remove','Apakah Anda yakin ingin menghapus produk ini?', template));
-            template.style.position = "relative";
-            template.appendChild(removeBtn);
-
-            productWrapper.prepend(template);
-            productIndex++;
-        } else if(currentAction === 'remove' && targetElement){
-            targetElement.remove();
+    umkmLogoInput?.addEventListener('change', () => {
+        umkmLogoPreview.innerHTML = '';
+        const file = umkmLogoInput.files[0];
+        if(!file) return;
+        if(!ALLOWED.includes(file.type) || file.size > MAX_SIZE){
+            alert('Format harus JPG/PNG dan ukuran maks 2MB.');
+            umkmLogoInput.value='';
+            return;
         }
-        popup.style.display = 'none';
+        const img = document.createElement('img');
+        img.className = 'thumb';
+        img.src = URL.createObjectURL(file);
+        umkmLogoPreview.appendChild(img);
     });
 
-    popupNo.addEventListener('click', ()=>{ popup.style.display = 'none'; });
+    // Preview Produk
+    document.querySelectorAll('.product-file-input').forEach(input => {
+        input.addEventListener('change', e => {
+            const container = input.closest('.form-group').querySelector('.preview-grid');
+            container.innerHTML = '';
+            Array.from(input.files).forEach(file => {
+                const img = document.createElement('img');
+                img.className = 'preview-thumb';
+                img.src = URL.createObjectURL(file);
+                container.appendChild(img);
+            });
+        });
+    });
 
-    document.querySelectorAll('.remove-btn').forEach(btn=>{
-        btn.addEventListener('click', e=> showPopup('remove','Apakah Anda yakin ingin menghapus produk ini?', e.target.closest('.product-item')));
+    // Tambah Produk Dinamis
+    const productWrapper = document.getElementById('productWrapper');
+    let productIndex = 1;
+    document.getElementById('addProduct').addEventListener('click', () => {
+        const first = document.querySelector('.product-item');
+        const clone = first.cloneNode(true);
+
+        // Reset semua input
+        clone.querySelectorAll('input,textarea').forEach(el => {
+            if(el.name.includes('product_images')){
+                el.name = `product_images[${productIndex}][]`;
+                el.value = '';
+                el.closest('.form-group').querySelector('.preview-grid').innerHTML = '<img src="{{ asset("images/dummy5.PNG") }}" alt="Produk" class="preview-thumb">';
+            } else {
+                el.value = '';
+            }
+        });
+
+        // Tombol hapus
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'remove-btn';
+        removeBtn.textContent = '×';
+        removeBtn.style.cssText = "position:absolute;top:-10px;right:-10px;background:#000;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;";
+        removeBtn.addEventListener('click', ()=> clone.remove());
+        clone.style.position = "relative";
+        clone.appendChild(removeBtn);
+
+        productWrapper.appendChild(clone);
+        productIndex++;
+
+        // Tambahkan event preview untuk file baru
+        clone.querySelector('.product-file-input').addEventListener('change', e => {
+            const container = e.target.closest('.form-group').querySelector('.preview-grid');
+            container.innerHTML = '';
+            Array.from(e.target.files).forEach(file => {
+                const img = document.createElement('img');
+                img.className = 'preview-thumb';
+                img.src = URL.createObjectURL(file);
+                container.appendChild(img);
+            });
+        });
     });
 })();
 </script>

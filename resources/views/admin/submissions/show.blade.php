@@ -1,6 +1,6 @@
 @extends('admin.partials.sidebar')
 
-@section('title', 'Service Setting')
+@section('title', 'Tinjau Data UMKM')
 
 @section('content')
 <section class="service-section">
@@ -40,10 +40,8 @@
             <div class="form-group">
                 <label>Logo UMKM</label>
                 <div class="single-preview">
-                    <img src="{{ $submission->logo && file_exists(public_path($submission->logo))
-                        ? asset($submission->logo)
-                        : asset('images/dummy5.PNG') }}" 
-                        alt="Logo UMKM" class="thumb">
+                    <img src="{{ $submission->logo ? asset($submission->logo) : asset('images/dummy5.PNG') }}" 
+                         alt="Logo UMKM" class="thumb">
                 </div>
             </div>
         </div>
@@ -84,10 +82,8 @@
                     <div class="form-group">
                         <label>Foto Produk</label>
                         <div class="preview-grid">
-                            <img src="{{ $product->product_image && file_exists(public_path($product->product_image))
-                                ? asset($product->product_image)
-                                : asset('images/dummy5.PNG') }}" 
-                                alt="{{ $product->nama_produk ?? 'Produk' }}" class="preview-thumb">
+                            <img src="{{ $product->product_image ? asset($product->product_image) : asset('images/dummy5.PNG') }}" 
+                                 alt="{{ $product->nama_produk ?? 'Produk' }}" class="preview-thumb">
                         </div>
                     </div>
                 </div>

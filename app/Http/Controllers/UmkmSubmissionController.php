@@ -34,7 +34,7 @@ class UmkmSubmissionController extends Controller
             'product_images.*.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // Upload logo langsung ke public
+        // Upload logo langsung ke public/umkm_logos
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
@@ -57,7 +57,7 @@ class UmkmSubmissionController extends Controller
             'status' => 'pending',
         ]);
 
-        // Produk
+        // Simpan produk
         $products = $request->input('product', []);
         $prices = $request->input('price', []);
         $descriptions = $request->input('description', []);
@@ -67,13 +67,11 @@ class UmkmSubmissionController extends Controller
         foreach ($products as $i => $name) {
             $imgPath = null;
 
-            if (isset($productImages[$i]) && is_array($productImages[$i]) && count($productImages[$i]) > 0) {
-                $imgFile = $productImages[$i][0];
-                if ($imgFile && $imgFile->isValid()) {
-                    $fileName = time().'_'.$imgFile->getClientOriginalName();
-                    $imgFile->move(public_path('product_images'), $fileName);
-                    $imgPath = 'product_images/'.$fileName;
-                }
+            if (isset($productImages[$i][0]) && $productImages[$i][0]->isValid()) {
+                $file = $productImages[$i][0];
+                $fileName = time().'_'.$file->getClientOriginalName();
+                $file->move(public_path('product_images'), $fileName);
+                $imgPath = 'product_images/'.$fileName;
             }
 
             ProductSubmission::create([
