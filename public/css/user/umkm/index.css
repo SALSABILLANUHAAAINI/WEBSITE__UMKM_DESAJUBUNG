@@ -58,7 +58,7 @@ body {
 /* ===== Grid ===== */
 .umkm-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: clamp(1rem, 2.5vw, 2rem);
     align-items: stretch;
 }
@@ -179,13 +179,13 @@ body {
 /* ===== Responsive ===== */
 @media (max-width: 1024px) {
     .umkm-grid {
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-template-columns: repeat(2, 1fr); /* tablet: 2 kolom */
     }
 }
 
 @media (max-width: 640px) {
-    .umkm-title {
-        margin-bottom: 1.5rem;
+    .umkm-grid {
+        grid-template-columns: 1fr; /* HP: 1 kolom */
     }
 }
 
