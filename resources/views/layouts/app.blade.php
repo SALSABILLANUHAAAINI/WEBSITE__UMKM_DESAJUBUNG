@@ -9,6 +9,10 @@
     {{-- Pastikan urutan ini benar. app.css harus memuat semua style lain --}}
     <link rel="stylesheet" href="{{ asset('css/user/app.css') }}">
     
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+
     {{-- File CSS admin tidak perlu dimuat di halaman user --}}
     {{-- <link rel="stylesheet" href="{{ asset('css/admin/login.css') }}"> --}}
     {{-- <link rel="stylesheet" href="{{ asset('css/admin/sidebar.css') }}"> --}}
