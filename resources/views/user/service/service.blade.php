@@ -8,7 +8,7 @@
 
     <!-- HEADER -->
     <div class="service-header">
-        @if($settings)
+        @if(isset($settings) && $settings)
             <h1 class="service-title">{{ $settings->judul_hero }}</h1>
             <p class="service-subtitle">{{ $settings->subjudul_hero }}</p>
         @else
@@ -24,49 +24,56 @@
         <!-- 1. Data UMKM -->
         <div class="form-block">
             <h2 class="block-title">1. Data UMKM</h2>
+
             <div class="grid-2">
                 <div class="form-group">
                     <label for="brand">Nama UMKM*</label>
                     <input type="text" id="brand" name="nama_umkm" value="{{ old('nama_umkm') }}" required>
                 </div>
+
                 <div class="form-group">
                     <label for="owner">Nama Pemilik / Penanggung Jawab*</label>
                     <input type="text" id="owner" name="owner" value="{{ old('owner') }}" required>
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="address">Alamat UMKM*</label>
                 <textarea id="address" name="alamat" rows="2" required>{{ old('alamat') }}</textarea>
             </div>
+
             <div class="form-group">
                 <label for="deskripsi">Deskripsi UMKM*</label>
                 <textarea id="deskripsi" name="deskripsi" rows="3" required>{{ old('deskripsi') }}</textarea>
             </div>
+
             <div class="grid-2">
                 <div class="form-group">
                     <label for="phone">Kontak / WhatsApp*</label>
                     <input type="text" id="phone" name="kontak" value="{{ old('kontak') }}" required>
                 </div>
+
                 <div class="form-group">
                     <label for="umkm_logo">Logo UMKM (JPEG/PNG, maks 2MB)</label>
                     <input type="file" id="umkm_logo" name="logo" accept="image/png,image/jpeg,image/jpg">
                     <div class="single-preview" id="umkmLogoPreview">
-                        <img src="{{ isset($umkm) && $umkm->logo 
-                            ? asset('umkm_logos/' . basename($umkm->logo)) 
-                            : asset('images/dummy5.PNG') }}" 
+                        <img src="{{ isset($umkm) && $umkm->logo ? asset($umkm->logo) : asset('images/dummy5.PNG') }}" 
                             alt="{{ $umkm->nama_umkm ?? 'Logo UMKM' }}" class="thumb">
                     </div>
                 </div>
             </div>
+
             <div class="form-group">
                 <label for="gmaps">Link Google Maps (opsional)</label>
                 <input type="text" id="gmaps" name="gmaps" value="{{ old('gmaps') }}">
             </div>
+
             <div class="grid-2">
                 <div class="form-group">
                     <label for="social">Sosial Media / Marketplace</label>
                     <input type="text" id="social" name="social" value="{{ old('social') }}">
                 </div>
+
                 <div class="form-group">
                     <label for="store">Lokasi Penjualan Offline</label>
                     <input type="text" id="store" name="store" value="{{ old('store') }}">
@@ -77,6 +84,7 @@
         <!-- 2. Data Produk -->
         <div class="form-block">
             <h2 class="block-title">2. Data Produk</h2>
+
             <div id="productWrapper">
                 <div class="grid-2 product-item" style="position:relative;">
                     <div class="form-group">
@@ -100,6 +108,7 @@
                     </div>
                 </div>
             </div>
+
             <button type="button" id="addProduct" class="btn-add">Tambah Produk</button>
         </div>
 
@@ -110,17 +119,29 @@
     </form>
 </section>
 
-<!-- JS Preview & Produk Dinamis -->
+<!-- Popup Tambah Produk -->
+<div id="popupConfirm" class="popup-overlay" style="display:none;">
+    <div class="popup-box">
+        <p id="popupText">Apakah Anda yakin ingin menambahkan produk baru?</p>
+        <div class="popup-actions">
+            <button type="button" id="popupYes" class="btn-yes">Ya</button>
+            <button type="button" id="popupNo" class="btn-no">Batal</button>
+        </div>
+    </div>
+</div>
+
 <script>
 (() => {
-    const MAX_SIZE = 2 * 1024 * 1024;
+    const MAX_SIZE = 2 * 1024 * 1024; // 2MB
     const ALLOWED = ["image/jpeg","image/png","image/jpg"];
+
+    function clear(el){ while(el.firstChild) el.removeChild(el.firstChild); }
 
     const umkmLogoInput = document.getElementById('umkm_logo');
     const umkmLogoPreview = document.getElementById('umkmLogoPreview');
     if(umkmLogoInput){
         umkmLogoInput.addEventListener('change', () => {
-            umkmLogoPreview.innerHTML = '';
+            clear(umkmLogoPreview);
             const file = umkmLogoInput.files[0];
             if(!file) return;
             if(!ALLOWED.includes(file.type) || file.size > MAX_SIZE){
@@ -139,32 +160,60 @@
     const addProductBtn = document.getElementById('addProduct');
     let productIndex = 1;
 
-    addProductBtn.addEventListener('click', ()=>{
-        const firstProduct = document.querySelector('.product-item');
-        const template = firstProduct.cloneNode(true);
+    const popup = document.getElementById('popupConfirm');
+    const popupYes = document.getElementById('popupYes');
+    const popupNo = document.getElementById('popupNo');
+    let currentAction = null; 
+    let targetElement = null;
 
-        const inputs = template.querySelectorAll('input,textarea');
-        inputs.forEach(input => {
-            if(input.name.includes('product_images')) {
-                input.name = `product_images[${productIndex}][]`;
-                input.value = '';
-                template.querySelector('.preview-grid').innerHTML = '<img src="{{ asset("images/dummy5.PNG") }}" alt="Produk">';
-            } else {
-                input.value = '';
-            }
-        });
+    function showPopup(action, text, element=null){
+        currentAction = action;
+        targetElement = element;
+        document.getElementById('popupText').textContent = text;
+        popup.style.display = 'flex';
+    }
 
-        const removeBtn = document.createElement('button');
-        removeBtn.type = 'button';
-        removeBtn.className = 'remove-btn';
-        removeBtn.textContent = '×';
-        removeBtn.style.cssText = "position:absolute;top:-10px;right:-10px;background:#000;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;";
-        removeBtn.addEventListener('click', ()=> template.remove());
-        template.style.position = "relative";
-        template.appendChild(removeBtn);
+    addProductBtn.addEventListener('click', ()=>{ showPopup('add','Apakah Anda yakin ingin menambahkan produk baru?'); });
 
-        productWrapper.prepend(template);
-        productIndex++;
+    popupYes.addEventListener('click', ()=>{
+        if(currentAction === 'add'){
+            const firstProduct = document.querySelector('.product-item');
+            const template = firstProduct.cloneNode(true);
+
+            const firstInputs = firstProduct.querySelectorAll('input,textarea');
+            const newInputs = template.querySelectorAll('input,textarea');
+
+            newInputs.forEach((el, i) => {
+                if(el.name.includes('product_images')) {
+                    el.name = `product_images[${productIndex}][]`;
+                    el.value = '';
+                    template.querySelector('.preview-grid').innerHTML = '<img src="{{ asset("images/dummy5.PNG") }}" alt="Produk">';
+                } else {
+                    el.value = firstInputs[i].value;
+                }
+            });
+
+            const removeBtn = document.createElement('button');
+            removeBtn.type = 'button';
+            removeBtn.className = 'remove-btn';
+            removeBtn.textContent = '×';
+            removeBtn.style.cssText = "position:absolute;top:-10px;right:-10px;background:#000;color:#fff;border:none;border-radius:50%;width:24px;height:24px;cursor:pointer;";
+            removeBtn.addEventListener('click', ()=> showPopup('remove','Apakah Anda yakin ingin menghapus produk ini?', template));
+            template.style.position = "relative";
+            template.appendChild(removeBtn);
+
+            productWrapper.prepend(template);
+            productIndex++;
+        } else if(currentAction === 'remove' && targetElement){
+            targetElement.remove();
+        }
+        popup.style.display = 'none';
+    });
+
+    popupNo.addEventListener('click', ()=>{ popup.style.display = 'none'; });
+
+    document.querySelectorAll('.remove-btn').forEach(btn=>{
+        btn.addEventListener('click', e=> showPopup('remove','Apakah Anda yakin ingin menghapus produk ini?', e.target.closest('.product-item')));
     });
 })();
 </script>
