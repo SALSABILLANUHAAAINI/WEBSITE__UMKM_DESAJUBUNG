@@ -34,7 +34,7 @@ class UmkmSubmissionController extends Controller
             'product_images.*.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // Upload logo langsung ke public/umkm_logos
+        // Upload logo ke public/umkm_logos
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
@@ -43,7 +43,6 @@ class UmkmSubmissionController extends Controller
             $logoPath = 'umkm_logos/'.$fileName;
         }
 
-        // Simpan submission
         $submission = UmkmSubmission::create([
             'nama_umkm' => $validated['nama_umkm'],
             'owner' => $validated['owner'],
@@ -57,7 +56,7 @@ class UmkmSubmissionController extends Controller
             'status' => 'pending',
         ]);
 
-        // Simpan produk
+        // Produk
         $products = $request->input('product', []);
         $prices = $request->input('price', []);
         $descriptions = $request->input('description', []);

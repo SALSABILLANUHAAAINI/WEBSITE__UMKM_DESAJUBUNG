@@ -11,6 +11,22 @@
         <p class="service-subtitle">Berikut adalah data submission UMKM pending.</p>
     </div>
 
+    <!-- Status Submission -->
+    <div class="form-block">
+        <h2 class="block-title">Status Submission</h2>
+        <div class="form-group">
+            @if($submission->status=='pending')
+                <span class="badge badge-warning">Pending</span>
+            @elseif($submission->status=='accepted')
+                <span class="badge badge-success">Diterima</span>
+            @elseif($submission->status=='rejected')
+                <span class="badge badge-danger">Ditolak</span>
+            @else
+                <span class="badge badge-secondary">-</span>
+            @endif
+        </div>
+    </div>
+
     <!-- Data UMKM -->
     <div class="form-block">
         <h2 class="block-title">1. Data UMKM</h2>
