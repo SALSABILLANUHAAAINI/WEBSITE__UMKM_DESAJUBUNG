@@ -14,7 +14,7 @@
         <h1 class="umkm-title">{{ $umkm->nama_umkm }}</h1>
         <div class="slider">
             <img
-                src="{{ $umkm->gambar ? asset('umkm_images/' . $umkm->gambar) : asset('images/dummy1.png') }}"
+                src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}"
                 alt="{{ $umkm->nama_umkm }}"
                 class="main-slider-img appear"
             >
@@ -27,9 +27,6 @@
     </div>
 </main>
 
-{{-- ========================= --}}
-{{-- KATALOG PRODUK (DI ATAS KONTAK) --}}
-{{-- ========================= --}}
 @if($umkm->products && $umkm->products->count() > 0)
 <section class="katalog-wrap">
     <h2 class="katalog-title">Produk UMKM</h2>
@@ -40,7 +37,7 @@
                 $firstProduct = $umkm->products->first();
             @endphp
             <img id="mainImage"
-                src="{{ $firstProduct->product_image ? asset('product_images/' . $firstProduct->product_image) : asset('images/dummy1.png') }}"
+                src="{{ $firstProduct->product_image ? asset($firstProduct->product_image) : asset('images/dummy1.png') }}"
                 alt="Produk Utama"
                 class="main-img"
                 loading="lazy"
@@ -49,7 +46,7 @@
             <div class="thumbnail-container">
                 @foreach($umkm->products as $item)
                     <img
-                        src="{{ $item->product_image ? asset('product_images/' . $item->product_image) : asset('images/dummy1.png') }}"
+                        src="{{ $item->product_image ? asset($item->product_image) : asset('images/dummy1.png') }}"
                         alt="Thumbnail {{ $item->nama_produk }}"
                         data-nama="{{ $item->nama_produk }}"
                         data-harga="Rp {{ number_format($item->harga, 0, ',', '.') }}"
@@ -82,7 +79,6 @@
     <h2 class="contact-title">Kontak & Alamat</h2>
 
     <div class="contact-cards">
-        <!-- KONTAK -->
         @if($umkm->kontak)
         <a href="https://wa.me/{{ $umkm->kontak }}" target="_blank" class="contact-card">
             <h3>Kontak WhatsApp</h3>
@@ -90,14 +86,12 @@
         </a>
         @endif
 
-        <!-- ALAMAT -->
         <div class="contact-card">
             <h3>Alamat</h3>
             <p>{{ $umkm->alamat }}</p>
         </div>
     </div>
 
-    <!-- Google Maps -->
     @if($umkm->gmaps)
     <div class="map-container">
         <iframe
@@ -108,9 +102,7 @@
     @endif
 </section>
 
-{{-- ====== JS: fungsional + animasi ringan ====== --}}
 <script>
-    // Ganti gambar & info produk
     function changeImage(el) {
         document.getElementById('mainImage').src = el.src;
         document.getElementById('produkNama').childNodes[0].nodeValue = el.dataset.nama + ' ';
@@ -118,7 +110,7 @@
         document.getElementById('produkDesc').innerText = el.dataset.deskripsi;
     }
 
-    // Scroll reveal + efek muncul halus
+    // Scroll reveal & tilt
     (function(){
         const revealEls = [
             ...document.querySelectorAll('.umkm-detail, .umkm-title, .umkm-right'),
@@ -151,11 +143,10 @@
         });
     })();
 
-    // Tilt ringan pada gambar utama
     (function(){
         const img = document.querySelector('.slider img');
         if(!img) return;
-        const maxTilt = 4; // derajat
+        const maxTilt = 4;
         img.addEventListener('mousemove', (e)=> {
             const r = img.getBoundingClientRect();
             const rx = ((e.clientY - r.top)/r.height - .5) * maxTilt;

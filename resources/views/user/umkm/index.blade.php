@@ -19,7 +19,7 @@
       @forelse($umkms as $umkm)
         <article class="umkm-card">
           <img
-            src="{{ $umkm->gambar ? asset('umkm_images/'.$umkm->gambar) : asset('images/dummy1.png') }}"
+            src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}"
             alt="{{ $umkm->nama_umkm }}"
             class="umkm-cover"
           >
