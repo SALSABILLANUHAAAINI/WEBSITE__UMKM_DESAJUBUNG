@@ -15,27 +15,25 @@ public function userIndex(Request $request)
     $katalogs = Katalog::all();
     $heroKatalog = HeroKatalog::first();
 
-    $query = Product::latest();
+    $query = Product::query();
 
     // Filter search
     if ($request->filled('search')) {
-        $search = $request->search;
-        $query->where('nama_produk', 'like', "%{$search}%");
+        $query->where('nama_produk', 'like', '%' . $request->search . '%');
     }
 
     // Filter kategori
-    if ($request->filled('kategori') && $request->kategori != 'semua') {
-        $kategori = strtolower($request->kategori);
-        $query->whereHas('katalog', function($q) use ($kategori) {
-            $q->whereRaw('LOWER(name) = ?', [$kategori]);
+    if ($request->filled('kategori') && $request->kategori !== 'semua') {
+        $query->whereHas('katalog', function($q) use ($request){
+            $q->where('name', 'like', $request->kategori);
         });
     }
 
-    // Pagination: 12 produk per halaman
-    $products = $query->paginate(12)->withQueryString();
+    $products = $query->latest()->paginate(12); // 12 produk per halaman
 
     return view('user.katalog.index', compact('katalogs', 'heroKatalog', 'products'));
 }
+
 
 
     // ------------------- ADMIN SIDE -------------------

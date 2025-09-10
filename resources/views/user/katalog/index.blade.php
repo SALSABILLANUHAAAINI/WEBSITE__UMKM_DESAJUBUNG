@@ -14,7 +14,7 @@
 
     {{-- Toolbar: kategori dropdown + search --}}
     <div class="katalog-toolbar">
-        <form method="GET" action="{{ route('katalog.userIndex') }}" class="filter-form">
+        <form method="GET" action="{{ route('katalog') }}" class="filter-form">
             {{-- Search --}}
             <input type="text" name="search" value="{{ request('search') }}" 
                    placeholder="Cari produk..." class="katalog-search-input">
@@ -32,21 +32,14 @@
                 @endforeach
             </select>
 
-            <button type="submit" class="btn-search">Filter</button>
+            <button type="submit" class="btn-submit">Filter</button>
         </form>
     </div>
 
     {{-- Grid produk --}}
     <div class="katalog-grid">
         @forelse($products as $product)
-            <div class="katalog-card"
-                data-nama="{{ $product->nama_produk }}"
-                data-harga="Rp {{ number_format($product->harga, 0, ',', '.') }}"
-                data-toko="{{ $product->umkm->nama_umkm ?? '-' }}"
-                data-gambar="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
-                data-kategori="{{ strtolower($product->katalog->name ?? 'lainnya') }}"
-                data-deskripsi="{{ $product->deskripsi ?? 'Tidak ada deskripsi' }}">
-
+            <div class="katalog-card">
                 <img src="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}" alt="{{ $product->nama_produk }}">
                 <div class="katalog-info">
                     <h3>{{ $product->nama_produk }}</h3>
