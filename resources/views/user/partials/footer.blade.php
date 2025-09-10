@@ -4,7 +4,7 @@
     <div class="socials">
         <a href="#"><i class="fab fa-instagram"></i></a>
         <a href="#"><i class="fab fa-facebook"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.youtube.com/watch?v=s1H20qu8-Ak&t=1s"><i class="fab fa-youtube"></i></a>
         <a href="mailto:umkm.jubung@example.com"><i class="fas fa-envelope"></i></a>
     </div>
 
