@@ -26,7 +26,6 @@ body {
    ================================= */
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 1.5rem;
     justify-items: center; /* agar 1 kartu tetap di tengah */
 }
@@ -136,19 +135,6 @@ body {
   font-size: 0.95rem;
   color: var(--text-light);
 }
-
-/* Batasi grid produk hanya di dashboard */
-.dashboard-container .produk-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 1.5rem;
-}
-
-
-.dashboard-container .produk-img {
-    height: 150px; /* kecilin tinggi gambar */
-}
-
 
 
 /* =================================

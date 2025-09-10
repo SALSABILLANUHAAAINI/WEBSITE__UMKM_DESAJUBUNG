@@ -39,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
                                     ->get();
 
             // 4. Ambil 5 katalog terbaru
-            $recentKatalogs = Katalog::latest()->take(5)->get();
+            $recentKatalogs = Katalog::latest()->take(6)->get();
 
             // 5. Kirim semua data ini ke view
             $view->with([
