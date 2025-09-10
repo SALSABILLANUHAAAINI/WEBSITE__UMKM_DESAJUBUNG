@@ -85,7 +85,7 @@
     <!-- Data Produk -->
     <div class="form-block">
         <h2 class="block-title">2. Data Produk</h2>
-        @if(isset($submission->products) && $submission->products->count() > 0)
+        @if($submission->products && $submission->products->count() > 0)
             @foreach($submission->products as $product)
                 <div class="grid-2 product-item">
                     <div class="form-group">
@@ -115,6 +115,7 @@
     </div>
 
     <!-- Tombol Aksi -->
+    @if($submission->status == 'pending')
     <div class="form-actions">
         <form action="{{ route('admin.submissions.reject', $submission->id) }}" method="POST" style="display:inline-block;">
             @csrf
@@ -126,5 +127,6 @@
             <button type="submit" class="btn-accept">Accept</button>
         </form>
     </div>
+    @endif
 </section>
 @endsection
