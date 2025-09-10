@@ -58,7 +58,7 @@
             </div>
         </div>
 
-        <!-- <div class="produk-deskripsi">
+        <div class="produk-deskripsi">
             <h2 id="produkNama">
                 {{ $firstProduct->nama_produk }}
                 <span class="harga" id="produkHarga">
@@ -70,7 +70,7 @@
             <hr>
             <p><strong>Toko:</strong> {{ $umkm->nama_umkm }}</p>
             <p>{{ $umkm->deskripsi }}</p>
-        </div> -->
+        </div>
     </main>
 </section>
 @endif
