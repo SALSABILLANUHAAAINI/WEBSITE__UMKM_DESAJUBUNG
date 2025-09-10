@@ -66,10 +66,6 @@
                 </span>
             </h2>
             <p id="produkDesc">{{ $firstProduct->deskripsi }}</p>
-
-            <hr>
-            <p><strong>Toko:</strong> {{ $umkm->nama_umkm }}</p>
-            <p>{{ $umkm->deskripsi }}</p>
         </div>
     </main>
 </section>
