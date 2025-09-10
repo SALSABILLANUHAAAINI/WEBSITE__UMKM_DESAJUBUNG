@@ -41,14 +41,17 @@
         <textarea name="deskripsi" id="deskripsi">{{ $product->deskripsi }}</textarea>
 
         <label for="gambar">Gambar Produk</label>
-        @if($product->product_image)
-            <div style="margin-bottom: 1rem;">
-                <img src="{{ asset('storage/'.$product->product_image) }}" alt="{{ $product->nama_produk }}" style="max-width: 200px;">
+        <div class="upload-box" id="drop-area" onclick="document.getElementById('gambar').click()">
+            <p id="drop-text">Drag & drop untuk upload<br>atau klik untuk pilih</p>
+            <input type="file" name="gambar" id="gambar" class="file-input" accept="image/*">
+            <div id="preview" style="margin-top:10px;">
+                @if($product->product_image)
+                    <img src="{{ asset($product->product_image) }}" style="max-width:200px;">
+                @endif
             </div>
-        @endif
-        <input type="file" name="gambar" id="gambar">
+        </div>
 
-        <button type="submit" class="btn edit">Update</button>
+        <button type="submit" class="btn edit" style="margin-top:1rem;">Update</button>
     </form>
 </div>
 @endsection
@@ -64,24 +67,27 @@ gambarInput.addEventListener('change', function() {
     if(this.files && this.files[0]){
         const file = this.files[0];
 
+        const info = document.createElement('p');
+        info.textContent = 'File dipilih: ' + file.name;
+        preview.appendChild(info);
+
         const reader = new FileReader();
         reader.onload = function(e){
             const img = document.createElement('img');
             img.src = e.target.result;
+            img.style.maxWidth = '150px';
+            img.style.marginTop = '10px';
             preview.appendChild(img);
         }
         reader.readAsDataURL(file);
-
         dropText.style.display = 'none';
     } else {
-        // tampilkan kembali gambar lama jika ada
+        dropText.style.display = 'block';
         @if($product->product_image)
             const img = document.createElement('img');
-            img.src = "{{ asset('storage/'.$product->product_image) }}";
+            img.src = "{{ asset($product->product_image) }}";
+            img.style.maxWidth = '200px';
             preview.appendChild(img);
-            dropText.style.display = 'block';
-        @else
-            dropText.style.display = 'block';
         @endif
     }
 });

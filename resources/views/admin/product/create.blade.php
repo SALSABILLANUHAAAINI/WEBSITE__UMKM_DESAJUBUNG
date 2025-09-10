@@ -81,7 +81,6 @@ gambarInput.addEventListener('change', function() {
     preview.innerHTML = '';
     if(this.files && this.files[0]){
         const file = this.files[0];
-
         const info = document.createElement('p');
         info.textContent = 'File dipilih: ' + file.name;
         preview.appendChild(info);

@@ -9,7 +9,6 @@
 <div class="produk-container">
     <h1 class="title">Daftar Produk</h1>
 
-    <!-- Header aksi: Pencarian + Tambah Produk -->
     <div class="produk-actions" style="display: flex; gap: 1rem; margin: 1rem 0; align-items: center;">
         <form action="{{ route('admin.product.index') }}" method="GET" style="display: flex; gap: 0.5rem; flex: 1;">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk..."
@@ -24,7 +23,7 @@
     <div class="produk-grid">
         @forelse($products as $product)
             <div class="produk-card">
-                <img src="{{ $product->product_image ? asset('storage/'.$product->product_image) : asset('images/sample-produk.jpg') }}"
+                <img src="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
                     alt="{{ $product->nama_produk }}" class="produk-img">
 
                 <div class="produk-body">
@@ -48,7 +47,6 @@
         @endforelse
     </div>
 
-    <!-- Pagination -->
     <div class="pagination">
         {{ $products->links() }}
     </div>
