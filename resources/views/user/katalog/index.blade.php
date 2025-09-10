@@ -117,6 +117,8 @@ document.addEventListener('DOMContentLoaded', function(){
             selectedCategory = btn.dataset.filter;
             document.getElementById('kategoriToggle').textContent = 'Kategori: ' + btn.textContent + ' ▾';
             filterProducts();
+
+            menu.classList.remove('show');
         });
     });
 

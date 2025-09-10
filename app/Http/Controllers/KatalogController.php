@@ -29,7 +29,7 @@ public function userIndex(Request $request)
         });
     }
 
-    $products = $query->latest()->paginate(12); // 12 produk per halaman
+    $products = $query->latest()->paginate(10); // 10 produk per halaman
 
     return view('user.katalog.index', compact('katalogs', 'heroKatalog', 'products'));
 }
