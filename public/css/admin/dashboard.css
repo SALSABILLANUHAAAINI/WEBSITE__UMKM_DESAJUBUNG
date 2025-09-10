@@ -6,7 +6,7 @@
   --success-color: #16a34a; /* Hijau */
   --danger-color: #dc2626;  /* Merah */
   --bg-light: #f8f9fa;      /* Latar belakang utama */
-  --bg-card: #ffffff;      /* Latar belakang kartu */
+  --bg-card: #ffffff;       /* Latar belakang kartu */
   --text-dark: #1f2937;     /* Teks utama */
   --text-light: #6b7280;    /* Teks sekunder */
   --border-color: #e5e7eb;  /* Warna border */
@@ -20,7 +20,6 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-
 /* =================================
    LAYOUT UTAMA & GRID
    ================================= */
@@ -33,7 +32,6 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
 }
-
 
 /* =================================
    HERO SECTION / HEADER
@@ -73,7 +71,6 @@ body {
   font-size: 1rem;
   color: var(--text-light);
 }
-
 
 /* =================================
    KARTU STATISTIK
@@ -119,23 +116,22 @@ body {
   letter-spacing: 0.5px;
 }
 
-
 /* =================================
-   KARTU PRODUK DI DASHBOARD
+   SHARED CARD UNTUK PRODUK & KATEGORI
    ================================= */
-.produk-card-dashboard {
+.card-dashboard {
   background: var(--bg-card);
   border-radius: var(--border-radius);
   overflow: hidden;
   box-shadow: var(--shadow);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  flex-direction: column;
   border: 1px solid var(--border-color);
   padding: 1rem;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
-.produk-card-dashboard::before {
+.card-dashboard::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -144,33 +140,15 @@ body {
   border-radius: var(--border-radius);
   pointer-events: none;
 }
-.produk-card-dashboard:hover {
+.card-dashboard:hover {
   transform: translateY(-5px);
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
-
-.produk-card-dashboard .produk-nama::before {
+.card-dashboard .produk-nama::before {
   content: '🛍️';
   margin-right: 0.5rem;
 }
-
-.produk-card-dashboard .produk-nama {
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-.produk-card-dashboard .produk-sub {
-  font-size: 0.9rem;
-  color: var(--text-light);
-  margin-bottom: 0.5rem;
-}
-.produk-card-dashboard .produk-desc.harga {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--text-dark);
-  margin-bottom: 1rem;
-}
-.produk-card-dashboard .produk-btn-group {
+.card-dashboard .produk-btn-group {
   display: flex;
   gap: 0.5rem;
   justify-content: flex-end;
@@ -178,24 +156,45 @@ body {
   transform: translateY(5px);
   transition: opacity 0.3s, transform 0.3s;
 }
-.produk-card-dashboard:hover .produk-btn-group {
+.card-dashboard:hover .produk-btn-group {
   opacity: 1;
   transform: translateY(0);
 }
-.produk-card-dashboard .btn.edit {
+.card-dashboard .produk-nama {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+.card-dashboard .produk-sub {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+.card-dashboard .produk-desc.harga {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+}
+.card-dashboard .btn.edit {
   background: var(--primary-color);
   color: white;
 }
-.produk-card-dashboard .btn.edit:hover {
+.card-dashboard .btn.edit:hover {
   background: #2563eb;
 }
-.produk-card-dashboard .btn.hapus {
+.card-dashboard .btn.lihat {
+  background: var(--success-color);
+}
+.card-dashboard .btn.lihat:hover {
+  background: #15803d;
+}
+.card-dashboard .btn.hapus {
   background: var(--danger-color);
 }
-.produk-card-dashboard .btn.hapus:hover {
+.card-dashboard .btn.hapus:hover {
   background: #b91c1c;
 }
-
 
 /* =================================
    TOMBOL
@@ -219,20 +218,6 @@ body {
 }
 .btn:active {
     transform: scale(0.98);
-}
-
-.btn.lihat {
-  background: var(--success-color);
-}
-.btn.lihat:hover {
-  background: #15803d;
-}
-
-.btn.hapus {
-  background: var(--danger-color);
-}
-.btn.hapus:hover {
-  background: #b91c1c;
 }
 
 /* =================================
