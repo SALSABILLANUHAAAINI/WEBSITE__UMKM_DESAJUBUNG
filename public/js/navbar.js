@@ -11,5 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const expanded = hamburger.classList.contains("is-active");
       hamburger.setAttribute("aria-expanded", expanded);
     });
+
+    // Keyboard support
+    hamburger.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        hamburger.click();
+      }
+    });
   }
 });
