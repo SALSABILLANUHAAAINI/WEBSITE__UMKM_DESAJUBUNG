@@ -152,12 +152,11 @@ body {
     font-size: clamp(1.2rem, 1rem + .8vw, 1.6rem);
 }
 
-/* Layout */
 .katalog {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    gap: 28px; /* sedikit lebih rapat */
+    align-items: stretch; /* tinggi kiri & kanan lebih seragam */
+    gap: 32px;
     padding: 22px 16px;
     background: #fff;
     border: 1px solid var(--c-soft);
@@ -167,25 +166,22 @@ body {
 
 /* Kiri: display + thumbnails */
 .produk-display {
-    flex: 0 0 auto; /* jangan memaksa ikut melar */
+    flex: 1; /* biar seimbang dengan deskripsi */
+    max-width: 420px; /* batasi supaya tidak terlalu besar */
     text-align: center;
 }
 
 .main-img {
     width: 100%;
-    max-width: 380px; /* lebih kecil dari 480px */
-    height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    display: block;
-    margin: 0 auto;
+    height: 320px; /* tinggi tetap, lebih konsisten */
+    object-fit: cover; /* crop rapi */
     border-radius: var(--radius-lg);
     border: 1px solid var(--c-soft);
     box-shadow: var(--shadow-sm);
+    margin-bottom: 12px;
 }
 
 .thumbnail-container {
-    margin-top: 12px;
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -208,13 +204,15 @@ body {
 
 /* Kanan: deskripsi */
 .produk-deskripsi {
-    flex: 1; /* biar melar ambil ruang kosong */
-    max-width: 500px; /* biar tidak terlalu panjang */
+    flex: 1; /* ikut fleksibel */
+    max-width: 500px;
     background: #fff;
-    padding: 18px;
+    padding: 24px 20px; /* tambah padding agar tidak mepet */
+    margin-left: auto; /* pastikan ada ruang dari sisi kiri */
     border-radius: var(--radius-md);
     border: 1px solid var(--c-soft);
     box-shadow: var(--shadow-sm);
+    text-align: left; /* tetap rapi untuk teks */
 }
 
 .produk-deskripsi h2 {
