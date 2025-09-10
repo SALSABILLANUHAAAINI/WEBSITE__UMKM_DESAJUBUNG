@@ -3,18 +3,12 @@
 
 :root {
     --c-white: #ffffff;
-    --c-soft: #E9F5EC;
-    /* pastel green */
-    --c-soft-2: #F6FBF8;
-    /* latar sangat lembut */
-    --c-accent: #8FBC8F;
-    /* primary green */
-    --c-accent-soft: #BEE3C6;
-    /* gradient pair */
-    --c-deep: #2F6F52;
-    /* judul / ikon */
-    --c-muted: #5a7a6a;
-    /* body text */
+    --c-soft: #E9F5EC; /* pastel green */
+    --c-soft-2: #F6FBF8; /* latar sangat lembut */
+    --c-accent: #8FBC8F; /* primary green */
+    --c-accent-soft: #BEE3C6; /* gradient pair */
+    --c-deep: #2F6F52; /* judul / ikon */
+    --c-muted: #5a7a6a; /* body text */
 
     --radius-lg: 16px;
     --radius-md: 12px;
@@ -33,39 +27,42 @@ body {
 
 /* ====== WRAPPER DETAIL ====== */
 .umkm-detail {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(260px, 520px) 1fr; 
+    /* ⬆️ kiri: max 520px, kanan fleksibel → seimbang */
     gap: 2rem;
-    margin: 2rem auto;
+    margin: 1.5rem auto;
     max-width: 1100px;
     padding: 1rem;
-    flex-wrap: wrap;
+    align-items: start; 
+    /* ⬆️ pastikan deskripsi mulai sejajar atas gambar */
     background: linear-gradient(180deg, #fff 0%, var(--c-soft-2) 100%);
     border: 1px solid var(--c-soft);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
 }
 
-.umkm-left {
-    flex: 1 1 45%;
-}
-
+/* Kolom */
+.umkm-left { grid-column: 1; }
 .umkm-right {
-    flex: 1 1 45%;
+    grid-column: 2;
     font-size: 1rem;
     line-height: 1.8;
     color: var(--c-muted);
+    padding-right: .25rem;
 }
 
-/* Judul UMKM */
+/* Nama UMKM → selalu di tengah atas */
 .umkm-title {
-    margin: .25rem 0 1rem;
+    text-align: center;  
+    margin: 1.25rem 0; 
     font-weight: 800;
     color: var(--c-deep);
-    font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem);
+    font-size: clamp(1.6rem, 1.2rem + 1vw, 2.2rem);
     letter-spacing: .01em;
 }
 
-/* Gambar utama (slider single) */
+/* ====== Gambar utama (slider) ====== */
 .slider img {
     width: 100%;
     display: block;
@@ -73,7 +70,6 @@ body {
     border: 1px solid var(--c-soft);
     box-shadow: var(--shadow-sm);
     object-fit: cover;
-    /* tilt vars diatur via JS */
     transform: rotateX(var(--tiltX, 0deg)) rotateY(var(--tiltY, 0deg)) scale(1.0);
     transition: transform .25s ease, box-shadow .25s ease, opacity .35s ease;
     transform-style: preserve-3d;
@@ -133,7 +129,6 @@ body {
     font-size: .95rem;
 }
 
-/* Google Map */
 .map-container {
     margin-top: 1.25rem;
     border-radius: var(--radius-md);
@@ -157,37 +152,35 @@ body {
     font-size: clamp(1.2rem, 1rem + .8vw, 1.6rem);
 }
 
-/* Layout */
 .katalog {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
     gap: 32px;
     padding: 22px 16px;
     background: #fff;
     border: 1px solid var(--c-soft);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
+    align-items: flex-start; /* sejajarkan bagian atas */
 }
 
 /* Kiri: display + thumbnails */
 .produk-display {
+    flex: 0 0 50%; /* ambil setengah lebar */
+    max-width: 460px; /* batasi biar tidak terlalu gede */
     text-align: center;
 }
 
 .main-img {
-    width: 520px;
-    max-width: 86vw;
-    height: 340px;
+    width: 100%;
+    height: 300px; /* lebih proporsional */
     object-fit: cover;
-    display: block;
     border-radius: var(--radius-lg);
     border: 1px solid var(--c-soft);
     box-shadow: var(--shadow-sm);
+    margin-bottom: 12px;
 }
 
 .thumbnail-container {
-    margin-top: 12px;
     display: flex;
     justify-content: center;
     gap: 10px;
@@ -195,30 +188,30 @@ body {
 }
 
 .thumbnail-container img {
-    width: 110px;
-    height: 82px;
+    width: 90px;
+    height: 68px;
     object-fit: cover;
-    border-radius: 10px;
-    cursor: pointer;
+    border-radius: 8px;
     border: 1px solid var(--c-soft);
-    transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease, opacity .35s ease;
-    background: #fff;
+    transition: transform .2s ease, border-color .2s ease;
 }
 
 .thumbnail-container img:hover {
     transform: scale(1.05);
     border-color: var(--c-accent);
-    box-shadow: 0 8px 18px rgba(143, 188, 143, .22);
 }
 
-/* Kanan: deskripsi */
+/* Bagian deskripsi */
 .produk-deskripsi {
-    max-width: 420px;
+    flex: 1; /* ambil sisa ruang */
+    max-width: 480px; /* jangan melebar ke kanan */
+    margin: 0 auto;   /* biar lebih balance */
+    padding: 20px 24px;
     background: #fff;
-    padding: 18px;
     border-radius: var(--radius-md);
     border: 1px solid var(--c-soft);
     box-shadow: var(--shadow-sm);
+    text-align: left; /* teks tetap rata kiri */
 }
 
 .produk-deskripsi h2 {
@@ -251,88 +244,44 @@ body {
     margin: .8rem 0 .6rem;
 }
 
-/* ====== ANIMASI & MICRO-INTERACTION ====== */
 
-/* Reduce motion respect */
+/* ====== ANIMASI ====== */
 @media (prefers-reduced-motion: reduce) {
-    * {
-        animation: none !important;
-        transition: none !important;
-    }
+    * { animation: none !important; transition: none !important; }
 }
 
-/* Scroll reveal */
 .reveal {
     opacity: 0;
     transform: translateY(14px);
     transition: opacity .6s ease, transform .6s ease;
-    will-change: opacity, transform;
 }
 
-.reveal.is-visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.reveal-left {
-    transform: translateX(-16px);
-}
-
-.reveal-right {
-    transform: translateX(16px);
-}
-
-.reveal-up {
-    transform: translateY(18px);
-}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+.reveal-left { transform: translateX(-16px); }
+.reveal-right { transform: translateX(16px); }
+.reveal-up { transform: translateY(18px); }
 
 .is-visible.reveal-left,
 .is-visible.reveal-right,
-.is-visible.reveal-up {
-    transform: none;
-}
-
-/* Fade-in gambar */
-.slider img,
-.thumbnail-container img {
-    transform: translateZ(0);
-    backface-visibility: hidden;
-}
+.is-visible.reveal-up { transform: none; }
 
 .slider img.appear,
-.thumbnail-container img.appear {
-    animation: fadeIn .6s ease both;
-}
+.thumbnail-container img.appear { animation: fadeIn .6s ease both; }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Hover halus gambar utama */
 .slider img:hover {
     transform: rotateX(var(--tiltX, 0deg)) rotateY(var(--tiltY, 0deg)) scale(1.015);
     box-shadow: var(--shadow-md);
 }
 
-/* Ripple lembut thumbnail */
-.thumbnail-container img:hover {
-    box-shadow: 0 0 0 4px rgba(143, 188, 143, .18);
-}
-
-/* Underline aksen tumbuh pada judul */
+/* Judul underline aksen */
 .umkm-title,
 .katalog-title,
-.contact-title {
-    position: relative;
-}
+.contact-title { position: relative; }
 
 .umkm-title.is-visible::after,
 .katalog-title.is-visible::after,
@@ -350,84 +299,36 @@ body {
 }
 
 @keyframes growBar {
-    from {
-        transform: translateX(-50%) scaleX(0);
-    }
-
-    to {
-        transform: translateX(-50%) scaleX(1);
-    }
-}
-
-/* Tombol hover lift */
-.btn--primary:hover {
-    animation: hoverLift .35s ease both;
-}
-
-@keyframes hoverLift {
-    from {
-        transform: translateY(0);
-    }
-
-    to {
-        transform: translateY(-2px);
-    }
+    from { transform: translateX(-50%) scaleX(0); }
+    to { transform: translateX(-50%) scaleX(1); }
 }
 
 /* ====== RESPONSIVE ====== */
 @media (max-width: 1024px) {
-    .katalog {
-        gap: 22px;
-    }
-
-    .main-img {
-        height: 300px;
-    }
+    .katalog { gap: 22px; }
+    .main-img { height: 300px; }
 }
 
 @media (max-width: 768px) {
     .umkm-detail {
-        flex-direction: column;
-        gap: 1.25rem;
-    }
-
-    .umkm-left,
-    .umkm-right {
-        flex: 1 1 100%;
+        grid-template-columns: 1fr; /* ⬆️ stack vertikal */
+        text-align: center;
     }
 
     .katalog {
-        flex-direction: column;
-        align-items: center;
-        gap: 18px;
-        padding: 16px 12px;
+        grid-template-columns: 1fr; /* ⬆️ produk & deskripsi menumpuk */
     }
 
     .produk-deskripsi {
-        width: 100%;
-        max-width: 640px;
+        max-width: 100%;
     }
 
-    .main-img {
-        height: 260px;
-    }
-
-    .thumbnail-container img {
-        width: 100px;
-        height: 74px;
-    }
+    .main-img { height: 260px; }
+    .thumbnail-container { justify-content: center; }
+    .thumbnail-container img { width: 100px; height: 74px; }
 }
 
 @media (max-width: 480px) {
-    .katalog-wrap {
-        margin: 2rem auto;
-    }
-
-    .produk-deskripsi h2 {
-        font-size: 1.2rem;
-    }
-
-    .harga {
-        font-size: .95rem;
-    }
+    .produk-deskripsi h2 { font-size: 1.2rem; }
+    .harga { font-size: .95rem; }
 }
