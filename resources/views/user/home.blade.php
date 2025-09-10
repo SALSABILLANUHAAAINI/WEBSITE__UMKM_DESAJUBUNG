@@ -83,7 +83,7 @@
             <div class="umkm-grid">
                 @forelse($umkms as $umkm)
                     <div class="umkm-card">
-                        <img src="{{ $umkm->logo ? asset('umkm_logos/'.$umkm->logo) : asset('images/dummy1.png') }}" alt="{{ $umkm->nama_umkm }}">
+                        <img src="{{ $umkm->gambar ? asset('umkm_images/'.$umkm->gambar) : asset('images/dummy1.png') }}" alt="{{ $umkm->nama_umkm }}">
                         <div class="umkm-info">
                             <h3 class="umkm-name">{{ $umkm->nama_umkm }}</h3>
                             <p class="umkm-desc">{{ Str::limit($umkm->deskripsi, 150) }}</p>
