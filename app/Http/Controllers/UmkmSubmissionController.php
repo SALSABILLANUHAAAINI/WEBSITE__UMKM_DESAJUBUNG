@@ -10,12 +10,11 @@ use Illuminate\Http\Request;
 class UmkmSubmissionController extends Controller
 {
     public function showForm()
-{
-    $katalogs = Katalog::where('is_active', 1)->get();
-    $settings = \App\Models\ServiceSetting::first(); // ambil settings hero
-    return view('user.service.service', compact('katalogs', 'settings'));
-}
-
+    {
+        $katalogs = Katalog::where('is_active', 1)->get();
+        $settings = \App\Models\ServiceSetting::first();
+        return view('user.service.service', compact('katalogs', 'settings'));
+    }
 
     public function store(Request $request)
     {
@@ -36,15 +35,16 @@ class UmkmSubmissionController extends Controller
             'product_images.*.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // Upload logo ke public/umkm_logos
+        // Upload logo ke public/umkm_images
         $logoPath = null;
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $fileName = time().'_'.$file->getClientOriginalName();
-            $file->move(public_path('umkm_logos'), $fileName);
-            $logoPath = 'umkm_logos/'.$fileName;
+            $file->move(public_path('umkm_images'), $fileName);
+            $logoPath = 'umkm_images/'.$fileName;
         }
 
+        // Create UMKM submission
         $submission = UmkmSubmission::create([
             'nama_umkm' => $validated['nama_umkm'],
             'owner' => $validated['owner'],
