@@ -14,9 +14,7 @@
         <h1 class="umkm-title">{{ $umkm->nama_umkm }}</h1>
         <div class="slider">
             <img
-                src="{{ $umkm->gambar 
-                    ? asset('storage/umkm_images/' . urlencode($umkm->gambar)) 
-                    : asset('images/dummy1.png') }}"
+                src="{{ $umkm->gambar ? asset('umkm_images/' . $umkm->gambar) : asset('images/dummy1.png') }}"
                 alt="{{ $umkm->nama_umkm }}"
                 class="main-slider-img appear"
             >
@@ -42,9 +40,7 @@
                 $firstProduct = $umkm->products->first();
             @endphp
             <img id="mainImage"
-                src="{{ $firstProduct->product_image 
-                        ? asset('storage/product_images/' . urlencode($firstProduct->product_image)) 
-                        : asset('images/dummy1.png') }}"
+                src="{{ $firstProduct->product_image ? asset('product_images/' . $firstProduct->product_image) : asset('images/dummy1.png') }}"
                 alt="Produk Utama"
                 class="main-img"
                 loading="lazy"
@@ -53,9 +49,7 @@
             <div class="thumbnail-container">
                 @foreach($umkm->products as $item)
                     <img
-                        src="{{ $item->product_image 
-                                ? asset('storage/product_images/' . urlencode($item->product_image)) 
-                                : asset('images/dummy1.png') }}"
+                        src="{{ $item->product_image ? asset('product_images/' . $item->product_image) : asset('images/dummy1.png') }}"
                         alt="Thumbnail {{ $item->nama_produk }}"
                         data-nama="{{ $item->nama_produk }}"
                         data-harga="Rp {{ number_format($item->harga, 0, ',', '.') }}"
