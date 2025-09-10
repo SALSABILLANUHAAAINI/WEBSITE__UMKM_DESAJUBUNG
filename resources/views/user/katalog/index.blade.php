@@ -12,43 +12,51 @@
     {{-- Judul --}}
     <h1 class="katalog-title">{{ $heroKatalog->hero ?? 'Explore Our Clients' }}</h1>
 
-    {{-- Toolbar --}}
-    <div class="katalog-toolbar">
+    {{-- Toolbar: kategori dropdown + search --}}
+    <form method="GET" action="{{ route('katalog') }}" class="katalog-toolbar">
+        @php
+            $selectedCategory = request('kategori') ?? 'all';
+            $searchQuery = request('search') ?? '';
+        @endphp
 
-        {{-- Dropdown kategori (server-side) --}}
-        @php $selectedCategory = request('kategori') ?? 'all'; @endphp
+        {{-- Dropdown kategori --}}
         <div class="kategori-dropdown">
-            <form method="GET" action="{{ route('katalog') }}">
-                <input type="hidden" name="search" value="{{ request('search') }}">
-                <select name="kategori" class="katalog-select" onchange="this.form.submit()">
-                    <option value="all" {{ $selectedCategory=='all'?'selected':'' }}>Semua</option>
-                    @foreach($katalogs as $katalog)
-                        @if($katalog->is_active)
-                            <option value="{{ strtolower($katalog->name) }}" 
-                                    {{ strtolower($katalog->name)==$selectedCategory?'selected':'' }}>
+            <button type="button" id="kategoriToggle" class="kategori-btn">
+                Kategori: {{ ucfirst($selectedCategory) }} ▾
+            </button>
+            <ul id="kategoriMenu" class="kategori-menu">
+                <li>
+                    <button type="submit" name="kategori" value="all" class="kat-btn {{ $selectedCategory=='all'?'is-active':'' }}">
+                        Semua
+                    </button>
+                </li>
+                @foreach($katalogs as $katalog)
+                    @if($katalog->is_active)
+                        <li>
+                            <button type="submit" name="kategori" value="{{ strtolower($katalog->name) }}" 
+                                    class="kat-btn {{ strtolower($katalog->name)==$selectedCategory?'is-active':'' }}">
                                 {{ $katalog->name }}
-                            </option>
-                        @endif
-                    @endforeach
-                </select>
-            </form>
+                            </button>
+                        </li>
+                    @endif
+                @endforeach
+            </ul>
         </div>
 
-        {{-- Search (client-side) --}}
+        {{-- Search --}}
         <div class="katalog-search">
-            <input type="text" id="katalogSearch" class="katalog-search-input"
-                   placeholder="Cari produk...">
-            <button type="button" class="katalog-search-clear" title="Bersihkan">×</button>
+            <input type="text" name="search" id="katalogSearch" class="katalog-search-input"
+                   value="{{ $searchQuery }}" placeholder="Cari produk...">
+            <button type="submit" class="katalog-search-btn">Cari</button>
         </div>
-
-    </div>
+    </form>
 
     {{-- Grid produk --}}
     <div class="katalog-grid">
         @forelse($products as $product)
             <div class="katalog-card"
                  data-nama="{{ $product->nama_produk }}"
-                 data-harga="Rp {{ number_format($product->harga,0,',','.') }}"
+                 data-harga="Rp {{ number_format($product->harga, 0, ',', '.') }}"
                  data-toko="{{ $product->umkm->nama_umkm ?? '-' }}"
                  data-gambar="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
                  data-kategori="{{ strtolower($product->katalog->name ?? 'lainnya') }}"
@@ -58,7 +66,7 @@
                 <div class="katalog-info">
                     <h3>{{ $product->nama_produk }}</h3>
                     <p class="produk-umkm">{{ $product->umkm->nama_umkm ?? '-' }}</p>
-                    <p class="produk-harga">Rp {{ number_format($product->harga,0,',','.') }}</p>
+                    <p class="produk-harga">Rp {{ number_format($product->harga, 0, ',', '.') }}</p>
                 </div>
             </div>
         @empty
@@ -66,9 +74,9 @@
         @endforelse
     </div>
 
-    {{-- Pagination (server-side) --}}
+    {{-- Pagination --}}
     <div class="pagination">
-        {{ $products->appends(['kategori'=>request('kategori')])->links('vendor.pagination.custom') }}
+        {{ $products->appends(['kategori'=>request('kategori'),'search'=>request('search')])->links('vendor.pagination.custom') }}
     </div>
 
     {{-- Modal Produk --}}
@@ -83,30 +91,10 @@
         </div>
     </div>
 
-    {{-- Script: live search + modal --}}
+    {{-- Script modal --}}
     <script>
     document.addEventListener('DOMContentLoaded', function(){
-        const input = document.getElementById('katalogSearch');
-        const clearBtn = document.querySelector('.katalog-search-clear');
         const cards = document.querySelectorAll('.katalog-grid .katalog-card');
-
-        function filterProducts() {
-            const query = input.value.trim().toLowerCase();
-            cards.forEach(card => {
-                const title = card.dataset.nama.toLowerCase();
-                card.style.display = title.includes(query) ? '' : 'none';
-            });
-            clearBtn.style.display = query ? 'inline' : 'none';
-        }
-
-        input.addEventListener('input', filterProducts);
-        clearBtn.addEventListener('click', () => {
-            input.value = '';
-            filterProducts();
-            input.focus();
-        });
-
-        // Modal
         const modal = document.getElementById('produkModal');
         const modalImg = document.getElementById('modalImg');
         const modalNama = document.getElementById('modalNama');
@@ -128,8 +116,15 @@
 
         closeBtn.addEventListener('click', () => modal.style.display = 'none');
         window.addEventListener('click', e => { if(e.target === modal) modal.style.display = 'none'; });
+
+        // Dropdown toggle
+        const toggleBtn = document.getElementById('kategoriToggle');
+        const menu = document.getElementById('kategoriMenu');
+        toggleBtn.addEventListener('click', () => menu.classList.toggle('show'));
+        document.addEventListener('click', e => {
+            if(!e.target.closest('.kategori-dropdown')) menu.classList.remove('show');
+        });
     });
     </script>
-
 </div>
 @endsection
