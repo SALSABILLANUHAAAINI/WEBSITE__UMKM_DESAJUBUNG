@@ -29,19 +29,12 @@
     height: 44px;
     margin: 0 8px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.15);
     /* transparan putih lembut */
     color: #ffffff;
     font-size: 1.2rem;
     transition: all 0.3s ease;
 }
 
-.footer .socials a:hover {
-    background: #ffffff;
-    color: #2F6F52;
-    /* deep green untuk kontras */
-    transform: translateY(-3px) scale(1.05);
-}
 
 /* Copyright */
 .footer .copyright {
