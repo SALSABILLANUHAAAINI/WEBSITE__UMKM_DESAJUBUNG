@@ -30,10 +30,13 @@
     </section>
 
     {{-- PRODUK TERBARU --}}
+
+<div class="produk-container">
+
     <section class="section-headline">
         <h2>Produk Terbaru</h2>
     </section>
-<div class="produk-container">
+
     <div class="produk-grid">
         @forelse($recentProducts as $product)
             <div class="produk-card">
