@@ -303,37 +303,8 @@ body {
     to { transform: translateX(-50%) scaleX(1); }
 }
 
-/* ====== RESPONSIVE ====== */
-@media (max-width: 1024px) {
-    .katalog { gap: 22px; }
-    .main-img { height: 300px; }
-}
+/* ====== RESPONSIVE FIX ====== */
 
-@media (max-width: 768px) {
-    .umkm-detail {
-        grid-template-columns: 1fr; /* ⬆️ stack vertikal */
-        text-align: center;
-    }
-
-    .katalog {
-        grid-template-columns: 1fr; /* ⬆️ produk & deskripsi menumpuk */
-    }
-
-    .produk-deskripsi {
-        max-width: 100%;
-    }
-
-    .main-img { height: 260px; }
-    .thumbnail-container { justify-content: center; }
-    .thumbnail-container img { width: 100px; height: 74px; }
-}
-
-@media (max-width: 480px) {
-    .produk-deskripsi h2 { font-size: 1.2rem; }
-    .harga { font-size: .95rem; }
-}
-
-/* ====== RESPONSIVE ====== */
 /* Laptop / tablet besar */
 @media (max-width: 1024px) {
   .katalog { gap: 22px; }
@@ -342,6 +313,32 @@ body {
 
 /* Tablet & HP */
 @media (max-width: 768px) {
+  /* UMKM detail */
+  .umkm-detail {
+    grid-template-columns: 1fr; /* stack vertikal */
+    text-align: center;
+  }
+
+  .umkm-left,
+  .umkm-right {
+    grid-column: 1;
+    max-width: 100%;
+  }
+
+  .umkm-left img,
+  .slider img {
+    display: block;
+    margin: 0 auto;  /* ⬅️ center image */
+    max-width: 90%;
+    height: auto;
+  }
+
+  .umkm-title {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Produk detail (katalog) */
   .katalog {
     flex-direction: column; /* stack vertikal */
     gap: 20px;
@@ -350,36 +347,46 @@ body {
 
   .produk-display {
     max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
   }
 
   .main-img {
-    height: auto; 
+    display: block;
+    margin: 0 auto 12px;
+    height: auto;
     max-height: 280px;
   }
 
-  .thumbnail-container { justify-content: center; }
-  .thumbnail-container img { width: 72px; height: 54px; }
+  .thumbnail-container {
+    justify-content: center;
+  }
+
+  .thumbnail-container img {
+    width: 72px;
+    height: 54px;
+  }
 
   .produk-deskripsi {
     max-width: 100%;
-    margin-left: 0;
+    margin: 0 auto;
     padding: 20px 16px;
+    text-align: center;
   }
 
   .produk-deskripsi h2 {
     font-size: 1.2rem;
-    text-align: center;
+    margin-bottom: 0.5rem;
   }
 
   .harga {
     display: block;
-    text-align: center;
     margin: 8px 0;
   }
 
   .produk-deskripsi p {
     font-size: 0.95rem;
-    text-align: justify;
+    text-align: justify; /* lebih enak dibaca di HP */
   }
 }
 
