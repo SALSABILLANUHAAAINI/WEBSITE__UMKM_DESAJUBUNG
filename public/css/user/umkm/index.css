@@ -145,6 +145,7 @@ body {
 .btn {
     display: inline-block;
     text-decoration: none;
+    text-align: center;
     cursor: pointer;
     padding: .6rem 1.05rem;
     border-radius: 999px;

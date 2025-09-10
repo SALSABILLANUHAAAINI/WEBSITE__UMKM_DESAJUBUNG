@@ -35,9 +35,10 @@
     </div>
 
     <!-- Pagination -->
-    <div class="pagination-wrapper">
-        {{ $umkms->links() }}
-    </div>
+    <div class="pagination">
+    {{ $umkms->links('vendor.pagination.custom') }}
+</div>
+
   </div>
 </section>
 @endsection
