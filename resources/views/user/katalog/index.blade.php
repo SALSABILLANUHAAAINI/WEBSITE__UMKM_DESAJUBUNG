@@ -46,7 +46,8 @@
                 data-harga="Rp {{ number_format($product->harga, 0, ',', '.') }}"
                 data-toko="{{ $product->umkm->nama_umkm ?? '-' }}"
                 data-gambar="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
-                data-kategori="{{ strtolower($product->katalog->name ?? 'lainnya') }}">
+                data-kategori="{{ strtolower($product->katalog->name ?? 'lainnya') }}"
+                data-deskripsi="{{ $product->deskripsi ?? 'Tidak ada deskripsi' }}"><!-- Tambahan -->
 
                 <img src="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}" alt="{{ $product->nama_produk }}">
                 <div class="katalog-info">
@@ -68,6 +69,7 @@
             <h2 id="modalNama"></h2>
             <p id="modalHarga"></p>
             <p id="modalToko"></p>
+            <p id="modalDeskripsi"></p> <!-- Tambahan -->
         </div>
     </div>
 
@@ -85,6 +87,7 @@
         const modalNama = document.getElementById('modalNama');
         const modalHarga = document.getElementById('modalHarga');
         const modalToko = document.getElementById('modalToko');
+        const modalDeskripsi = document.getElementById('modalDeskripsi'); // Tambahan
         const closeBtn = document.querySelector('.modal-close');
 
         cards.forEach(card => {
@@ -93,6 +96,7 @@
                 modalNama.textContent = card.dataset.nama;
                 modalHarga.textContent = "Harga: " + card.dataset.harga;
                 modalToko.textContent = "Toko: " + card.dataset.toko;
+                modalDeskripsi.textContent = card.dataset.deskripsi; // Tambahan
                 modal.style.display = 'flex';
             });
         });
