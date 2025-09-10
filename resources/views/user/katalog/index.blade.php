@@ -62,10 +62,9 @@
         @endforelse
     </div>
 
-    {{-- Pagination --}}
-    <div class="pagination-wrapper">
-        {{ $products->withQueryString()->links() }}
-    </div>
+       <!-- Pagination -->
+    <div class="pagination">
+    {{ $products->links('vendor.pagination.custom') }}
 </div>
 
 {{-- Modal Produk --}}
