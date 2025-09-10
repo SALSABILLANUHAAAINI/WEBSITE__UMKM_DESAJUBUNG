@@ -47,7 +47,7 @@
     {{-- Search --}}
     <div class="search-container">
         <form action="{{ route('admin.umkm.index') }}" method="GET" class="search-form">
-            <input type="text" name="q" class="search-input" placeholder="Cari UMKM..." value="{{ request('q') }}">
+            <input type="text" name="search" class="search-input" placeholder="Cari UMKM..." value="{{ request('search') }}">
             <button type="submit" class="search-btn">Cari</button>
             <a href="{{ route('admin.umkm.index') }}" class="reset-btn">Reset</a>
         </form>
@@ -77,8 +77,9 @@
 
     {{-- Pagination --}}
     <div class="pagination">
-        {{ $umkms->links() }}
-    </div>
+    {{ $umkms->links('vendor.pagination.custom') }}
+</div>
+
     @else
         <p class="empty">Belum ada UMKM yang terdaftar.</p>
     @endif
