@@ -50,10 +50,10 @@
                     <input type="text" name="kontak" value="{{ old('kontak') }}" required>
                 </div>
                 <div class="form-group">
-                    <label>Logo UMKM (maks 2MB)</label>
-                    <input type="file" name="logo" accept="image/png,image/jpeg">
+                    <label>Gambar UMKM (maks 2MB)</label>
+                    <input type="file" name="gambar" accept="image/png,image/jpeg">
                     <div class="single-preview">
-                        <img src="{{ asset('images/dummy5.PNG') }}" class="thumb" alt="Logo">
+                        <img src="{{ asset('images/dummy5.PNG') }}" class="thumb" alt="Gambar UMKM">
                     </div>
                 </div>
             </div>
@@ -129,8 +129,8 @@
     const MAX_SIZE = 2 * 1024 * 1024;
     const ALLOWED = ["image/jpeg","image/png"];
 
-    // Preview logo
-    document.querySelectorAll('input[name="logo"]').forEach(input => {
+    // Preview gambar UMKM
+    document.querySelectorAll('input[name="gambar"]').forEach(input => {
         input.addEventListener('change', e => {
             const file = e.target.files[0];
             const container = e.target.nextElementSibling;
@@ -162,7 +162,7 @@
     };
     document.querySelectorAll('.product-file-input').forEach(attachPreview);
 
-    // Tambah produk
+    // Tambah produk dinamis
     const wrapper=document.getElementById('productWrapper');
     let index=1;
     document.getElementById('addProduct').addEventListener('click',()=>{

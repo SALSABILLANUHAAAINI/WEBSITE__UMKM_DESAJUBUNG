@@ -24,7 +24,7 @@ class UmkmSubmissionController extends Controller
             'alamat' => 'required|string|max:500',
             'deskripsi' => 'required|string|max:1000',
             'kontak' => 'required|string|max:50',
-            'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'gmaps' => 'nullable|string|max:255',
             'social' => 'nullable|string|max:255',
             'store' => 'nullable|string|max:255',
@@ -35,13 +35,13 @@ class UmkmSubmissionController extends Controller
             'product_images.*.*' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // Upload logo langsung ke public/umkm_images
-        $logoPath = null;
-        if ($request->hasFile('logo')) {
-            $file = $request->file('logo');
+        // Upload gambar langsung ke public/umkm_images
+        $gambarPath = null;
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
             $fileName = time().'_'.$file->getClientOriginalName();
             $file->move(public_path('umkm_images'), $fileName);
-            $logoPath = 'umkm_images/'.$fileName;
+            $gambarPath = 'umkm_images/'.$fileName;
         }
 
         // Create UMKM submission
@@ -51,7 +51,7 @@ class UmkmSubmissionController extends Controller
             'alamat' => $validated['alamat'],
             'deskripsi' => $validated['deskripsi'],
             'kontak' => $validated['kontak'],
-            'logo' => $logoPath,
+            'gambar' => $gambarPath,
             'gmaps' => $validated['gmaps'] ?? null,
             'social' => $validated['social'] ?? null,
             'store' => $validated['store'] ?? null,
@@ -88,3 +88,4 @@ class UmkmSubmissionController extends Controller
         return redirect()->back()->with('success', 'Data UMKM berhasil dikirim, menunggu persetujuan admin.');
     }
 }
+    

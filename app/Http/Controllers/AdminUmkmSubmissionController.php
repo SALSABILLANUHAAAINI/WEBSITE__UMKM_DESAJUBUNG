@@ -58,7 +58,7 @@ class AdminUmkmSubmissionController extends Controller
                 'deskripsi' => $submission->deskripsi,
                 'alamat' => $submission->alamat,
                 'kontak' => $submission->kontak,
-                'logo' => $submission->logo, // path langsung dari submission
+                'gambar' => $submission->gambar, // <-- ganti logo jadi gambar
                 'gmaps' => $submission->gmaps,
                 'social' => $submission->social,
                 'store' => $submission->store,
@@ -70,7 +70,7 @@ class AdminUmkmSubmissionController extends Controller
                     'nama_produk' => $productSub->nama_produk,
                     'harga' => $productSub->harga,
                     'deskripsi' => $productSub->deskripsi,
-                    'product_image' => $productSub->product_image, // langsung pakai path publik
+                    'product_image' => $productSub->product_image,
                 ]);
             }
 

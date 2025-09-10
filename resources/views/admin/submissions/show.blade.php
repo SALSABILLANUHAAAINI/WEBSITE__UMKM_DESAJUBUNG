@@ -57,10 +57,10 @@
                 <input type="text" value="{{ $submission->kontak ?? '-' }}" readonly>
             </div>
             <div class="form-group">
-                <label>Logo UMKM</label>
+                <label>Gambar UMKM</label>
                 <div class="single-preview">
-                    <img src="{{ $submission->logo ? asset($submission->logo) : asset('images/dummy5.PNG') }}" 
-                         alt="Logo UMKM" class="thumb">
+                    <img src="{{ $submission->gambar ? asset($submission->gambar) : asset('images/dummy5.PNG') }}" 
+                         alt="Gambar UMKM" class="thumb">
                 </div>
             </div>
         </div>
@@ -124,7 +124,7 @@
 
         <form action="{{ route('admin.submissions.accept', $submission->id) }}" method="POST" style="display:inline-block;">
             @csrf
-            <button type="submit" class="btn-accept">Accept</button>
+            <button type="submit" class="btn-accept">Terima</button>
         </form>
     </div>
     @endif
