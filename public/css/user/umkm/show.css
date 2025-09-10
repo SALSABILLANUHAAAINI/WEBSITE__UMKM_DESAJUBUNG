@@ -183,9 +183,12 @@ body {
 
 .thumbnail-container {
     display: flex;
-    justify-content: center;
+    justify-content: center;   /* selalu center */
+    align-items: center;       /* vertikal rata tengah */
     gap: 10px;
     flex-wrap: wrap;
+    width: 100%;               /* penting biar bisa full center */
+    text-align: center;
 }
 
 .thumbnail-container img {
