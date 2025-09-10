@@ -17,6 +17,7 @@ class AdminUmkmSubmissionController extends Controller
     // Halaman service settings
     public function serviceSettings()
     {
+        // Tampilkan semua submission, termasuk accepted
         $submissions = UmkmSubmission::with('products')
             ->orderBy('created_at', 'desc')
             ->get();
@@ -69,7 +70,7 @@ class AdminUmkmSubmissionController extends Controller
         DB::beginTransaction();
 
         try {
-            // Pindahkan logo
+            // Pindahkan logo ke folder public
             $newLogoPath = null;
             if ($submission->logo && Storage::disk('public')->exists($submission->logo)) {
                 $newLogoPath = 'umkm_logos/' . basename($submission->logo);
@@ -91,7 +92,7 @@ class AdminUmkmSubmissionController extends Controller
                 'store'     => $submission->store,
             ]);
 
-            // Masukkan produk
+            // Masukkan produk ke tabel UMKM & pindahkan gambar
             foreach ($submission->products as $productSub) {
                 $newProductPath = null;
                 if ($productSub->product_image && Storage::disk('public')->exists($productSub->product_image)) {
@@ -108,15 +109,16 @@ class AdminUmkmSubmissionController extends Controller
                     'deskripsi'    => $productSub->deskripsi,
                     'product_image'=> $newProductPath,
                 ]);
-
-                $productSub->delete();
             }
 
-            $submission->delete();
+            // Ubah status submission menjadi accepted (tidak dihapus)
+            $submission->status = 'accepted';
+            $submission->save();
+
             DB::commit();
 
             return redirect()->route('admin.service.settings')
-                ->with('success', 'Submission diterima dan dipindahkan ke tabel UMKM & Product.');
+                ->with('success', 'Submission diterima, data UMKM & produk sudah dibuat.');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error("ERROR: Gagal accept submission", [

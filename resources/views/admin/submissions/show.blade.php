@@ -42,7 +42,10 @@
             <div class="form-group">
                 <label>Logo UMKM</label>
                 <div class="single-preview">
-                    <img src="{{ asset('storage/' . $submission->logo) }}" alt="Logo UMKM" class="thumb">
+                    <img src="{{ $submission->logo 
+                        ? asset('umkm_logos/' . basename($submission->logo)) 
+                        : asset('images/dummy5.PNG') }}" 
+                        alt="Logo UMKM" class="thumb">
                 </div>
             </div>
         </div>
@@ -83,7 +86,10 @@
         <div class="form-group">
             <label>Foto Produk</label>
             <div class="preview-grid">
-                <img src="{{ asset('storage/' . $product->product_image) }}" alt="{{ $product->nama_produk }}" class="preview-thumb">
+                <img src="{{ $product->product_image 
+                    ? asset('product_images/' . basename($product->product_image)) 
+                    : asset('images/dummy5.PNG') }}" 
+                    alt="{{ $product->nama_produk }}" class="preview-thumb">
             </div>
         </div>
         @endforeach
