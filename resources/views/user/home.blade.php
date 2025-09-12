@@ -34,7 +34,7 @@
         <div class="highlight__overlay"></div>
         <div class="highlight__box">
             <h2 class="highlight__text">{!! nl2br(e($home->highlight)) !!}</h2>
-            <a href="{{ url('/umkm') }}" class="btn btn--primary">Lihat Selengkapnya</a>
+            <a href="{{ url('/about.blade.php') }}" class="btn btn--primary">Lihat Selengkapnya</a>
         </div>
     </section>
     @else
