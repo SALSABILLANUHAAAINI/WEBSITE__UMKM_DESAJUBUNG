@@ -130,14 +130,14 @@
     let typingTimer;
     const typingDelay = 500; // delay 500ms setelah user berhenti mengetik
 
-    searchInput.addEventListener('keyup', () => {
+    searchInput.addEventListener('input', () => {
         clearTimeout(typingTimer);
         typingTimer = setTimeout(() => {
             // submit form otomatis
             searchInput.form.submit();
         }, typingDelay);
     });
-    });
+});
     </script>
 </div>
 @endsection
