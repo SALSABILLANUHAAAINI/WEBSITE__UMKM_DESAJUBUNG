@@ -3,7 +3,7 @@
 @section('title', 'Home')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('css/user/umkm/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/user/index.css') }}">
 @endsection
 
 @section('content')
@@ -48,54 +48,58 @@
 
     {{-- ============= KATALOG PRODUK ============= --}}
     <section class="section section--light">
-        <div class="container">
-            <h2 class="section__title">Katalog Produk UMKM</h2>
+    <div class="container">
+        <h2 class="section__title">Katalog Produk UMKM</h2>
 
-            <div class="katalog-grid">
-                @forelse($products as $product)
-                    <div class="katalog-card"
-                        data-kategori="{{ strtolower($product->katalog->name ?? '') }}"
-                        data-nama="{{ $product->nama_produk }}"
-                        data-harga="Rp {{ number_format((float) $product->harga, 0, ',', '.') }}"
-                        data-toko="{{ $product->umkm->nama_umkm ?? 'UMKM Desa Jubung' }}"
-                        data-gambar="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}">
-
-                        <img src="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
-                            alt="{{ $product->nama_produk }}">
-                        <div class="katalog-info">
-                            <h3 class="katalog-name">{{ $product->nama_produk }}</h3>
-                            <p class="harga">Rp {{ number_format((float) $product->harga, 0, ',', '.') }}</p>
-                        </div>
+        <div class="katalog-grid">
+            @forelse($products as $product)
+                <div class="katalog-card">
+                    <img src="{{ $product->product_image ? asset($product->product_image) : asset('images/sample-produk.jpg') }}"
+                        alt="{{ $product->nama_produk }}">
+                    <div class="katalog-info">
+                        <h3 class="katalog-name">{{ $product->nama_produk }}</h3>
+                        <p class="harga">Rp {{ number_format((float) $product->harga, 0, ',', '.') }}</p>
                     </div>
-                @empty
-                    <p class="empty-state">Belum ada produk yang tersedia saat ini.</p>
-                @endforelse
-            </div>
-    </section>
+                </div>
+            @empty
+                <p class="empty-state">Belum ada produk yang tersedia saat ini.</p>
+            @endforelse
+        </div>
+
+        {{-- tombol lihat lainnya --}}
+        <div class="btn-wrapper" style="text-align:center; margin-top:2rem;">
+            <a href="{{ url('/katalog') }}" class="btn btn--primary">Lihat Lainnya</a>
+        </div>
+    </div>
+</section>
+
 
     {{-- ===================== UMKM ===================== --}}
     <section class="section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section__title">Berbagai Macam UMKM Desa Jubung</h2>
-            </div>
+    <div class="container">
+        <h2 class="section__title">Berbagai Macam UMKM Desa Jubung</h2>
 
-            <div class="umkm-grid">
-                @forelse($umkms as $umkm)
-                    <div class="umkm-card">
-                        <img src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}" alt="{{ $umkm->nama_umkm }}" class="produk-img">
-                        <div class="umkm-info">
-                            <h3 class="umkm-name">{{ $umkm->nama_umkm }}</h3>
-                            <p class="umkm-desc">{{ Str::limit($umkm->deskripsi, 150) }}</p>
-                        </div>
-                        <a href="{{ route('umkm.show', $umkm->id) }}" class="btn btn--primary btn--block">Lihat Detail</a>
+        <div class="umkm-grid">
+            @forelse($umkms as $umkm)
+                <div class="umkm-card">
+                    <img src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}"
+                         alt="{{ $umkm->nama_umkm }}" class="produk-img">
+                    <div class="umkm-info">
+                        <h3 class="umkm-name">{{ $umkm->nama_umkm }}</h3>
+                        <p class="umkm-desc">{{ Str::limit($umkm->deskripsi, 150) }}</p>
                     </div>
-                @empty
-                    <p class="empty-state">Belum ada data UMKM.</p>
-                @endforelse
-            </div>
+                    <a href="{{ route('umkm.show', $umkm->id) }}" class="btn btn--primary btn--block">Lihat Detail</a>
+                </div>
+            @empty
+                <p class="empty-state">Belum ada data UMKM.</p>
+            @endforelse
         </div>
-    </section>
 
+        {{-- tombol lihat lainnya --}}
+        <div class="btn-wrapper" style="text-align:center; margin-top:2rem;">
+            <a href="{{ url('/umkm') }}" class="btn btn--primary">Lihat Lainnya</a>
+        </div>
+    </div>
+</section>
 </div>
 @endsection
