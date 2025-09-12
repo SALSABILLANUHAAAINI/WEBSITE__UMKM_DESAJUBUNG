@@ -195,17 +195,23 @@
   }
 
   .navbar__wrap {
-    grid-template-columns: 1fr 1fr; /* kiri = logo, kanan = hamburger */
+    position: relative;           /* biar bisa tempatkan logo absolut */
+    display: flex;
+    justify-content: flex-end;    /* dorong hamburger ke kanan */
+    align-items: center;
   }
 
   .logo {
-    justify-self: center; /* pastikan logo tetap di tengah */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);  /* benar-benar center */
+    text-align: center;           /* teks di tengah */
   }
 
   .hamburger {
     display: flex;
-    justify-self: end; /* dorong ke kanan */
-    margin-left: auto;
+    margin-left: auto;            /* pastikan tetap di kanan */
   }
 }
+
 
