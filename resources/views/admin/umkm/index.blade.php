@@ -16,33 +16,47 @@
     </div>
 
     {{-- Hero Section --}}
-    <div class="hero-section">
-        <div class="hero-card">
-            <h2 class="hero-title">Hero UMKM</h2>
-            <p class="hero-desc">{{ $heroUmkm->hero ?? 'Berbagai Macam UMKM Desa Jubung' }}</p>
-            <div class="hero-btn-group">
-                <button class="btn hero-edit" onclick="openHeroModal()">Edit Hero</button>
-            </div>
+<div class="hero-section">
+    <div class="hero-card">
+        <h2 class="hero-title">Hero UMKM</h2>
+        <p class="hero-desc">{{ $heroUmkm->hero ?? 'Berbagai Macam UMKM Desa Jubung' }}</p>
+        <div class="hero-btn-group">
+            <button class="btn hero-edit" onclick="openHeroModal()">Edit Hero</button>
         </div>
     </div>
+</div>
 
-    {{-- Modal Hero --}}
-    <div id="heroModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeHeroModal()">&times;</span>
-            <h3 class="modal-title">Edit Hero Section</h3>
-            <p class="modal-subtitle">Ubah teks hero sesuai kebutuhan.</p>
-            <form class="modal-form" action="{{ route('admin.umkm.hero.update', $heroUmkm->id) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <input type="text" name="hero" class="form-control" value="{{ $heroUmkm->hero ?? '' }}" placeholder="Masukkan teks hero">
-                <div class="form-actions">
-                    <button type="button" class="btn cancel" onclick="closeHeroModal()">Batal</button>
-                    <button type="submit" class="btn submit">Simpan</button>
-                </div>
-            </form>
-        </div>
+{{-- Modal Hero --}}
+<div id="heroModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeHeroModal()">&times;</span>
+        <h3 class="modal-title">Edit Hero Section</h3>
+        <p class="modal-subtitle">Ubah teks hero sesuai kebutuhan.</p>
+
+        <form class="modal-form" action="{{ route('admin.umkm.hero.update') }}" method="POST">
+            @csrf
+            @method('PUT')
+            
+            <input type="text" 
+                   name="hero" 
+                   class="form-control @error('hero') is-invalid @enderror" 
+                   value="{{ old('hero', $heroUmkm->hero ?? '') }}" 
+                   placeholder="Masukkan teks hero">
+
+            @error('hero')
+                <p class="error-message" style="color:red; font-size: 14px; margin-top:5px;">
+                    {{ $message }}
+                </p>
+            @enderror
+
+            <div class="form-actions">
+                <button type="button" class="btn cancel" onclick="closeHeroModal()">Batal</button>
+                <button type="submit" class="btn submit">Simpan</button>
+            </div>
+        </form>
     </div>
+</div>
+
 
     {{-- Search --}}
     <div class="search-container">
