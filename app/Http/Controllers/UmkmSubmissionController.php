@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Katalog;
 use App\Models\UmkmSubmission;
 use App\Models\ProductSubmission;
+use App\Models\ServiceSetting;
 use Illuminate\Http\Request;
+
 
 class UmkmSubmissionController extends Controller
 {
     public function showForm()
     {
         $katalogs = Katalog::where('is_active', 1)->get();
-        $settings = \App\Models\ServiceSetting::first();
+        $settings = ServiceSetting::first();
         return view('user.service.service', compact('katalogs', 'settings'));
     }
 

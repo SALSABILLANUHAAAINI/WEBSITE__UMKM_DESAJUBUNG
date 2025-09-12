@@ -120,9 +120,10 @@
 
 /* Hamburger */
 .hamburger {
-  display: none;
+   display: none;
   flex-direction: column;
-  justify-content: center;
+  justify-self: end;   /* <-- ini yang bikin dia pindah ke kanan */
+  margin-left: auto;   /* dorong ke kanan penuh */
   gap: 5px;
   width: 32px;
   height: 32px;
@@ -130,6 +131,7 @@
   background: none;
   cursor: pointer;
 }
+
 .hamburger span {
   display: block;
   width: 100%;
@@ -195,6 +197,6 @@
     display: flex;
   }
   .navbar__wrap {
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: 1fr auto 1fr; /* kiri - logo - kanan */
   }
 }
