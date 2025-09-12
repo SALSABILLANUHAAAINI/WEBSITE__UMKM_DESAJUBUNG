@@ -30,6 +30,7 @@ class UmkmSubmissionController extends Controller
             'gmaps' => 'nullable|url',
             'social'    => 'nullable|url',
             'store' => 'nullable|string|max:255',
+            'product' => 'required|array|min:1',
             'product.*' => 'required|string|max:255',
             'price.*' => 'required|string|max:50',
             'description.*' => 'required|string|max:1000',
