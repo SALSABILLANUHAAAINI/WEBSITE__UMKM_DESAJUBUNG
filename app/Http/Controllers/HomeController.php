@@ -12,9 +12,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $umkms = Umkm::take(8)->get();
+        $umkms = Umkm::take(6)->get();
         $homeSetting = HomeSetting::first();
-        $products = Product::with(['katalog', 'umkm'])->take(8)->get();
+        $products = Product::with(['katalog', 'umkm'])->take(6)->get();
         $katalogs = Katalog::where('is_active', true)->get();
 
         return view('user.home', [
