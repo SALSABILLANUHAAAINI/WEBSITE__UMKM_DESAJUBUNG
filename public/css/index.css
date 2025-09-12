@@ -262,7 +262,7 @@ a {
 .katalog-grid,
 .umkm-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(3, 1fr); /* 3 kolom default */
     gap: var(--gap-lg);
     margin-top: 2rem;
 }
@@ -382,7 +382,7 @@ a {
 
 /* ================= RESPONSIVE LAYOUT ================= */
 
-/* Tablet (max 960px) */
+/* Tablet (max 960px) → 2 kolom */
 @media (max-width: 960px) {
     .hero__container {
         grid-template-columns: 1fr;
@@ -403,12 +403,12 @@ a {
 
     .katalog-grid,
     .umkm-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        grid-template-columns: repeat(2, 1fr); /* tablet 2 kolom */
         gap: var(--gap-md);
     }
 }
 
-/* Mobile landscape (max 640px) */
+/* Mobile landscape (max 640px) → 1 kolom */
 @media (max-width: 640px) {
     body {
         font-size: 0.95rem;
@@ -436,10 +436,14 @@ a {
         font-size: 1.1rem;
     }
 
+    .katalog-grid,
+    .umkm-grid {
+        grid-template-columns: 1fr; /* hp 1 kolom */
+    }
+
     .katalog-card img,
     .umkm-card img {
         aspect-ratio: 4/3;
-        /* lebih cocok untuk layar kecil */
     }
 }
 
@@ -455,7 +459,6 @@ a {
 
     .btn {
         width: 100%;
-        /* tombol full width biar gampang di-tap */
         text-align: center;
     }
 
