@@ -193,10 +193,19 @@
   .nav-right-group {
     display: none;
   }
+
+  .navbar__wrap {
+    grid-template-columns: 1fr 1fr; /* kiri = logo, kanan = hamburger */
+  }
+
+  .logo {
+    justify-self: center; /* pastikan logo tetap di tengah */
+  }
+
   .hamburger {
     display: flex;
-  }
-  .navbar__wrap {
-    grid-template-columns: 1fr auto 1fr; /* kiri - logo - kanan */
+    justify-self: end; /* dorong ke kanan */
+    margin-left: auto;
   }
 }
+
