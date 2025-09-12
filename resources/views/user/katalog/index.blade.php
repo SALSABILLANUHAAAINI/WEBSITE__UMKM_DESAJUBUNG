@@ -137,6 +137,7 @@
             searchInput.form.submit();
         }, typingDelay);
     });
+    });
     </script>
 </div>
 @endsection
