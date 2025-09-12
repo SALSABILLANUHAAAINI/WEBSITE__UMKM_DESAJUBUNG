@@ -170,6 +170,21 @@
         attachPreview(clone.querySelector('.product-file-input'));
         index++;
     });
+
+    // 🔹 Cek produk kosong sebelum submit
+    document.querySelector('.service-form').addEventListener('submit', e => {
+        const items = document.querySelectorAll('#productWrapper .product-item');
+        items.forEach(item => {
+            const name = item.querySelector('input[name^="product"]').value.trim();
+            const price = item.querySelector('input[name^="price"]').value.trim();
+            const desc = item.querySelector('textarea[name^="description"]').value.trim();
+
+            // kalau semua kosong, hapus block produk
+            if(!name && !price && !desc){
+                item.remove();
+            }
+        });
+    });
 })();
 </script>
 @endsection
