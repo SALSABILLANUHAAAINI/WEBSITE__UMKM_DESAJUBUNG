@@ -16,47 +16,46 @@
     </div>
 
     {{-- Hero Section --}}
-<div class="hero-section">
-    <div class="hero-card">
-        <h2 class="hero-title">Hero UMKM</h2>
-        <p class="hero-desc">{{ $heroUmkm->hero ?? 'Berbagai Macam UMKM Desa Jubung' }}</p>
-        <div class="hero-btn-group">
-            <button class="btn hero-edit" onclick="openHeroModal()">Edit Hero</button>
+    <div class="hero-section">
+        <div class="hero-card">
+            <h2 class="hero-title">Hero UMKM</h2>
+            <p class="hero-desc">{{ $heroUmkm->hero ?? 'Berbagai Macam UMKM Desa Jubung' }}</p>
+            <div class="hero-btn-group">
+                <button class="btn hero-edit" onclick="openHeroModal()">Edit Hero</button>
+            </div>
         </div>
     </div>
-</div>
 
-{{-- Modal Hero --}}
-<div id="heroModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeHeroModal()">&times;</span>
-        <h3 class="modal-title">Edit Hero Section</h3>
-        <p class="modal-subtitle">Ubah teks hero sesuai kebutuhan.</p>
+    {{-- Modal Hero --}}
+    <div id="heroModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeHeroModal()">&times;</span>
+            <h3 class="modal-title">Edit Hero Section</h3>
+            <p class="modal-subtitle">Ubah teks hero sesuai kebutuhan.</p>
 
-        <form class="modal-form" action="{{ route('admin.umkm.hero.update') }}" method="POST">
-            @csrf
-            @method('PUT')
-            
-            <input type="text" 
-                   name="hero" 
-                   class="form-control @error('hero') is-invalid @enderror" 
-                   value="{{ old('hero', $heroUmkm->hero ?? '') }}" 
-                   placeholder="Masukkan teks hero">
+            <form class="modal-form" action="{{ route('admin.umkm.hero.update') }}" method="POST">
+                @csrf
+                @method('PUT')
 
-            @error('hero')
-                <p class="error-message" style="color:red; font-size: 14px; margin-top:5px;">
-                    {{ $message }}
-                </p>
-            @enderror
+                <input type="text" 
+                       name="hero" 
+                       class="form-control @error('hero') is-invalid @enderror" 
+                       value="{{ old('hero', $heroUmkm->hero ?? '') }}" 
+                       placeholder="Masukkan teks hero">
 
-            <div class="form-actions">
-                <button type="button" class="btn cancel" onclick="closeHeroModal()">Batal</button>
-                <button type="submit" class="btn submit">Simpan</button>
-            </div>
-        </form>
+                @error('hero')
+                    <p class="error-message" style="color:red; font-size: 14px; margin-top:5px;">
+                        {{ $message }}
+                    </p>
+                @enderror
+
+                <div class="form-actions">
+                    <button type="button" class="btn cancel" onclick="closeHeroModal()">Batal</button>
+                    <button type="submit" class="btn submit">Simpan</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
 
     {{-- Search --}}
     <div class="search-container">
@@ -69,35 +68,33 @@
 
     {{-- Grid UMKM --}}
     @if($umkms->count() > 0)
-    <div class="produk-list">
-        @foreach($umkms as $umkm)
-        <div class="produk-card">
-            <img src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}" alt="{{ $umkm->nama_umkm }}" class="produk-img">
-            <div class="produk-body">
-                <h3 class="produk-nama">{{ $umkm->nama_umkm }}</h3>
-                <p class="produk-desc">{{ Str::limit($umkm->deskripsi, 80) }}</p>
-                <div class="produk-btn-group">
-                    <a href="{{ route('admin.umkm.edit', $umkm->id) }}" class="btn edit">Edit</a>
-                    <form action="{{ route('admin.umkm.destroy', $umkm->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus UMKM ini?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn hapus">Hapus</button>
-                    </form>
+        <div class="produk-list">
+            @foreach($umkms as $umkm)
+                <div class="produk-card">
+                    <img src="{{ $umkm->gambar ? asset($umkm->gambar) : asset('images/dummy1.png') }}" alt="{{ $umkm->nama_umkm }}" class="produk-img">
+                    <div class="produk-body">
+                        <h3 class="produk-nama">{{ $umkm->nama_umkm }}</h3>
+                        <p class="produk-desc">{{ Str::limit($umkm->deskripsi, 80) }}</p>
+                        <div class="produk-btn-group">
+                            <a href="{{ route('admin.umkm.edit', $umkm->id) }}" class="btn edit">Edit</a>
+                            <form action="{{ route('admin.umkm.destroy', $umkm->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus UMKM ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn hapus">Hapus</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
-        @endforeach
-    </div>
 
-    {{-- Pagination --}}
-    <div class="pagination">
-    {{ $umkms->links('vendor.pagination.custom') }}
-</div>
-
+        {{-- Pagination --}}
+        <div class="pagination">
+            {{ $umkms->links('vendor.pagination.custom') }}
+        </div>
     @else
         <p class="empty">Belum ada UMKM yang terdaftar.</p>
     @endif
-
 </div>
 
 {{-- JS modal --}}

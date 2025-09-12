@@ -120,14 +120,25 @@ class UmkmController extends Controller
         return redirect()->route('admin.umkm.index')->with('success', 'UMKM berhasil dihapus!');
     }
 
-    // ================= HERO UPDATE =================
-    public function updateHero(Request $request)
-    {
-        $request->validate(['hero' => 'required|string|max:255']);
-        $heroUmkm = HeroUmkm::first() ?? new HeroUmkm();
-        $heroUmkm->hero = $request->hero;
-        $heroUmkm->save();
+    /// ================= HERO UPDATE =================
+public function updateHero(Request $request)
+{
+    $request->validate([
+        'hero' => 'required|string|max:255'
+    ]);
 
-        return redirect()->route('admin.umkm.index')->with('success', 'Hero UMKM berhasil diperbarui!');
+    // Ambil hero pertama, kalau belum ada buat baru
+    $heroUmkm = HeroUmkm::first();
+    if (!$heroUmkm) {
+        $heroUmkm = new HeroUmkm();
     }
+
+    $heroUmkm->hero = $request->hero;
+    $heroUmkm->save();
+
+    return redirect()
+        ->route('admin.umkm.index')
+        ->with('success', 'Hero UMKM berhasil diperbarui!');
+}
+
 }
