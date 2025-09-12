@@ -33,27 +33,28 @@
             <h3 class="modal-title">Edit Hero Section</h3>
             <p class="modal-subtitle">Ubah teks hero sesuai kebutuhan.</p>
 
-            <form class="modal-form" action="{{ route('umkm.hero.update') }}" method="POST">
-                @csrf
-                @method('PUT')
+            <form class="modal-form" action="{{ route('admin.umkm.hero.update') }}" method="POST">
+    @csrf
+    @method('PUT')
 
-                <input type="text" 
-                       name="hero" 
-                       class="form-control @error('hero') is-invalid @enderror" 
-                       value="{{ old('hero', $heroUmkm->hero ?? '') }}" 
-                       placeholder="Masukkan teks hero">
+    <input type="text" 
+           name="hero" 
+           class="form-control @error('hero') is-invalid @enderror" 
+           value="{{ old('hero', $heroUmkm->hero ?? '') }}" 
+           placeholder="Masukkan teks hero">
 
-                @error('hero')
-                    <p class="error-message" style="color:red; font-size: 14px; margin-top:5px;">
-                        {{ $message }}
-                    </p>
-                @enderror
+    @error('hero')
+        <p class="error-message" style="color:red; font-size: 14px; margin-top:5px;">
+            {{ $message }}
+        </p>
+    @enderror
 
-                <div class="form-actions">
-                    <button type="button" class="btn cancel" onclick="closeHeroModal()">Batal</button>
-                    <button type="submit" class="btn submit">Simpan</button>
-                </div>
-            </form>
+    <div class="form-actions">
+        <button type="button" class="btn cancel" onclick="closeHeroModal()">Batal</button>
+        <button type="submit" class="btn submit">Simpan</button>
+    </div>
+</form>
+
         </div>
     </div>
 
