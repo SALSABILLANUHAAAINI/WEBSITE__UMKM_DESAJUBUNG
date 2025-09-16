@@ -32,15 +32,9 @@
             <span class="close" onclick="closeHeroModal()">&times;</span>
             <h3 class="modal-title">Edit Hero Section</h3>
             <p class="modal-subtitle">Ubah teks hero sesuai kebutuhan.</p>
-
-            {{-- ========================================================= --}}
-            {{-- INI BAGIAN YANG DIPERBAIKI --}}
-            {{-- route() sekarang dipanggil tanpa parameter kedua ($hero->id) --}}
             <form action="{{ route('admin.umkm.hero.update') }}" method="POST">
-            {{-- ========================================================= --}}
-
                 @csrf
-                @method('PUT')
+                <!-- @method('PUT') -->
 
                 <input type="text" 
                        name="hero" 

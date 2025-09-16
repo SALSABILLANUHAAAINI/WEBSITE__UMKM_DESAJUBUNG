@@ -75,7 +75,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/umkm/{umkm}/edit', [UmkmController::class, 'adminEdit'])->name('umkm.edit');
     Route::put('/umkm/{umkm}', [UmkmController::class, 'adminUpdate'])->name('umkm.update');
     Route::delete('/umkm/{umkm}', [UmkmController::class, 'destroy'])->name('umkm.destroy');
-    Route::put('/umkm/hero', [UmkmController::class, 'updateHero'])->name('umkm.hero.update');
+    Route::post('/umkm/hero', [UmkmController::class, 'updateHero'])->name('umkm.hero.update');
 
     // Manajemen Produk
     Route::resource('product', ProductController::class)->except(['show']);
