@@ -33,27 +33,32 @@
             <h3 class="modal-title">Edit Hero Section</h3>
             <p class="modal-subtitle">Ubah teks hero sesuai kebutuhan.</p>
 
-            <form action="{{ route('admin.umkm.hero.update', $hero->id) }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
+            {{-- ========================================================= --}}
+            {{-- INI BAGIAN YANG DIPERBAIKI --}}
+            {{-- route() sekarang dipanggil tanpa parameter kedua ($hero->id) --}}
+            <form action="{{ route('admin.umkm.hero.update') }}" method="POST">
+            {{-- ========================================================= --}}
 
-    <input type="text" 
-           name="hero" 
-           class="form-control @error('hero') is-invalid @enderror" 
-           value="{{ old('hero', $heroUmkm->hero ?? '') }}" 
-           placeholder="Masukkan teks hero">
+                @csrf
+                @method('PUT')
 
-    @error('hero')
-        <p class="error-message" style="color:red; font-size: 14px; margin-top:5px;">
-            {{ $message }}
-        </p>
-    @enderror
+                <input type="text" 
+                       name="hero" 
+                       class="form-control @error('hero') is-invalid @enderror" 
+                       value="{{ old('hero', $heroUmkm->hero ?? '') }}" 
+                       placeholder="Masukkan teks hero">
 
-    <div class="form-actions">
-        <button type="button" class="btn cancel" onclick="closeHeroModal()">Batal</button>
-        <button type="submit" class="btn submit">Simpan</button>
-    </div>
-</form>
+                @error('hero')
+                    <p class="error-message" style="color:red; font-size: 14px; margin-top:5px;">
+                        {{ $message }}
+                    </p>
+                @enderror
+
+                <div class="form-actions">
+                    <button type="button" class="btn cancel" onclick="closeHeroModal()">Batal</button>
+                    <button type="submit" class="btn submit">Simpan</button>
+                </div>
+            </form>
 
         </div>
     </div>

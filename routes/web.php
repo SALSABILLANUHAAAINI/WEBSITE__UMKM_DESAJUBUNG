@@ -9,7 +9,6 @@ use App\Http\Controllers\UmkmSubmissionController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\HomeSettingController;
 use App\Http\Controllers\AdminUmkmSubmissionController;
-use App\Http\Controllers\HeroController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\ProductController;
 
@@ -76,11 +75,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('/umkm/{umkm}/edit', [UmkmController::class, 'adminEdit'])->name('umkm.edit');
     Route::put('/umkm/{umkm}', [UmkmController::class, 'adminUpdate'])->name('umkm.update');
     Route::delete('/umkm/{umkm}', [UmkmController::class, 'destroy'])->name('umkm.destroy');
-    Route::put('/umkm/hero', [HeroController::class, 'update'])->name('admin.umkm.hero.update');
-
+    Route::put('/umkm/hero', [UmkmController::class, 'updateHero'])->name('admin.umkm.hero.update');
 
     // Manajemen Produk
-    // Route::resource lebih ringkas untuk CRUD standar
     Route::resource('product', ProductController::class)->except(['show']);
 
     // Manajemen Katalog
@@ -101,8 +98,4 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::post('/accept/{id}', [AdminUmkmSubmissionController::class, 'accept'])->name('accept');
         Route::post('/reject/{id}', [AdminUmkmSubmissionController::class, 'reject'])->name('reject');
     });
-
-    // Rute lain-lain (jika ada)
-    // Route::get('/hero', [HeroController::class, 'edit'])->name('hero.edit');
-    // Route::put('/hero', [HeroController::class, 'update'])->name('hero.update');
 });
