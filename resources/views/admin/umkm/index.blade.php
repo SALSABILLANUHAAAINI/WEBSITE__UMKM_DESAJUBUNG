@@ -33,8 +33,7 @@
             <h3 class="modal-title">Edit Hero Section</h3>
             <p class="modal-subtitle">Ubah teks hero sesuai kebutuhan.</p>
 
-            {{-- DENGAN BARIS INI --}}
-<form action="{{ route('admin.umkm.hero.update') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.umkm.hero.update', $hero->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
